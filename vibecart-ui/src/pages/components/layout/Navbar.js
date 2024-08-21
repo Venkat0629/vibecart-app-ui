@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-import './components.css'
+import '../components.css'
 import { FaShoppingCart } from "react-icons/fa";
 
 

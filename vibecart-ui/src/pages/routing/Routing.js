@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom'
 import Homepage from '../components/Homepage'
-import Cart from '../components/Cart'
-import Checkout from '../components/Checkout'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+import Cart from '../components/cart/Cart'
+import Checkout from '../components/cart/Checkout'
+import Navbar from '../components/layout/Navbar'
+import Footer from '../components/layout/Footer'
 import './routing.css';
 
 export const Routing = () => {
