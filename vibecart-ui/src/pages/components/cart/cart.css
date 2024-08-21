@@ -1,24 +1,33 @@
-.cartLayout{
+.cartLayout {
     display: flex;
 }
-.cartproducts{
+
+.cartproducts {
     display: flex;
+    flex: 0 0 60%;
     flex-direction: column;
+    gap: 10px;
 }
+
+.orderSummaryLayout {
+    flex: 0 0 40%;
+}
+
 .productItem {
     display: flex;
-    flex-direction: column;
     border: 1px solid #ddd;
     border-radius: 5px;
-  }
-  
-  .productImage {
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.productImage {
     max-width: 100%;
     height: auto;
     border-bottom: 1px solid #ddd;
-  }
-  
-  .productDetails {
+}
+
+.productDetails {
     display: flex;
     flex-direction: column;
-  }
+}

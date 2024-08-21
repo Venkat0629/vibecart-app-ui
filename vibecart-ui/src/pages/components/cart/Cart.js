@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import './cart.css';
+import OrderSummary from './OrderSummary';
 
 const Cart = () => {
 
@@ -47,14 +48,14 @@ const Cart = () => {
             <div className='productDetails'>
               <h4>{product.productName}</h4>
               <p>{product.description}</p>
-              <p>${product.price.toFixed(2)}</p>
+              <p>${product.price}</p>
+              <p>Quantity : {product.quantity}</p>
             </div>
           </div>
         ))}
       </div>
-      <div >
-        <h2>Order Summary</h2>
-        <h4>Sub total ({products.length} items): ${totalBill}</h4>
+      <div className='orderSummaryLayout'>
+      <OrderSummary products={products} totalBill={Math.floor(totalBill)}/>
       </div>
     </div>
   );
