@@ -1,0 +1,24 @@
+.routing {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    gap: 5px;
+}
+
+.navbarLayout{
+    flex: 0 0 5%;
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+
+.content{
+    flex: 1;
+    overflow: auto;
+}
+
+.footerLayout{
+    flex: 0 0 3%;
+    background-color: #343a40;
+    color: #f8f9fa;
+
+}
