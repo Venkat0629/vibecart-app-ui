@@ -2,16 +2,9 @@ import React, { useCallback } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { IoCartOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< Updated upstream:vibecart-ui/src/pages/components/layout/Navbar.js
-
-import '../components.css'
-import { FaShoppingCart } from "react-icons/fa";
-
-=======
-import { useSearch } from '../Homepage/SearchContext';
 import debounce from 'lodash.debounce';
-import './Navbar.css';
->>>>>>> Stashed changes:vibecart-ui/src/pages/components/Navbar.js
+import '../Navbar.css';
+import { useSearch } from '../../Homepage/SearchContext';
 
 const Navbar = () => {
     const { handleSearch } = useSearch();
