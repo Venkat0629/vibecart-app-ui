@@ -124,6 +124,7 @@ const Shipping = () => {
                         onChange={handleChange}
                         required
                     />
+                    
                 </div>
                 <div className="form-group">
                     <label htmlFor="phone"></label>
