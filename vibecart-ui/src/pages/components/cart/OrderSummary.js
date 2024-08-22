@@ -1,10 +1,16 @@
 import React from 'react'
+import ReusableButton from '../../commoncomponents/ReusableButton'
+import './cart.css';
 
-const OrderSummary = ({products,totalBill}) => {
+const OrderSummary = ({ products, totalBill }) => {
     return (
-        <div>
-            <h1><b>Order Summary</b></h1>
-            <h4>Sub total ({products?.length} items): ${totalBill}</h4>
+        <div className='orderSummary'>
+            <h2>Order Summary</h2>
+            <p> <b>Sub total ({products?.length} items) : ${totalBill}</b></p>
+            <div>
+                <ReusableButton buttonName="Proceed to Checkout" />
+            </div>
+            <p>By continuing with your purchase you agree to our terms,conditions and privacy policy</p>
         </div>
     )
 }
