@@ -1,6 +1,7 @@
 import React from 'react'
 import './checkout.css'
-import Shipping from '../../checkout/Shipping'
+import Shipping from '../Shipping'
+import Payment from './Payment-Component/Payment'
 
 const Checkout = () => {
   return (
@@ -8,11 +9,11 @@ const Checkout = () => {
         <div class="main">
             <div class="row"><Shipping></Shipping></div>
             <div class="row">Delivery & Gift Options</div>
-            <div class="row">Payment</div>
+            <div class="row"><Payment /></div>
         </div>
         <div class="order">Order Summary</div>
     </div>
   )
 }
 
-export default Checkout
+export default Checkout;
