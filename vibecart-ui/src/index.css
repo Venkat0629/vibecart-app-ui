@@ -29,3 +29,8 @@ p {
     overflow-wrap: break-word;
 
 }
+img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}

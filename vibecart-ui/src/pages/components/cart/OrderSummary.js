@@ -5,7 +5,7 @@ import './cart.css';
 const OrderSummary = ({ products, totalBill }) => {
     return (
         <div className='orderSummary'>
-            <h2>Order Summary</h2>
+            <h3>Order Summary</h3>
             <p> <b>Sub total ({products?.length} items) : ${totalBill}</b></p>
             <div>
                 <ReusableButton buttonName="Proceed to Checkout" />
