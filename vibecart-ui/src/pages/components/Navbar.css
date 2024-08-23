@@ -1,7 +1,7 @@
 .navbar-container {
   /* background: linear-gradient(to right, #4a0c7a, #4b2d77, #003f73);  */
-  /* color: white;
-    background-color: #0071ce; */
+  color: white;
+    background-color: #0071ce;
     padding: 10px 0;
     
     font-family: Arial, sans-serif;
@@ -59,3 +59,5 @@
 .shadow {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+
