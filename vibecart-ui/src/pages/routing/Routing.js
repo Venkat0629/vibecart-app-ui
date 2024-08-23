@@ -1,5 +1,4 @@
 // import Homepage from '../components/Homepage';
-import Cart from '../components/cart/Cart';
 
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -8,7 +7,8 @@ import { Route, Routes } from "react-router-dom";
 import Home from "../Homepage/home";
 import ProductPage from "../Homepage/ProductPage";
 import ProductDetailPage from "../Homepage/ProductDetailPage"; // Import the ProductDetailPage component
-import Checkout from '../components/checkout/Checkout';
+import Cart from '../../pages/components/CartAndCheckout/cart/Cart'
+import Checkout from '../components/CartAndCheckout/checkout/Checkout';
 
 export const Routing = () => {
   return (
