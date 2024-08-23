@@ -1,13 +1,14 @@
-import Cart from '../components/cart/Cart'
-import Navbar from '../components/layout/Navbar'
-import Footer from '../components/layout/Footer'
+// import Homepage from '../components/Homepage';
+import Cart from '../components/cart/Cart';
+
+import Navbar from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer';
 import './routing.css';
 import { Route, Routes } from "react-router-dom";
-import "./routing.css";
 import Home from "../Homepage/home";
+import ProductPage from "../Homepage/ProductPage";
+import ProductDetailPage from "../Homepage/ProductDetailPage"; // Import the ProductDetailPage component
 import Checkout from '../components/checkout/Checkout';
-// import ProductPage from "../Homepage/ProductPage";
-// import CartPage from "../Homepage/CartPage";
 
 export const Routing = () => {
   return (
@@ -18,8 +19,8 @@ export const Routing = () => {
       <main className="content">
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/product/:id" element={<ProductPage />} /> */}
-          {/* <Route path="/cartpage" element={<CartPage />} /> */}
+          <Route path="/products" element={<ProductPage />} />
+          <Route path="/product/:productId" element={<ProductDetailPage />} /> {/* Add route for ProductDetailPage */}
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout/>} />
         </Routes>

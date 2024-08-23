@@ -1,0 +1,37 @@
+.product-detail-page {
+    padding: 20px;
+  }
+  
+  .product-detail-page .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-detail-page .image-container {
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in; /* Change the cursor to a zoom symbol */
+    background-size: 200%; /* Zoom level of the background image */
+  }
+  
+  .product-detail-page img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    transition: opacity 0.3s ease;
+  }
+  
+  .product-detail-page .image-container:hover img {
+    opacity: 0; /* Hide the foreground image on hover to show the background image */
+  }
+  
+  .product-detail-page .image-container:hover {
+    cursor: zoom-out; /* Change the cursor to a zoom-out symbol on hover */
+  }
+  
+  .product-detail-page .card-body {
+    padding: 15px;
+  }
+  
