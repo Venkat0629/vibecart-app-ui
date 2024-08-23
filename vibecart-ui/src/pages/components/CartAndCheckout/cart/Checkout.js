@@ -1,6 +1,6 @@
 import React from 'react'
 import './checkout.css'
-import Shipping from '../Shipping'
+import Shipping from '../../checkout/Shipping'
 
 const Checkout = () => {
   return (

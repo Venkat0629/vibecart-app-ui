@@ -3,7 +3,7 @@ import './cart.css';
 import OrderSummary from './OrderSummary';
 import CartProducts from './CartProducts';
 import { json, useNavigate } from 'react-router-dom';
-import ReusableButton from '../../commoncomponents/ReusableButton';
+import ReusableButton from '../../../commoncomponents/ReusableButton';
 
 const Cart = () => {
 

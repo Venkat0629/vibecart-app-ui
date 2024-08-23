@@ -1,5 +1,5 @@
 import React from 'react'
-import ReusableButton from '../../commoncomponents/ReusableButton'
+import ReusableButton from '../../../commoncomponents/ReusableButton'
 import './cart.css';
 
 const OrderSummary = ({ products, totalBill }) => {
