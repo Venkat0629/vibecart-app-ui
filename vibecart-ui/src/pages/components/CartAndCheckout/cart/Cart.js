@@ -3,8 +3,8 @@ import './cart.css';
 import OrderSummary from './OrderSummary';
 import CartProducts from './CartProducts';
 import { useNavigate } from 'react-router-dom';
-import ReusableButton from '../../commoncomponents/ReusableButton';
-import { calculateTotalBill } from '../../commoncomponents/CommonFunctions';
+import ReusableButton from '../../../commoncomponents/ReusableButton';
+import {calculateTotalBill} from '../../../commoncomponents/CommonFunctions'
 
 const Cart = () => {
 

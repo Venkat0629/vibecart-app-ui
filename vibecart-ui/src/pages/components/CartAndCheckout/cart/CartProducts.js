@@ -3,8 +3,8 @@ import { FiMinus } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
 
 import './cart.css'
-import ReusableButton from '../../commoncomponents/ReusableButton';
-import { calculateTotalBill } from '../../commoncomponents/CommonFunctions';
+import ReusableButton from '../../../commoncomponents/ReusableButton';
+import {calculateTotalBill} from '../../../commoncomponents/CommonFunctions'
 
 const CartProducts = ({ products, editQuantity, setTotalBill }) => {
 
