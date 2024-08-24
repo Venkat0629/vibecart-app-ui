@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FiMinus } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
 
@@ -6,18 +6,24 @@ import './cart.css'
 import ReusableButton from '../../../commoncomponents/ReusableButton';
 import {calculateTotalBill} from '../../../commoncomponents/CommonFunctions'
 
-const CartProducts = ({ products, editQuantity, setTotalBill }) => {
+const CartProducts = ({ products, editQuantity, setTotalBill,getcartData }) => {
 
     const [cartData, setCartData] = useState(products);
+
+    useEffect(()=> {
+      const data =  getcartData();
+      setCartData(data);
+    },[])
 
 
     const handleQuantityChange = (productId, quantity, e) => {
         if (e.target.value > quantity) {
             alert(`Sorry, we only have ${quantity} items left in stock.`)
         }
-        else if (e.target.value <= 0) {
-            alert(`Please enter a quantity greater than zero.`)
+        else if( e.target.value <0){
+            alert("Please enter valid quantity")
         }
+
         else {
             const updatedData = cartData.map((data) => productId === data.id ? { ...data, requestedQuantity: e.target.value } : data);
             setCartData(updatedData);
@@ -72,15 +78,16 @@ const CartProducts = ({ products, editQuantity, setTotalBill }) => {
                         <div className='quantityLayout'>
                             <b>Qty</b> : {editQuantity ?
                                 <>
-                                    <FiMinus onClick={() => handleQuantityUpdation("decrement", product.id, product.requestedQuantity, product.quantity)} />
+                                    <FiMinus className='icon-styles' onClick={() => handleQuantityUpdation("decrement", product.id, product.requestedQuantity, product.quantity)} />
                                     <input
                                         className='quantityInput'
                                         type='number'
+                                        min="1"
                                         max={product.quantity}
                                         value={product.requestedQuantity}
                                         onChange={(e) => handleQuantityChange(product.id, product.quantity, e)}
                                     />
-                                    <FaPlus onClick={() => handleQuantityUpdation("increment", product.id, product.requestedQuantity, product.quantity)} />
+                                    <FaPlus className='icon-styles' onClick={() => handleQuantityUpdation("increment", product.id, product.requestedQuantity, product.quantity)} />
                                     <ReusableButton buttonName="Remove" handleClick={() => handleRemoveCartItem(product.id)} />
                                 </>
                                 : product.requestedQuantity}

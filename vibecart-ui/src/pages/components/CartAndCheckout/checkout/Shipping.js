@@ -43,7 +43,6 @@ const Shipping = () => {
             const existingData = JSON.parse(localStorage.getItem('shippingAddress')) || {};
             const updatedData = { ...existingData, ...formData };
             localStorage.setItem('shippingAddress', JSON.stringify(updatedData));
-            console.log('Updated Shipping Address:', updatedData);
         }
         }
     

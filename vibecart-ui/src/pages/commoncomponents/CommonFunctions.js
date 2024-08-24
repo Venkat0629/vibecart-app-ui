@@ -7,3 +7,4 @@ export const calculateTotalBill = (cartData) => {
     return finalPrice
 
 };
+

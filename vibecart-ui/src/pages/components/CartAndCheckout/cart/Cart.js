@@ -54,7 +54,7 @@ const Cart = () => {
     return cartData?.length > 0 ? JSON.parse(cartData) : []
   }
   useEffect(() => {
-    localStorage.setItem("cartData", JSON.stringify(products));
+    // localStorage.setItem("cartData", JSON.stringify(products));
     const cartData = getCartData();
     setCartData(cartData);
     setTotalBill(calculateTotalBill(cartData));
@@ -65,10 +65,10 @@ const Cart = () => {
     cartData?.length > 0 ?
       <div className='cartLayout'>
         <div className='cartproductslayout'>
-          <CartProducts products={cartData} editQuantity="true" setTotalBill={setTotalBill}/>
+          <CartProducts products={cartData} editQuantity="true" setTotalBill={setTotalBill} getcartData={getCartData}/>
         </div>
         <div className='orderSummaryLayout'>
-          <OrderSummary products={cartData} totalBill={Math.floor(totalBill)} navigateTo={navigateTo}/>
+          <OrderSummary products={cartData} totalBill={Math.floor(totalBill)} navigateTo={navigateTo} getcartData={getCartData}/>
         </div>
       </div> :
       <div className='emptyCart'>

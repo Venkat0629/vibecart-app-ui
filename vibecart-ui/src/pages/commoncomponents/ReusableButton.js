@@ -3,7 +3,7 @@ import './button.css'
 
 const ReusableButton = ({buttonName,handleClick}) => {
   return (
-    <button onClick={handleClick} >{buttonName}</button>
+    <button className="button-css" onClick={handleClick} >{buttonName}</button>
   )
 }
 
