@@ -47,7 +47,7 @@
 }
 
 .quantityInput {
-    width: 80px;
+    width: 50px;
 }
 
 .orderSummary {
@@ -64,4 +64,8 @@
     border: 1px solid #ddd;
     background-color: #f9f9f9;
     padding: 10px;
+}
+
+.icon-styles{
+    cursor: pointer;
 }

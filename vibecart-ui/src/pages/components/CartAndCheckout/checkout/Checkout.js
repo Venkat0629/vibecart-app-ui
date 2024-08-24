@@ -5,13 +5,13 @@ import Payment from './Payment'
 
 const Checkout = () => {
   return (
-    <div class="grid-container">
-        <div class="main">
-            <div class="row"><Shipping></Shipping></div>
-            <div class="row">Delivery & Gift Options</div>
-            <div class="row"><Payment/></div>
+    <div class="checkout-container">
+        <div class="checkout-component-layout">
+            <div class="checkout-item "><Shipping></Shipping></div>
+            <div class="checkout-item ">Delivery & Gift Options</div>
+            <div class="checkout-item "><Payment/></div>
         </div>
-        <div class="order">Order Summary</div>
+        <div class="checkout-order-container">Order Summary</div>
     </div>
   )
 }
