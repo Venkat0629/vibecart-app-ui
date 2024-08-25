@@ -1,63 +1,18 @@
 
-.payment-container {
-    border: 1px solid #ccc;
-    padding: 20px;
-    max-width: 400px;
-    margin: auto;
-    background-color: #fff;
-  }
-  
-  .section {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .promo-input {
+  .payment-container{
     display: flex;
+    flex-direction: column;
     gap: 10px;
   }
   
-  .promo-input input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .promo-input button {
+  .promo-code,
+  .payment-Option {
     display: flex;
-    padding: 10px 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .option {
-    display: flex;
-    align-items: center;
+    width: 50%;
     gap: 10px;
   }
-  
-  .terms {
-    font-size: 12px;
-    color: #777;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  .place-order-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
+
   .place-order {
-    padding: 15px;
-    width: auto; 
-    border: 1px solid #aaa;
-    cursor: pointer;
-    border-radius: 4px;
     text-align: center;
-    
   }
   

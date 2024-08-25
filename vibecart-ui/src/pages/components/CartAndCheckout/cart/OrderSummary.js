@@ -16,13 +16,12 @@ const OrderSummary = ({ products, totalBill, navigateTo, getcartData }) => {
     }
     return (
         <div className='orderSummary'>
-            <h3>Order Summary</h3>
+            <h4>Order Summary</h4>
             <p> <b>Sub total ({products?.length} items) : ${totalBill}</b></p>
             <div>
-
                 <ReusableButton buttonName="Proceed to Checkout" handleClick={handleCheckout} />
+                <p><strong>By continuing with your purchase you agree to our terms,conditions and privacy policy</strong></p>
             </div>
-            <p>By continuing with your purchase you agree to our terms,conditions and privacy policy</p>
         </div>
     )
 }
