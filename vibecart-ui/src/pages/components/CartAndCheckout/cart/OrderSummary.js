@@ -2,7 +2,7 @@ import React from 'react'
 import ReusableButton from '../../../commoncomponents/ReusableButton'
 import './cart.css';
 
-const OrderSummary = ({ products, totalBill, navigateTo, getcartData }) => {
+const OrderSummary = ({ cartData, totalBill, navigateTo, getcartData }) => {
 
     const handleCheckout = () => {
         const data = getcartData();
@@ -17,7 +17,7 @@ const OrderSummary = ({ products, totalBill, navigateTo, getcartData }) => {
     return (
         <div className='orderSummary'>
             <h4>Order Summary</h4>
-            <p> <b>Sub total ({products?.length} items) : ${totalBill}</b></p>
+            <p> <b>Sub total ({cartData?.length} items) : ${totalBill}</b></p>
             <div>
                 <ReusableButton buttonName="Proceed to Checkout" handleClick={handleCheckout} />
                 <p><strong>By continuing with your purchase you agree to our terms,conditions and privacy policy</strong></p>
