@@ -48,7 +48,7 @@ const Shipping = () => {
     
     return (
         <div className='shipping-container'>
-            <h2>Shipping Address</h2>
+            <h4>Shipping Address</h4>
             <form onSubmit={handleSubmit}>
                 <div className='form-group'>
                     <input

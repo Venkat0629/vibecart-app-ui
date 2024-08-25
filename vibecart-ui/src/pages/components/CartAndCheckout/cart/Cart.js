@@ -65,7 +65,7 @@ const Cart = () => {
     cartData?.length > 0 ?
       <div className='cartLayout'>
         <div className='cartproductslayout'>
-          <CartProducts products={cartData} editQuantity="true" setTotalBill={setTotalBill} getcartData={getCartData}/>
+          <CartProducts products={cartData} editQuantity="true" setTotalBill={setTotalBill} getcartData={getCartData} navigateTo={navigateTo}/>
         </div>
         <div className='orderSummaryLayout'>
           <OrderSummary products={cartData} totalBill={Math.floor(totalBill)} navigateTo={navigateTo} getcartData={getCartData}/>
