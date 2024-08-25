@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { FiMinus } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
 
 import './cart.css'
-import ReusableButton from '../../../commoncomponents/ReusableButton';
 import { calculateTotalBill } from '../../../commoncomponents/CommonFunctions'
 import { IoMdClose } from "react-icons/io";
+import { updatecartBillData, updateCartData } from '../../../redux-toolkit/CartSlice';
+import { useDispatch } from 'react-redux';
 
 
-const CartProducts = ({ products, editQuantity, setTotalBill, getcartData, navigateTo }) => {
-
-    const [cartData, setCartData] = useState(products);
-
-    useEffect(() => {
-        const data = getcartData();
-        setCartData(data);
-    }, [])
+const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
+    const dispatch = useDispatch();
 
 
     const handleQuantityChange = (productId, quantity, e) => {
@@ -28,8 +23,8 @@ const CartProducts = ({ products, editQuantity, setTotalBill, getcartData, navig
 
         else {
             const updatedData = cartData.map((data) => productId === data.id ? { ...data, requestedQuantity: e.target.value } : data);
-            setCartData(updatedData);
-            setTotalBill(calculateTotalBill(updatedData));
+            dispatch(updateCartData(updatedData));
+            dispatch(updatecartBillData((calculateTotalBill(updatedData))));
             localStorage.setItem("cartData", JSON.stringify(updatedData));
         }
     }
@@ -52,17 +47,17 @@ const CartProducts = ({ products, editQuantity, setTotalBill, getcartData, navig
         }
         else {
             const updatedData = cartData.map((data) => productId === data.id ? { ...data, requestedQuantity: updatedQuantity } : data);
-            setCartData(updatedData);
-            setTotalBill(calculateTotalBill(updatedData));
+            dispatch(updateCartData(updatedData));
+            dispatch(updatecartBillData((calculateTotalBill(updatedData))));
             localStorage.setItem("cartData", JSON.stringify(updatedData));
         }
     }
 
     const handleRemoveCartItem = (productId) => {
-        const updatedCartData = cartData.filter((item) => item.id !== productId);
-        setCartData(updatedCartData);
-        setTotalBill(calculateTotalBill(updatedCartData));
-        localStorage.setItem("cartData", JSON.stringify(updatedCartData));
+        const updatedData = cartData.filter((item) => item.id !== productId);
+        dispatch(updateCartData(updatedData));
+        dispatch(updatecartBillData((calculateTotalBill(updatedData))));
+        localStorage.setItem("cartData", JSON.stringify(updatedData));
     }
 
     const handlecartItemClick = (productId) => {
