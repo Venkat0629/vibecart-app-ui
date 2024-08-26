@@ -11,9 +11,8 @@ import { updatecartBillData, updateCartData } from '../../../redux-toolkit/CartS
 const Cart = () => {
 
   const dispatch = useDispatch()
-  const { cartData,cartBillData:{totalBill} } = useSelector((state) => state.cart);
+  const { cartData,cartBillData:{totalBill},cartBillData } = useSelector((state) => state.cart);
   
-
   const navigate = useNavigate();
 
   const navigateTo = (path) => {
@@ -25,11 +24,7 @@ const Cart = () => {
   }
   // localStorage.setItem("cartData", JSON.stringify(cartData));
 
-  useEffect(() => {
-    const cartData = getCartData();
-    dispatch(updateCartData(cartData));
-    dispatch(updatecartBillData((calculateTotalBill(cartData))));
-  }, []);
+ 
 
   return (
     cartData?.length > 0 ?
@@ -38,7 +33,7 @@ const Cart = () => {
           <CartProducts cartData={cartData} editQuantity="true" getcartData={getCartData} navigateTo={navigateTo} />
         </div>
         <div className='orderSummaryLayout'>
-          <OrderSummary cartData={cartData} totalBill={Math.floor(totalBill)} navigateTo={navigateTo} getcartData={getCartData} />
+          <OrderSummary cartData={cartData} totalBill={totalBill} navigateTo={navigateTo} getcartData={getCartData} />
         </div>
       </div> :
       <div className='emptyCart'>

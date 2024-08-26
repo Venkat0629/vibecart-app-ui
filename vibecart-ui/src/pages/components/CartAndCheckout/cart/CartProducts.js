@@ -3,7 +3,7 @@ import { FiMinus } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
 
 import './cart.css'
-import { calculateTotalBill } from '../../../commoncomponents/CommonFunctions'
+import { calculateBillPerProduct, calculateTotalBill } from '../../../commoncomponents/CommonFunctions'
 import { IoMdClose } from "react-icons/io";
 import { updatecartBillData, updateCartData } from '../../../redux-toolkit/CartSlice';
 import { useDispatch } from 'react-redux';
@@ -23,9 +23,10 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
 
         else {
             const updatedData = cartData.map((data) => productId === data.id ? { ...data, requestedQuantity: e.target.value } : data);
-            dispatch(updateCartData(updatedData));
-            dispatch(updatecartBillData((calculateTotalBill(updatedData))));
-            localStorage.setItem("cartData", JSON.stringify(updatedData));
+            const finalData = calculateBillPerProduct(updatedData);
+            dispatch(updateCartData(finalData));
+            dispatch(updatecartBillData((calculateTotalBill(finalData))));
+            localStorage.setItem("cartData", JSON.stringify(finalData));
         }
     }
 
@@ -47,17 +48,18 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
         }
         else {
             const updatedData = cartData.map((data) => productId === data.id ? { ...data, requestedQuantity: updatedQuantity } : data);
-            dispatch(updateCartData(updatedData));
-            dispatch(updatecartBillData((calculateTotalBill(updatedData))));
-            localStorage.setItem("cartData", JSON.stringify(updatedData));
+            const finalData = calculateBillPerProduct(updatedData);
+            dispatch(updateCartData(finalData));
+            dispatch(updatecartBillData((calculateTotalBill(finalData))));
+            localStorage.setItem("cartData", JSON.stringify(finalData));
         }
     }
-
     const handleRemoveCartItem = (productId) => {
         const updatedData = cartData.filter((item) => item.id !== productId);
-        dispatch(updateCartData(updatedData));
-        dispatch(updatecartBillData((calculateTotalBill(updatedData))));
-        localStorage.setItem("cartData", JSON.stringify(updatedData));
+        const finalData = calculateBillPerProduct(updatedData);
+        dispatch(updateCartData(finalData));
+        dispatch(updatecartBillData((calculateTotalBill(finalData))));
+        localStorage.setItem("cartData", JSON.stringify(finalData));
     }
 
     const handlecartItemClick = (productId) => {
@@ -77,8 +79,8 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
                             <h4 className='icon-styles' onClick={() => handlecartItemClick(product.id)}>{product.productName}</h4>
                             {editQuantity && <IoMdClose className='icon-styles' onClick={() => handleRemoveCartItem(product.id)}/>}
                         </div>
-                        <p>{product.description}</p>
-                        <p style={{ color: "red" }}>${product.price}</p>
+                        {editQuantity && <p>{product.description}</p>}
+{                  editQuantity ?      <p style={{ color: "red" }}>${product.price}</p> :<p style={{ color: "red" }}>${product.totalAmountPerProduct}</p> }
                         <div className='quantityLayout'>
                             <b>Qty</b> : {editQuantity ?
                                 <>
