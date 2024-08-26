@@ -7,7 +7,7 @@ const productData = [
       CategoryID: 201,
       Price: 999.99,
       StockQuantity: 20,
-      image: "https://purepng.com/public/uploads/large/purepng.com-mobile-phone-with-touchmobilemobile-phonehandymobile-devicetouchscreenmobile-phone-device-231519332728kouyj.png"  },
+      image: "https://media.istockphoto.com/id/1271796113/photo/women-is-holding-handbag-near-luxury-car.jpg?s=1024x1024&w=is&k=20&c=BssUZgZlBm3LIpa7ejLZsDc0NwPgbfrxT_WGbT2EBs0=" },
     {
       ItemID: 2,
       ItemName: "Laptop",

@@ -7,7 +7,7 @@ const ProductDetailPage = () => {
   const { productId } = useParams();
   const product = productData.find((p) => p.ItemID === parseInt(productId));
 
-  const [backgroundPosition, setBackgroundPosition] = useState('0% 0%');
+  const [backgroundPosition, setBackgroundPosition] = useState('50% 50%');
 
   if (!product) {
     return <div>Product not found</div>;
@@ -15,8 +15,8 @@ const ProductDetailPage = () => {
 
   const handleMouseMove = (e) => {
     const { left, top, width, height } = e.target.getBoundingClientRect();
-    const x = ((e.pageX - left) / width) * 100;
-    const y = ((e.pageY - top) / height) * 100;
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
     setBackgroundPosition(`${x}% ${y}%`);
   };
 
@@ -32,17 +32,14 @@ const ProductDetailPage = () => {
                 style={{
                   backgroundImage: `url(${product.image})`,
                   backgroundPosition: backgroundPosition,
+                  cursor: 'zoom-in'
                 }}
               >
                 <img src={product.image} className="img-fluid" alt={product.ItemName} />
               </div>
-              {/* <div className="card-body">
-                <h5 className="card-title">{product.ItemName}</h5>
-                <p className="card-text">{product.ItemDescription}</p>
-              </div> */}
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 product-details">
             <h1>{product.ItemName}</h1>
             <p>{product.ItemDescription}</p>
             <p><strong>Price:</strong> ${product.Price.toFixed(2)}</p>

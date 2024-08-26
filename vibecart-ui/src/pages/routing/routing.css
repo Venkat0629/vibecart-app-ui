@@ -1,7 +1,7 @@
 .routing {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
     gap: 5px;
 }
 
@@ -13,12 +13,12 @@
 
 .content{
     flex: 1;
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 .footerLayout{
     flex: 0 0 3%;
-    background-color: #343a40;
-    color: #f8f9fa;
+    background: linear-gradient(to right, to right, #6a11cb, #2575fc);
+    /* color: #1064b8; */
 
 }
