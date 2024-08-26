@@ -5,8 +5,8 @@ import './cart.css';
 const OrderSummary = ({ cartData, totalBill, navigateTo, getcartData }) => {
 
     const handleCheckout = () => {
-        const data = getcartData();
-        const invalidIQuantityitems = data.filter((x) => x.requestedQuantity <= 0);
+        const {cartData} = getcartData();
+        const invalidIQuantityitems = cartData.filter((x) => x.requestedQuantity <= 0);
         if (invalidIQuantityitems.length > 0) {
             alert(`Enter valid quantity for product: ${invalidIQuantityitems[0].productName}`)
         }
