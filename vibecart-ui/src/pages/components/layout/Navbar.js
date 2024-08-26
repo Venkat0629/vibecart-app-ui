@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { FaUser } from 'react-icons/fa';
 import { IoCartOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+import { MdChecklistRtl } from "react-icons/md";
 import '../Navbar.css';
 
 const Navbar = () => {
@@ -15,18 +15,14 @@ const Navbar = () => {
         }
     };
 
-    const handleCartRoute = () => {
-        navigate('/cart');
-    };
-
-    const handleHomeRoute = () => {
-        navigate('/');
-    };
+    const handleNavigate = (path)=> {
+        navigate(path);
+    }
 
     return (
         <div>
             <header className="navbar-container d-flex justify-content-between align-items-center p-3 shadow">
-                <div className="navbar-title" onClick={handleHomeRoute}>VibeCart</div>
+                <div className="navbar-title" onClick={()=> handleNavigate('/')}>VibeCart</div>
                 <form className="navbar-search" onSubmit={handleSearch}>
                     <input
                         type="search"
@@ -37,17 +33,17 @@ const Navbar = () => {
                     />
                 </form>
                 <div className="navbar-icons d-flex align-items-center">
-                    <div className="navbar-icon" onClick={handleCartRoute} aria-label="Cart">
+                    <div className="navbar-icon" onClick={()=> handleNavigate('/cart')}>
                         <IoCartOutline size={28} />
                     </div>
-                    <div className="navbar-icon" aria-label="User Profile">
-                        <FaUser />
+                    <div className="navbar-icon" title='Orders' onClick={()=> handleNavigate('/orders')}>
+                        <MdChecklistRtl />
                     </div>
                 </div>
             </header>
             <nav className="bg-light py-2">
                 <div className="navbar__menu">
-                    <button onClick={handleHomeRoute}>Home</button>
+                    <button onClick={()=> handleNavigate('/')}>Home</button>
                     <button>Bags</button>
                     <button>Shoes</button>
                     <button>Jacket</button>

@@ -9,6 +9,7 @@ import ProductPage from "../components/Homepage/ProductPage";
 import ProductDetailPage from "../components/Homepage/ProductDetailPage"; // Import the ProductDetailPage component
 import Cart from '../../pages/components/CartAndCheckout/cart/Cart'
 import Checkout from '../components/CartAndCheckout/checkout/Checkout';
+import Orders from '../components/CartAndCheckout/orders/Orders'
 
 export const Routing = () => {
   return (
@@ -23,6 +24,7 @@ export const Routing = () => {
           <Route path="/product/:productId" element={<ProductDetailPage />} /> {/* Add route for ProductDetailPage */}
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout/>} />
+          <Route path="/orders" element={<Orders />} />
         </Routes>
       </main>
       <div className="footerLayout">
