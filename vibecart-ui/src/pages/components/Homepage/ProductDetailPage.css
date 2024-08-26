@@ -2,7 +2,7 @@
   position: relative;
   display: inline-block;
   padding: 10px 20px;
-  background: linear-gradient(to right, #6a11cb, #2575fc); /* Updated color scheme */
+  background: linear-gradient(to right, #7b00ff, #4e8cff);
   color: #fff;
   border: none;
   border-radius: 25px;
@@ -14,8 +14,9 @@
 }
 
 .product-detail-page .btn-primary:hover {
-  background: linear-gradient(45deg, #25bebe, #181516); /* Brighter, more vibrant colors */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to right, #9a4dff, #5a9bff);
+
   transform: scale(1.05); /* Slightly scales up the button on hover */
 }
 

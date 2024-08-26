@@ -41,6 +41,7 @@ const Cart = () => {
   },[totalBill])
 
   return (
+    
     cartData?.length > 0 ?
       <div className='cartLayout'>
         <div className='cartproductslayout'>
