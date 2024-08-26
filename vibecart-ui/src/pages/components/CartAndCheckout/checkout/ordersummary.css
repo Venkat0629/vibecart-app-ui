@@ -3,3 +3,7 @@
     flex-direction: column;
     gap: 10px;
 }
+.ordersummary-bill-layout{
+    display: flex;
+    justify-content: space-between;
+}

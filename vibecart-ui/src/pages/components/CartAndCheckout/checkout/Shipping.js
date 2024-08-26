@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReusableButton from '../../../commoncomponents/ReusableButton'
 import './shipping.css';
 import '../cartandcheckout.css';
+import { updateAddressData } from '../../../redux-toolkit/CartSlice';
+import { useDispatch } from 'react-redux';
 
-const Shipping = () => {
+const Shipping = ({ address }) => {
     const [formData, setFormData] = useState({
         fullname: '',
         address: '',
@@ -13,9 +15,12 @@ const Shipping = () => {
         zip: '',
         phone: ''
     });
+    const dispatch = useDispatch()
 
     const [errors, setErrors] = useState({});
-
+    useEffect(() => {
+        setFormData(address);
+    }, [address])
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -23,8 +28,8 @@ const Shipping = () => {
 
     const validateForm = () => {
         const newErrors = {};
-        const phoneRegex = /^\d{10}$/; 
-        const zipRegex = /^\d{6}$/; 
+        const phoneRegex = /^\d{10}$/;
+        const zipRegex = /^\d{6}$/;
 
         if (!phoneRegex.test(formData.phone)) {
             newErrors.phone = 'Please enter a valid 10-digit phone number.';
@@ -38,14 +43,15 @@ const Shipping = () => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-    
+
         if (validateForm()) {
             const existingData = JSON.parse(localStorage.getItem('shippingAddress')) || {};
             const updatedData = { ...existingData, ...formData };
+            dispatch(updateAddressData(updatedData));
             localStorage.setItem('shippingAddress', JSON.stringify(updatedData));
         }
-        }
-    
+    }
+
     return (
         <div className='shipping-container'>
             <h4>Shipping Address</h4>
@@ -159,7 +165,7 @@ const Shipping = () => {
                     <p>{errors.phone}</p>
                 </div>
                 <div className="button-container">
-                    <ReusableButton buttonName="Continue"/>
+                    <ReusableButton buttonName="Continue" />
                 </div>
             </form>
         </div>

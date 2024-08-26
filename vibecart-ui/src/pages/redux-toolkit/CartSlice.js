@@ -4,6 +4,7 @@ export const cartSlice = createSlice({
     name: "cart",
     initialState: {
         cartData: [],
+        address:{},
         cartBillData: {
             totalBill: 0
         }
@@ -14,9 +15,12 @@ export const cartSlice = createSlice({
         },
         updatecartBillData: (state, action) => {
             state.cartBillData.totalBill = action.payload
+        },
+        updateAddressData :(state,action)=> {
+            state.address = action.payload
         }
     }
 });
 
-export const { updateCartData,updatecartBillData } = cartSlice.actions
+export const { updateCartData,updatecartBillData ,updateAddressData} = cartSlice.actions
 export default cartSlice.reducer

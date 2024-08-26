@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import ReusableButton from '../../../commoncomponents/ReusableButton';
 import { calculateTotalBill } from '../../../commoncomponents/CommonFunctions'
 import { useDispatch, useSelector } from 'react-redux';
-import { updatecartBillData, updateCartData } from '../../../redux-toolkit/CartSlice';
+import { updateAddressData, updatecartBillData, updateCartData } from '../../../redux-toolkit/CartSlice';
 
 const Cart = () => {
 
@@ -20,11 +20,25 @@ const Cart = () => {
   }
   const getCartData = () => {
     const cartData = localStorage.getItem("cartData");
-    return cartData?.length > 0 ? JSON.parse(cartData) : []
+    const shippingAddress = localStorage.getItem("shippingAddress");
+
+    return {
+      cartData: cartData?.length > 0 ? JSON.parse(cartData) : [],
+      address: shippingAddress ? JSON.parse(shippingAddress) : {}
+    }
   }
   // localStorage.setItem("cartData", JSON.stringify(cartData));
+  useEffect(() => {
+    const {cartData, address} = getCartData();
+     dispatch(updateCartData(cartData));
+     dispatch(updateAddressData(address));
+    dispatch(updatecartBillData((calculateTotalBill(cartData))));
+  }, []);
 
- 
+
+  useEffect(()=> {
+    localStorage.setItem("cartBillData", JSON.stringify(cartBillData));
+  },[totalBill])
 
   return (
     cartData?.length > 0 ?
