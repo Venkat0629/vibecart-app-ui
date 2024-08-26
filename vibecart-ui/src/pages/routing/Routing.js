@@ -21,7 +21,7 @@ export const Routing = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<ProductPage />} />
-          <Route path="/product/:productId" element={<ProductDetailPage />} /> {/* Add route for ProductDetailPage */}
+          <Route path="/product/:productId" element={<ProductDetailPage />} /> 
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout/>} />
           <Route path="/orders" element={<Orders />} />

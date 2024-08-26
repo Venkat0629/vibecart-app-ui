@@ -1,35 +1,116 @@
-
 .card-img-top {
-    width: 80%; /* Full width of the parent container */
-    height: 250px; /* Fixed height */
-    object-fit: cover; /* Ensures the image covers the area without distortion */
-  }
-  .navbar__menu button {
-    background-color: #f8f9fa; /* Light background color */
-    color: #000; /* Text color */
-   
-    padding: 10px 20px; /* Padding inside the button */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition for color changes */
-  }
-  
-  /* Hover effect */
-  .navbar__menu button:hover {
-    background-color: #007bff; /* Change background color on hover */
-    color: #fff; /* Change text color on hover */
-  }
-/* 
-  button {
-    padding: 8px 16px;
-    border-radius: 0 20px 20px 0;
-    border: none;
-    background-color: #0056a3;
-    color: #fff;
-    cursor: pointer;
-  } */
-
-  .navbar__menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+  width: 80%; /* Full width of the parent container */
+  height: 250px; /* Fixed height */
+  object-fit: cover; /* Ensures the image covers the area without distortion */
 }
+
+.banner-slide {
+  background: linear-gradient(45deg,  #25bebe, #181516);
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.5s ease;
+}
+
+.banner-slide:hover {
+  transform: scale(1.05);
+}
+
+.top-categories {
+  padding: 20px 0;
+}
+
+.top-categories h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+/* Add product card styles here */
+.product-card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(to right, #fff, #f9f9f9);
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.product-card img {
+  border-radius: 15px 15px 0 0;
+  transition: transform 0.5s ease;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.product-card img:hover {
+  transform: scale(1.1);
+}
+
+.product-card .card-body {
+  padding: 15px;
+  flex: 1;
+}
+
+.product-card .card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4a0c7a;
+}
+
+.product-card .card-text {
+  font-size: 1rem;
+  color: #666;
+}
+
+
+
+.top-categoriesc {
+  padding: 20px 0;
+}
+
+.top-categoriesc .card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.top-categoriesc .card-img-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.top-categoriesc .card-body {
+  background-color: #fff;
+  padding: 15px;
+}
+
+.top-categoriesc .card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.top-categoriesc .card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.top-products .card {
+  /* Your existing product card styles */
+}
+
