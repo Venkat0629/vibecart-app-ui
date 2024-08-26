@@ -32,10 +32,10 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
     const handleQuantityUpdation = (type, productId, requestedQuantity, quantity) => {
         let updatedQuantity;
         if (type === "increment") {
-            updatedQuantity = requestedQuantity + 1
+            updatedQuantity = Number(requestedQuantity) + 1
         }
         else {
-            updatedQuantity = requestedQuantity - 1
+            updatedQuantity = Number(requestedQuantity) - 1
 
         }
 
