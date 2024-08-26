@@ -23,12 +23,6 @@ const Payment = ({ address }) => {
           <ReusableButton buttonName="Apply" />
         </div>
       </div>
-
-
-      <div className="place-order">
-        <p><strong>By placing an order, you are agreeing to our Privacy Policy and Terms of Use</strong></p>
-        <ReusableButton buttonName="Place Order with Cash" />
-      </div>
     </div>
   );
 };

@@ -22,11 +22,30 @@
 .checkout-order-container {
     grid-area: checkout-order-container; 
     padding: 10px;
-    background-color: #f9f9f9;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
 }
 
 .checkout-item {
     text-align: left;
     background-color: #f9f9f9;
     padding: 10px;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+
+}
+@media (max-width: 768px) {
+    .checkout-container {
+        grid-template-areas:
+            "checkout-component-layout"
+            "checkout-order-container";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+    
+    .checkout-component-layout {
+        grid-area: checkout-component-layout;
+    }
+
+    .checkout-order-container {
+        grid-area: checkout-order-container;
+    }
 }
