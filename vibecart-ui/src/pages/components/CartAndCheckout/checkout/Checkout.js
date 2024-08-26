@@ -43,7 +43,7 @@ const Checkout = () => {
     <div class="checkout-container">
       <div class="checkout-component-layout">
         <div class="checkout-item "><Shipping address={address}/></div>
-        <div class="checkout-item ">Delivery & Gift Options</div>
+        {/* <div class="checkout-item ">Delivery & Gift Options</div> */}
         <div class="checkout-item "><Payment address={address}/></div>
       </div>
       <div class="checkout-order-container"><OrderSummary cartData={cartData} cartBillData={cartBillData} navigateTo={navigateTo}/></div>
