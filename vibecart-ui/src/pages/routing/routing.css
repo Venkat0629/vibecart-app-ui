@@ -2,23 +2,24 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    min-height: 100vh;
     gap: 5px;
 }
 
 .navbarLayout{
-    flex: 0 0 5%;
-    background-color: #343a40;
+    flex: 0 0 auto;
+    background: linear-gradient(to right, #7b00ff, #4e8cff);
     color: #f8f9fa;
 }
 
 .content{
     flex: 1;
-    /* overflow: auto; */
+    overflow-y: auto;
+    margin: 5px;
 }
 
 .footerLayout{
-    flex: 0 0 3%;
-    background: linear-gradient(to right, to right, #6a11cb, #2575fc);
-    /* color: #1064b8; */
-
+    flex: 0 0 auto;
+    background: linear-gradient(to right, #7b00ff, #4e8cff);
+    color: #f8f9fa;
 }
