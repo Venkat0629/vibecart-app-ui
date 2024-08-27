@@ -1,5 +1,5 @@
 import React from 'react'
-import './button.css'
+import './commoncomponents.css'
 
 const ReusableButton = ({buttonName,handleClick}) => {
   return (

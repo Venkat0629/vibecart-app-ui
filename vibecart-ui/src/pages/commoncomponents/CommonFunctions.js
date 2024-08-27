@@ -14,3 +14,17 @@ export const calculateBillPerProduct = (cartData) => {
     }));
     return totalAmountPerProduct
 }
+export  const getCartData = () => {
+    const cartData = localStorage.getItem("cartData");
+    const shippingAddress = localStorage.getItem("shippingAddress");
+
+    return {
+      cartData: cartData?.length > 0 ? JSON.parse(cartData) : [],
+      address: shippingAddress ? JSON.parse(shippingAddress) : {}
+    }
+  }
+export const handleToast = ({type,message,setShowToast,setToast}) => {
+    setToast({ type: type, message:message });
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+};
