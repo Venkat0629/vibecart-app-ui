@@ -1,24 +1,27 @@
 import React from 'react'
 import { FiMinus } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
-
 import './cart.css'
 import { calculateBillPerProduct, calculateTotalBill } from '../../../commoncomponents/CommonFunctions'
 import { IoMdClose } from "react-icons/io";
 import { updatecartBillData, updateCartData } from '../../../redux-toolkit/CartSlice';
 import { useDispatch } from 'react-redux';
+import Toaster from '../../../commoncomponents/Toaster';
+import useToast from '../../../commoncomponents/ToastHook';
 
 
 const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
     const dispatch = useDispatch();
 
+    const { toast, showToast, triggerToast } = useToast();
+
 
     const handleQuantityChange = (productId, quantity, e) => {
         if (e.target.value > quantity) {
-            alert(`Sorry, we only have ${quantity} items left in stock.`)
+            triggerToast("error", `Sorry, we only have ${quantity} items left in stock.`)
         }
         else if (e.target.value < 0) {
-            alert("Please enter valid quantity")
+            triggerToast("error", "Please enter a valid quantity")
         }
 
         else {
@@ -41,10 +44,10 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
         }
 
         if (updatedQuantity > quantity) {
-            alert(`Sorry, we only have ${quantity} items left in stock.`)
+            triggerToast("error", `Sorry, we only have ${quantity} items left in stock.`)
         }
         else if (updatedQuantity <= 0) {
-            alert(`Please enter a quantity greater than zero.`)
+            triggerToast("error", "please enter quantity greater than 0")
         }
         else {
             const updatedData = cartData.map((data) => productId === data.id ? { ...data, requestedQuantity: updatedQuantity } : data);
@@ -60,6 +63,8 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
         dispatch(updateCartData(finalData));
         dispatch(updatecartBillData((calculateTotalBill(finalData))));
         localStorage.setItem("cartData", JSON.stringify(finalData));
+        triggerToast("success","Item removed successfully")
+
     }
 
     const handlecartItemClick = (productId) => {
@@ -69,6 +74,7 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
 
     return (
         <div className='cartproducts'>
+            {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
             {cartData?.map((product) => (
                 <div key={product.id} className='cartproductItem'>
                     <div className='cartproductImage'>

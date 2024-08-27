@@ -1,0 +1,35 @@
+.successtoast-styles {
+    background-color: green;
+}
+.errortoast-styles {
+    background-color: red;
+}
+.successtoast-styles, .errortoast-styles{
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.button-css {
+    background: linear-gradient(to right, #7b00ff, #4e8cff);
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    transition: all 0.4s ease;
+
+}
+
+button:hover {
+    background: linear-gradient(to right, #9a4dff, #5a9bff);
+    transform: scale(1.05); 
+
+}

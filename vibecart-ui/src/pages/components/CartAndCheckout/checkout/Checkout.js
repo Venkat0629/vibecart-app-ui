@@ -5,7 +5,7 @@ import Payment from './Payment'
 import OrderSummary from './OrderSummary'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateAddressData, updatecartBillData, updateCartData } from '../../../redux-toolkit/CartSlice'
-import { calculateTotalBill } from '../../../commoncomponents/CommonFunctions'
+import { calculateTotalBill, getCartData } from '../../../commoncomponents/CommonFunctions'
 import { useNavigate } from 'react-router-dom'
 
 const Checkout = () => {
@@ -18,15 +18,7 @@ const Checkout = () => {
   const navigateTo = (path) => {
     navigate(path);
   }
-  const getCartData = () => {
-    const cartData = localStorage.getItem("cartData");
-    const shippingAddress = localStorage.getItem("shippingAddress");
 
-    return {
-      cartData: cartData?.length > 0 ? JSON.parse(cartData) : [],
-      address: shippingAddress ? JSON.parse(shippingAddress) : {}
-    }
-  }
 
   useEffect(() => {
     const {cartData, address} = getCartData();

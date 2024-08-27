@@ -4,29 +4,20 @@ import OrderSummary from './OrderSummary';
 import CartProducts from './CartProducts';
 import { useNavigate } from 'react-router-dom';
 import ReusableButton from '../../../commoncomponents/ReusableButton';
-import { calculateTotalBill } from '../../../commoncomponents/CommonFunctions'
+import { calculateTotalBill, getCartData } from '../../../commoncomponents/CommonFunctions'
 import { useDispatch, useSelector } from 'react-redux';
 import { updateAddressData, updatecartBillData, updateCartData } from '../../../redux-toolkit/CartSlice';
 
 const Cart = () => {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cartData,cartBillData:{totalBill},cartBillData } = useSelector((state) => state.cart);
   
-  const navigate = useNavigate();
-
   const navigateTo = (path) => {
     navigate(path);
   }
-  const getCartData = () => {
-    const cartData = localStorage.getItem("cartData");
-    const shippingAddress = localStorage.getItem("shippingAddress");
 
-    return {
-      cartData: cartData?.length > 0 ? JSON.parse(cartData) : [],
-      address: shippingAddress ? JSON.parse(shippingAddress) : {}
-    }
-  }
   // localStorage.setItem("cartData", JSON.stringify(cartData));
   useEffect(() => {
     const {cartData, address} = getCartData();
