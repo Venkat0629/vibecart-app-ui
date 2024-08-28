@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { IoCartOutline } from 'react-icons/io5';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { MdChecklistRtl } from "react-icons/md";
-import '../Navbar.css';
+import './layout.css';
 import productData from '../Homepage/productData'
 
 const Navbar = () => {

@@ -1,6 +1,5 @@
-/* Background Gradient and Hero Section */
 .product-page {
-  background: linear-gradient(135deg, #43cea2  0%, #185a9d 100%);
+  background: var(--card-background);
   min-height: 100vh;
   padding-bottom: 50px;
 }
@@ -9,7 +8,7 @@
   text-align: center;
   padding: 50px 20px;
   color: #fff;
-  background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+  background: var(--card-background);
   border-radius: 10px;
   margin-bottom: 30px;
   animation: fadeIn 1s ease-in-out;
@@ -32,12 +31,12 @@
 /* Card Styling */
 /* Add product card styles here */
 .product-card {
-  border: none;
+  border: var(--card-border);
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  background: var(--card-background);
   display: flex;
   flex-direction: column;
 }
@@ -49,7 +48,7 @@
 
 .product-card img {
   border-radius: 15px 15px 0 0;
-  transition: transform 0.5s ease;
+  transition: transform 0.4s ease;
   width: 100%;
   height: 250px;
   object-fit: cover;
@@ -77,20 +76,15 @@
 
 
 .product-card .btn {
-  background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
-  color: #fff;
-  border: none;
+  background: var(--button-default);
+  color: var(--button-text);
   border-radius: 20px;
   padding: 10px 20px;
-  transition: background 0.3s ease;
+  transition: all 0.4s ease;
 }
 
 .product-card .btn:hover {
-  background: linear-gradient(135deg, #185a9d 0%, #43cea2 100%);
+  background: var(--button-hover);
 }
 
-/* Animations */
-@keyframes fadeInUp {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
+

@@ -8,7 +8,7 @@
 
 .navbarLayout{
     flex: 0 0 auto;
-    background: linear-gradient(to right, #7b00ff, #4e8cff);
+    background-color: var(--navbar-background);
     color: #f8f9fa;
 }
 
@@ -20,6 +20,6 @@
 
 .footerLayout{
     flex: 0 0 auto;
-    background: linear-gradient(to right, #7b00ff, #4e8cff);
+    background-color: var(--navbar-background);
     color: #f8f9fa;
 }

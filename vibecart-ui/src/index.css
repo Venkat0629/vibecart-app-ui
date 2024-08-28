@@ -31,6 +31,11 @@ p {
     margin: 0; 
     word-wrap: break-word;
     overflow-wrap: break-word;
+    color: var(--text-secondary);
+}
+
+h1,h2,h3,h4,h5,h6 {
+    color: var(--text-primary)
 }
 strong {
     font-size: 0.7em;
@@ -41,3 +46,28 @@ img {
     max-height: 100%;
     object-fit: contain;
 }
+
+:root {
+    --primary-blue: #007BFF;
+  
+    --navbar-background: #003B6F;
+  
+    /* Button Colors */
+    --button-default: #007BFF;
+    --button-hover: #0056b3;
+    --button-text: #FFFFFF;
+  
+    /* Card Colors */
+    --card-background: #F8F9FA;
+    --card-border: #E0E0E0;
+  
+    /* Text Colors */
+    --text-primary: #333333;
+    --text-secondary: #666666;
+  
+    /* Accent Colors */
+    --success-green: #28A745;
+    --error-red: #DC3545;
+    --warning-orange: #FFC107;
+  }
+  

@@ -1,16 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {Routing} from './pages/routing/Routing'
 
 const App = () => {
   
-    return (
-        
-        
-        <Routing />
-        
-            
-        
-    );
+    return <Routing />
 };
 
 export default App;
