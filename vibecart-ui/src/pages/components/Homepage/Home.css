@@ -5,7 +5,7 @@
 }
 
 .banner-slide {
-  background: var(--card-background);
+  background: var(--button-hover);
   height: 150px;
   display: flex;
   align-items: center;
