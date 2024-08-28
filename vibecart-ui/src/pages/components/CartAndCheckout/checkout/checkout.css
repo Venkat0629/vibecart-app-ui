@@ -22,14 +22,17 @@
 .checkout-order-container {
     grid-area: checkout-order-container; 
     padding: 10px;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+
 }
 
 .checkout-item {
     text-align: left;
-    background-color: #f9f9f9;
     padding: 10px;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+
 
 }
 @media (max-width: 768px) {

@@ -1,67 +1,20 @@
 .product-detail-page .btn-primary {
-  position: relative;
-  display: inline-block;
-  padding: 10px 20px;
-  background: linear-gradient(to right, #7b00ff, #4e8cff);
-  color: #fff;
-  border: none;
-  border-radius: 25px;
+  padding: 10px 10px;
+  background: var(--button-default);
+  color: var(--button-text);
+  border-radius: 20px;
   font-weight: bold;
-  text-transform: uppercase;
-  overflow: hidden;
   transition: all 0.4s ease;
-  width: 30%;
+
 }
 
 .product-detail-page .btn-primary:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(to right, #9a4dff, #5a9bff);
-
-  transform: scale(1.05); /* Slightly scales up the button on hover */
+  background: var(--button-hover);
 }
 
-
-
-.product-detail-page .btn-primary::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(60deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
-  transform: rotate(45deg);
-  transition: all 0.5s ease;
-}
-
-.product-detail-page .btn-primary:hover::before {
-  top: -30%;
-  left: -30%;
-  width: 160%;
-  height: 160%;
-  background: linear-gradient(60deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
-}
-
-.product-detail-page .btn-primary::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  mix-blend-mode: overlay;
-  transition: opacity 0.3s ease;
-}
-
-.product-detail-page .btn-primary:hover::after {
-  opacity: 0;
-}
 .product-detail-page .card {
-  border: 1px solid #ddd;
+  border: 1px solid var(--card-border);
   border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .product-detail-page .image-container {
@@ -78,7 +31,7 @@
   max-width: 100%;
   height: 100%; /* Ensures image fills the container */
   object-fit: cover; /* Ensures the image covers the entire area without distortion */
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
 }
 
 .product-detail-page .image-container:hover img {
