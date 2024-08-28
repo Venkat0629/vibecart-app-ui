@@ -6,8 +6,8 @@ import productData from './productData';
 import { Link } from 'react-router-dom';
 
 const categories = [
-  { id: 1, name: 'Bags', image: 'path_to_image_1' },
-  { id: 2, name: 'Jackets', image: 'path_to_image_2' }
+  { id: 1, name: 'Bags', image: 'https://images.pexels.com/photos/19090/pexels-photo.jpg' },
+  { id: 2, name: 'Jackets', image: 'https://4.imimg.com/data4/RU/VC/MY-11853389/men-s-jackets.jpg' }
 ];
 
 

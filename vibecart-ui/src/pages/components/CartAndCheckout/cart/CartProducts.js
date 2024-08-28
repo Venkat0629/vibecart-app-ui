@@ -71,14 +71,14 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
         navigateTo(`/product/${productId}`);
     }
 
-
+console.log(cartData)
     return (
         <div className='cartproducts'>
             {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
             {cartData?.map((product) => (
                 <div key={product.id} className='cartproductItem'>
                     <div className='cartproductImage'>
-                        <img src={product?.image} alt="Product" className='icon-styles' onClick={() => handlecartItemClick(product.id)}/>
+                        <img src={product.image} alt="Product" className='icon-styles' onClick={() => handlecartItemClick(product.id)}/>
                     </div>
                     <div className='cartproductDetails'>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
