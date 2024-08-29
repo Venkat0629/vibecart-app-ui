@@ -3,6 +3,28 @@
   height: 250px; /* Fixed height */
   object-fit: cover; /* Ensures the image covers the area without distortion */
 }
+.container {
+  width: 100%; /* Full width */
+  max-width: 1200px; /* Adjust as needed */
+  margin: 0 auto; /* Center the container */
+}
+
+.carousel .slide {
+  background: #000; /* Optional: add a background color */
+}
+
+.banner-slide {
+  position: relative;
+  width: 100%;
+  height: 100%; /* Ensures the slide takes full height of the container */
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the container without distortion */
+}
+
 
 .banner-slide {
   background: var(--button-hover);
@@ -19,6 +41,7 @@
 
 .top-categories {
   padding: 20px 0;
+
 }
 
 .top-categories h3 {
@@ -30,22 +53,14 @@
 }
 /* Add product card styles here */
 .product-card {
-  border: var(--card-border);
-  border-radius: 15px;
+
   overflow: hidden;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  background: var(--card-background);
   display: flex;
   flex-direction: column;
 }
 
-.product-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-}
 
 .product-card img {
-  border-radius: 15px 15px 0 0;
   transition: transform 0.4s ease;
   width: 100%;
   height: 250px;
@@ -78,22 +93,13 @@
   padding: 20px 0;
 }
 
-.top-categoriesc .card {
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
 .top-categoriesc .card-img-top {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+
   height: 200px;
   object-fit: cover;
 }
 
 .top-categoriesc .card-body {
-  background-color: #fff;
   padding: 15px;
 }
 
@@ -104,7 +110,6 @@
 
 .top-categoriesc .card:hover {
   transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 

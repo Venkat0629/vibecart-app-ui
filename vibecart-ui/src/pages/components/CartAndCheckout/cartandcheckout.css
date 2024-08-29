@@ -2,9 +2,7 @@
 .checkout-container select {
     width: 100%;
     padding: 5px;
-    border-radius: 8px;
     box-sizing: border-box;
     color: #333;
-    border: 1px solid var(--card-border);
     outline: none;
 }

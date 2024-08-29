@@ -12,7 +12,7 @@ code {
         monospace;
 }
 
-input{
+input,select{
     border: 1px solid #ccc;
     border-radius: 3px;
 }
@@ -31,11 +31,11 @@ p {
     margin: 0; 
     word-wrap: break-word;
     overflow-wrap: break-word;
-    color: var(--text-secondary);
+    color: black
 }
 
 h1,h2,h3,h4,h5,h6 {
-    color: var(--text-primary)
+    color: black
 }
 strong {
     font-size: 0.7em;
@@ -53,9 +53,10 @@ img {
     --navbar-background: #003B6F;
   
     /* Button Colors */
-    --button-default: #007BFF;
-    --button-hover: #0056b3;
+    --button-default: #9c171c;
+    --button-hover: #751619;
     --button-text: #FFFFFF;
+
   
     /* Card Colors */
     --card-background: #F8F9FA;

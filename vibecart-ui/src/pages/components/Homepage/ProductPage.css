@@ -8,8 +8,6 @@
   text-align: center;
   padding: 50px 20px;
   color: #fff;
-  background: var(--card-background);
-  border-radius: 10px;
   margin-bottom: 30px;
   animation: fadeIn 1s ease-in-out;
 }
@@ -24,27 +22,17 @@
   background: #fff;
   padding: 15px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 1.2s ease-in-out;
 }
 
 /* Card Styling */
 /* Add product card styles here */
 .product-card {
-  border: var(--card-border);
-  border-radius: 15px;
+border: none;
   overflow: hidden;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  background: var(--card-background);
   display: flex;
   flex-direction: column;
 }
 
-.product-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-}
 
 .product-card img {
   border-radius: 15px 15px 0 0;
@@ -67,24 +55,12 @@
   font-size: 1.25rem;
   font-weight: 600;
   color: #4a0c7a;
+  border: none;
 }
 
 .product-card .card-text {
   font-size: 1rem;
   color: #666;
-}
-
-
-.product-card .btn {
-  background: var(--button-default);
-  color: var(--button-text);
-  border-radius: 20px;
-  padding: 10px 20px;
-  transition: all 0.4s ease;
-}
-
-.product-card .btn:hover {
-  background: var(--button-hover);
 }
 
 

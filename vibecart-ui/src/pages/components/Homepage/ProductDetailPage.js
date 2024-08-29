@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import productData from '../Homepage/productData';
 import '../Homepage/ProductDetailPage.css';
+import ReusableButton from '../../commoncomponents/ReusableButton';
 
 const ProductDetailPage = () => {
   const { productId } = useParams();
@@ -44,7 +45,8 @@ const ProductDetailPage = () => {
             <p>{product.ItemDescription}</p>
             <p><strong>Price:</strong> ${product.Price.toFixed(2)}</p>
             <p><strong>Stock Quantity:</strong> {product.StockQuantity}</p>
-            <button className="btn btn-primary">Add to Cart</button>
+            {/* <button className="btn btn-primary">Add to Cart</button> */}
+            <ReusableButton buttonName="Add to Cart"/>
           </div>
         </div>
       </div>
