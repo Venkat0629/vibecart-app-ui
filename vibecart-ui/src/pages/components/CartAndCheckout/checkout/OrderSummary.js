@@ -4,10 +4,14 @@ import './ordersummary.css'
 import ReusableButton from '../../../commoncomponents/ReusableButton'
 
 const OrderSummary = ({ cartData, cartBillData, navigateTo }) => {
+
+  const totalItems = cartData.reduce((total, product) => {
+    return total + product.requestedQuantity;
+  }, 0);
   return (
     <div className='ordersummary-checkout-container'>
       <h4>Order Summary</h4>
-      <p><b>Your order ({cartData?.length} items)</b></p>
+      <p><b>Your order ({totalItems} items)</b></p>
       <CartProducts cartData={cartData} navigateTo={navigateTo} />
       <hr></hr>
       <div className='ordersummary-bill-layout'>
@@ -25,7 +29,7 @@ const OrderSummary = ({ cartData, cartBillData, navigateTo }) => {
       <hr></hr>
       <div className='ordersummary-bill-layout'>
         <p>Total</p>
-       <p> <b>{cartBillData?.totalBill}</b></p>
+        <p> <b>{cartBillData?.totalBill}</b></p>
       </div>
       <div className="place-order">
         <p><strong>By placing an order, you are agreeing to our Privacy Policy and Terms of Use</strong></p>

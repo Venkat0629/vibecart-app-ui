@@ -22,16 +22,12 @@
 .checkout-order-container {
     grid-area: checkout-order-container; 
     padding: 10px;
-    background: var(--card-background);
-    border: 1px solid var(--card-border);
-
 }
 
 .checkout-item {
     text-align: left;
     padding: 10px;
-    background: var(--card-background);
-    border: 1px solid var(--card-border);
+
 
 
 }

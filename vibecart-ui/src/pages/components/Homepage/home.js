@@ -17,39 +17,28 @@ const Home = () => {
   return (
     <div>
       <section className="banner my-4">
-        <div className="container">
-          <Carousel
-            autoPlay
-            infiniteLoop
-            showThumbs={false}
-            showStatus={false}
-            showArrows={false}
-            interval={3000}
-            transitionTime={800}
-            dynamicHeight={true}
-          >
-            <div className="banner-slide text-white text-center py-5">
-              <h2>Banner 1</h2>
-              <p>1314x250</p>
-            </div>
-            <div className="banner-slide text-white text-center py-5">
-              <h2>Banner 2</h2>
-              <p>1314x250</p>
-            </div>
-            <div className="banner-slide text-white text-center py-5">
-              <h2>Banner 3</h2>
-              <p>1314x250</p>
-            </div>
-            <div className="banner-slide text-white text-center py-5">
-              <h2>Banner 4</h2>
-              <p>1314x250</p>
-            </div>
-            <div className="banner-slide text-white text-center py-5">
-              <h2>Banner 5</h2>
-              <p>1314x250</p>
-            </div>
-          </Carousel>
+      <div className="container">
+    <Carousel
+      autoPlay
+      infiniteLoop
+      showThumbs={false}
+      showStatus={false}
+      showArrows={false}
+      interval={3000}
+      transitionTime={800}
+      dynamicHeight={false} // Set to false for consistent height
+    >
+      {[...Array(5)].map((_, index) => (
+        <div key={index} className="banner-slide text-white text-center py-5">
+          {/* <img 
+            src={imageUrl} 
+            alt={`Slide ${index + 1}`} 
+            style={{ width: '100%', height: 'auto' }} // Ensure images fit the container
+          /> */}
         </div>
+      ))}
+    </Carousel>
+  </div>
       </section>
 
       <section className="top-categoriesc my-4">

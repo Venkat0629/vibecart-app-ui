@@ -1,14 +1,12 @@
 .footer {
-    color:var(--text-secondary); 
+    color:var(--text-primary); 
     text-align: center; 
     padding: 10px 0; 
-    left: 0;
-    bottom: 0;
     width: 100%; 
   }
   
   .navbar-container {
-    color: white;
+    color: black;
     padding: 10px 0;
       
       font-family: Arial, sans-serif;
@@ -30,7 +28,6 @@
     max-width: 500px;
     padding: 8px;
     border-radius: 20px;
-    border: none;
     /* font-size: 14px; */
   }
   
@@ -46,26 +43,17 @@
   .navbar-icons {
     display: flex;
     align-items: center;
-    margin-left: 20px;
     cursor: pointer;
+    justify-content: space-evenly;
+    gap: 10px;
+    color:var(--button-default);
+    font-size: 24px; 
   }
   
   
   
   .navbar-icon:hover {
-    color: #25bebe;
-  }
-  
-  
-  .navbar-icon {
-    font-size: 24px; /* Adjust size as needed */
-    color: #f8f9fa; /* Light gray color */
-    margin-left: 1rem; /* Add space between icons */
-  }
-  
-  /* Optional: Add shadow if not using Bootstrap's shadow class */
-  .shadow {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: var(--button-hover);
   }
   
   
@@ -112,7 +100,8 @@
   }
   
   .navbar-search {
-    position: relative; /* Ensure suggestions are positioned relative to this container */
+    position: relative;
+    border: 1px solid black; /* Ensure suggestions are positioned relative to this container */
   }
   
   .suggestions-list {
@@ -128,7 +117,6 @@
     max-height: 300px;
     overflow-y: auto;
     z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for better visibility */
   }
   
   @media (max-width: 768px) {

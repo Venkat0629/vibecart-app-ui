@@ -1,21 +1,3 @@
-.product-detail-page .btn-primary {
-  padding: 10px 10px;
-  background: var(--button-default);
-  color: var(--button-text);
-  border-radius: 20px;
-  font-weight: bold;
-  transition: all 0.4s ease;
-
-}
-
-.product-detail-page .btn-primary:hover {
-  background: var(--button-hover);
-}
-
-.product-detail-page .card {
-  border: 1px solid var(--card-border);
-  border-radius: 8px;
-}
 
 .product-detail-page .image-container {
   position: relative;
@@ -24,6 +6,8 @@
   background-size: 200%; /* Ensures the zoom effect is visible */
   width: 100%;
   height: 400px; /* Fixed height for all images */
+  border: none;
+
 }
 
 .product-detail-page img {
@@ -47,4 +31,5 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
 }
