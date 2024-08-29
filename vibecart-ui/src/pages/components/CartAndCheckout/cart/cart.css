@@ -8,7 +8,7 @@
 .cartproductslayout {
     flex: 0 0 59%;
     color: black;
-
+    border-right: 0.5px solid black;
 }
 
 .orderSummaryLayout {
@@ -59,30 +59,31 @@
     flex-direction: column;
     padding: 10px;
     height: auto;
-    
+
 }
 
-.emptyCart{
+.emptyCart {
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 10px;
 }
 
-.icon-styles{
+.icon-styles {
     cursor: pointer;
     color: black;
 }
+
 @media (max-width: 768px) {
-    .cartLayout{
+    .cartLayout {
         display: flex;
         flex-direction: column;
         gap: 10px;
     }
-    
 
-.orderSummaryLayout {
-    max-height: 250px;
-    background: var(--card-background);
-}
+
+    .orderSummaryLayout {
+        max-height: 250px;
+        background: var(--card-background);
+    }
 }

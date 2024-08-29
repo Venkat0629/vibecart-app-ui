@@ -1,6 +1,6 @@
 
 import React from "react";
-import "./payment.css"
+import './checkoutcomponents.css'
 import ReusableButton from "../../../commoncomponents/ReusableButton";
 
 const Payment = ({ address }) => {

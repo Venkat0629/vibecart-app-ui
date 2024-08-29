@@ -38,6 +38,7 @@ const Checkout = () => {
         {/* <div class="checkout-item ">Delivery & Gift Options</div> */}
         {/* <div class="checkout-item "><Payment address={address}/></div> */}
       </div>
+     
       <div class="checkout-order-container"><OrderSummary cartData={cartData} cartBillData={cartBillData} navigateTo={navigateTo}/></div>
     </div>
   )

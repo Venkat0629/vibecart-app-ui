@@ -6,7 +6,9 @@ import Toaster from '../../../commoncomponents/Toaster';
 
 const OrderSummary = ({ cartData, totalBill, navigateTo, getcartData }) => {
     const { toast, showToast, triggerToast } = useToast();
-
+    const totalItems = cartData.reduce((total, product) => {
+        return total + Number(product.requestedQuantity);
+    }, 0);
 
     const handleCheckout = () => {
         const {cartData} = getcartData();
@@ -22,7 +24,7 @@ const OrderSummary = ({ cartData, totalBill, navigateTo, getcartData }) => {
         <div className='orderSummary'>
                         {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
             <h4>Order Summary</h4>
-            <p> <b>Sub total ({cartData?.length} items) : ${totalBill}</b></p>
+            <p> <b>Sub total ({totalItems} items) : ${totalBill}</b></p>
             <div>
                 <ReusableButton buttonName="Proceed to Checkout" handleClick={handleCheckout} />
                 <p><strong>By continuing with your purchase you agree to our terms,conditions and privacy policy</strong></p>

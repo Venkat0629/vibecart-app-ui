@@ -13,7 +13,7 @@ const categories = [
 
 const Home = () => {
   const [filteredProducts] = useState(productData);
-
+const bannerData = ["Banner1","Banner2","Banner3"]
   return (
     <div>
       <section className="banner my-4">
@@ -28,13 +28,14 @@ const Home = () => {
       transitionTime={800}
       dynamicHeight={false} // Set to false for consistent height
     >
-      {[...Array(5)].map((_, index) => (
+      {bannerData.map((x,index) => (
         <div key={index} className="banner-slide text-white text-center py-5">
           {/* <img 
             src={imageUrl} 
             alt={`Slide ${index + 1}`} 
             style={{ width: '100%', height: 'auto' }} // Ensure images fit the container
           /> */}
+          <p>{x}</p>
         </div>
       ))}
     </Carousel>
