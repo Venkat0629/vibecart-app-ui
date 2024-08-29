@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReusableButton from '../../../commoncomponents/ReusableButton'
-import './shipping.css';
+import './checkoutcomponents.css'
 import '../cartandcheckout.css';
 import { updateAddressData } from '../../../redux-toolkit/CartSlice';
 import { useDispatch } from 'react-redux';

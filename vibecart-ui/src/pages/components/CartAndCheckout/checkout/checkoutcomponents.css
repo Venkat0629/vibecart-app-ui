@@ -1,0 +1,46 @@
+/* shipping */
+.shipping-container {
+    padding: 10px; 
+}
+
+.form-group {
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.form-item{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* ordersummary */
+.ordersummary-checkout-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.ordersummary-bill-layout{
+    display: flex;
+    justify-content: space-between;
+}
+
+.place-order {
+    text-align: center;
+  }
+  
+/* payments */
+.payment-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .promo-code,
+  .payment-Option {
+    display: flex;
+    width: 50%;
+    gap: 10px;
+  }
+
+  
