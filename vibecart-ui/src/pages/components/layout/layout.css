@@ -70,7 +70,6 @@
     color: #000; /* Text color */
     padding: 10px 20px; /* Padding inside the button */
     cursor: pointer; /* Change cursor to pointer on hover */
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition for color changes */
     border: none; /* Remove default border */
     position: relative; /* Ensure the pseudo-element is positioned relative to the button */
     overflow: hidden; /* Ensure the pseudo-element does not overflow the button */
@@ -84,7 +83,6 @@
     width: 0; /* Start with zero width */
     height: 2px; /* Height of the underline effect */
     background: #000; /* Color of the underline effect */
-    transition: width 0.3s; /* Smooth transition for the width change */
   }
   
   .navbar__menu button:hover::after {

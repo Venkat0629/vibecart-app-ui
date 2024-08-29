@@ -1,5 +1,5 @@
-// ProductData.js
 const productData = [
+  
   {
       ItemID: 1,
       ItemName: "Blue shoe",
@@ -9,6 +9,7 @@ const productData = [
       StockQuantity: 20,
       image: "https://media.istockphoto.com/id/1350560575/photo/pair-of-blue-running-sneakers-on-white-background-isolated.jpg?s=612x612&w=0&k=20&c=A3w_a9q3Gz-tWkQL6K00xu7UHdN5LLZefzPDp-wNkSU="
   },
+
   {
       ItemID: 2,
       ItemName: "White shoe",
@@ -18,6 +19,7 @@ const productData = [
       StockQuantity: 10,
       image: "https://rukminim2.flixcart.com/image/450/500/xif0q/shoe/7/z/r/8-white-leaf-8-urbanbox-white-black-original-imagvgf4cuzs2hrw.jpeg?q=90&crop=true"
   },
+
   {
       ItemID: 3,
       ItemName: "Black jacket",
@@ -27,6 +29,7 @@ const productData = [
       StockQuantity: 30,
       image: "https://images-cdn.ubuy.co.in/653d06345111e1455a32d0b3-magcomsen-cotton-jacket-men-casual-stand.jpg"
   },
+
   {
       ItemID: 4,
       ItemName: "Blue jacket",
