@@ -7,7 +7,6 @@ const Payment = ({ address }) => {
 
   return (
     <div className="payment-container">
-      <h4>Payment</h4>
       <h6>Delivery Address</h6>
       {address ?
         <div>

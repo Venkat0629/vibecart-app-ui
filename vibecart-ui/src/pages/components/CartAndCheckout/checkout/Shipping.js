@@ -5,7 +5,7 @@ import '../cartandcheckout.css';
 import { updateAddressData } from '../../../redux-toolkit/CartSlice';
 import { useDispatch } from 'react-redux';
 
-const Shipping = ({ address }) => {
+const Shipping = ({ address ,toggleAccordionOnContinue}) => {
     const [formData, setFormData] = useState({
         fullname: '',
         address: '',
@@ -49,12 +49,12 @@ const Shipping = ({ address }) => {
             const updatedData = { ...existingData, ...formData };
             dispatch(updateAddressData(updatedData));
             localStorage.setItem('shippingAddress', JSON.stringify(updatedData));
+            toggleAccordionOnContinue()
         }
     }
 
     return (
         <div className='shipping-container'>
-            <h4>Shipping Address</h4>
             <form onSubmit={handleSubmit}>
                 <div className='form-group'>
                     <input
