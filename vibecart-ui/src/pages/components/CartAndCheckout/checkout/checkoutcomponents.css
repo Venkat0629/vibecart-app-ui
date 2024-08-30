@@ -1,6 +1,8 @@
 /* shipping */
 .shipping-container {
     padding: 10px; 
+    margin: 0;
+    box-sizing: border-box; 
 }
 
 .form-group {
