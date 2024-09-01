@@ -1,8 +1,8 @@
 /* shipping */
 .shipping-container {
     padding: 10px; 
-    margin: 0;
     box-sizing: border-box; 
+    height: auto;
 }
 
 .form-group {
@@ -21,6 +21,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin: 10px;
 }
 .ordersummary-bill-layout{
     display: flex;
@@ -29,20 +30,28 @@
 
 .place-order {
     text-align: center;
+    margin-top: 30px;
   }
   
 /* payments */
 .payment-container{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
+    height: auto;
   }
   
-  .promo-code,
-  .payment-Option {
+  .promo-code {
     display: flex;
     width: 50%;
     gap: 10px;
   }
+  .payment-option {
+    display: flex;
+    align-items: center;
+    width: 20%;
+  }
+
+
 
   

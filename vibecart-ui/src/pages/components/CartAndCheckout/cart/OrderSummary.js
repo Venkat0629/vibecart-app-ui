@@ -11,10 +11,10 @@ const OrderSummary = ({ cartData, totalBill, navigateTo, getcartData }) => {
     }, 0);
 
     const handleCheckout = () => {
-        const {cartData} = getcartData();
+        const { cartData } = getcartData();
         const invalidIQuantityitems = cartData.filter((x) => x.requestedQuantity <= 0);
         if (invalidIQuantityitems.length > 0) {
-            triggerToast("error",`Enter valid quantity for product: ${invalidIQuantityitems[0].productName}`)
+            triggerToast("error", `Enter valid quantity for product: ${invalidIQuantityitems[0].productName}`)
         }
         else {
             navigateTo("/checkout");
@@ -22,11 +22,10 @@ const OrderSummary = ({ cartData, totalBill, navigateTo, getcartData }) => {
     }
     return (
         <div className='orderSummary'>
-                        {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
-            <h4>Order Summary</h4>
-            <p> <b>Sub total ({totalItems} items) : ${totalBill}</b></p>
+            {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
+            <p> Sub total ({totalItems} items) :<b> ${totalBill}</b></p>
             <div>
-                <ReusableButton buttonName="Proceed to Checkout" handleClick={handleCheckout} />
+                <ReusableButton buttonName="Checkout" handleClick={handleCheckout} />
                 <p><strong>By continuing with your purchase you agree to our terms,conditions and privacy policy</strong></p>
             </div>
         </div>

@@ -1,6 +1,8 @@
 .checkout-container {
     display: flex;
     gap: 5px;
+    margin: 40px;
+    align-items: flex-start;
 }
 
 .checkout-component-layout {
@@ -8,12 +10,16 @@
     flex-direction: column;
     gap: 10px;
     flex: 70%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    height: auto;
 }
 
 .checkout-order-container {
-    grid-area: checkout-order-container;
-    padding: 10px;
     flex: 30%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    height: auto;
 }
 
 @media (max-width: 768px) {
