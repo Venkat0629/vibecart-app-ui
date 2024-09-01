@@ -11,20 +11,25 @@ import Accordion from './Accordian'
 import DeliveryAndGiftOptions from './CheckoutOffers'
 
 const Checkout = () => {
- 
-  const [openSection, setOpenSection] = useState('shipping'); 
+
+  const [openSection, setOpenSection] = useState(['shipping']);
   const toggleAccordion = (type) => {
-    setOpenSection(openSection ? "" :type);
+    if (openSection.includes(type)) {
+      setOpenSection(prevOpenSection =>
+        prevOpenSection.filter(x => x !== type)
+      );
+    } else {
+      setOpenSection(prevOpenSection =>
+        [...prevOpenSection, type]
+      );
+    }
   };
 
 
-
-  const toggleAccordionOnContinue = (currentSection) => {
-    if (currentSection === 'shipping') {
-      setOpenSection('offers');
-    } else if (currentSection === 'offers') {
-      setOpenSection('payment');
-    }
+  const toggleAccordionOnContinue = () => {
+    setOpenSection(prevOpenSection =>
+      [prevOpenSection.filter(x => x !== "shipping"),"offers"]
+    );
   };
   const dispatch = useDispatch()
   const { cartData, cartBillData: { totalBill }, cartBillData, address } = useSelector((state) => state.cart);
@@ -50,19 +55,19 @@ const Checkout = () => {
   return (
     <div class="checkout-container">
       <div class="checkout-component-layout">
-        <div >
-          <Accordion toggleAccordian={()=>toggleAccordion("shipping")} isOpen={openSection === 'shipping'}  title="Shipping Address" >
-            <Shipping address={address} handleAccordian={()=>toggleAccordionOnContinue("shipping")} />
+        <div style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.1)" }}>
+          <Accordion toggleAccordian={() => toggleAccordion("shipping")} isOpen={openSection.includes('shipping')} title="Shipping Address" >
+            <Shipping address={address} toggleAccordionOnContinue={toggleAccordionOnContinue} />
+          </Accordion>
+        </div>
+        <div style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.1)" }}>
+          <Accordion toggleAccordian={() => toggleAccordion("offers")} isOpen={openSection.includes('offers')} title="Offers">
+            <DeliveryAndGiftOptions />
           </Accordion>
         </div>
         <div >
-          <Accordion toggleAccordian={()=>toggleAccordion("offers")} isOpen={openSection === 'offers'}  title="Offers">
-            <DeliveryAndGiftOptions handleAccordian={()=>toggleAccordionOnContinue("offers")}/>
-          </Accordion>
-        </div>
-        <div >
-          <Accordion toggleAccordian={()=>toggleAccordion("payment")} isOpen={openSection === 'payment'} title="Payment" >
-            <Payment address={address} handleAccordian={()=>toggleAccordionOnContinue("payment")}/>
+          <Accordion toggleAccordian={() => toggleAccordion("payment")} isOpen={openSection.includes('payment')} title="Payment" >
+            <Payment address={address} />
           </Accordion>
         </div>
       </div>

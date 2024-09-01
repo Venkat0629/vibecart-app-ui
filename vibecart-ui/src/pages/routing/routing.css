@@ -3,18 +3,19 @@
     flex-direction: column;
     min-height: 100vh;
     min-height: 100vh;
-    gap: 5px;
 }
 
 .navbarLayout{
     flex: 0 0 auto;
     color: #f8f9fa;
+    background-color: white;
 }
 
 .content{
     flex: 1;
     overflow-y: auto;
-    margin: 5px;
+    background-color: #fafafc;
+
 }
 
 .footerLayout{

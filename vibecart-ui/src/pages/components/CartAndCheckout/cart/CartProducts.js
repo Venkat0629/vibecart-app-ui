@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FiMinus } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
-import './cart.css'
 import { calculateBillPerProduct, calculateTotalBill } from '../../../commoncomponents/CommonFunctions'
-import { IoMdClose } from "react-icons/io";
 import { updatecartBillData, updateCartData } from '../../../redux-toolkit/CartSlice';
 import { useDispatch } from 'react-redux';
 import Toaster from '../../../commoncomponents/Toaster';
 import useToast from '../../../commoncomponents/ToastHook';
+import './cartproducts.css'
 
 
 const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
@@ -15,8 +14,6 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
 
 
     const { toast, showToast, triggerToast } = useToast();
-    const [errors, setErrors] = useState(null);
-
 
     const handleQuantityChange = (productId, stockQuantity, e) => {
         if (e.target.value > stockQuantity) {
@@ -69,6 +66,12 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
 
     }
 
+    const handleEmptyCart = () => {
+        dispatch(updateCartData([]));
+        dispatch(updatecartBillData((calculateTotalBill([]))));
+        localStorage.setItem("cartData", JSON.stringify([]));
+    }
+
     const handlecartItemClick = (productId) => {
         navigateTo(`/product/${productId}`);
     }
@@ -77,38 +80,41 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
         <div className='cartproducts'>
             {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
             {cartData?.map((product) => (
-                <div key={product.skuID} className='cartproductItem'>
-                    <div className='cartproductImage'>
-                        <img src={product.imageURL[0]} alt="Product" className='icon-styles' onClick={() => handlecartItemClick(product.skuID)} />
-                    </div>
-                    <div className='cartproductDetails'>
-                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <h4 className='icon-styles' onClick={() => handlecartItemClick(product.skuID)}>{product.itemName}</h4>
-                            {editQuantity && <IoMdClose className='icon-styles' onClick={() => handleRemoveCartItem(product.skuID)} />}
+                <div className='cartProductsContainer'>
+                    <div key={product.skuID} className='cartproductDetails'>
+                        <div className='cartproductImage'>
+                            <img src={product.imageURL[0]} alt="Product" className='icon-styles' onClick={() => handlecartItemClick(product.skuID)} />
                         </div>
-                        {editQuantity && <p>{product.itemDescription}</p>}
-                        {editQuantity ? <p style={{ color: "red" }}>${product.price}</p> : <p style={{ color: "red" }}>${product.totalAmountPerProduct}</p>}
-                        <div className='quantityLayout'>
-                            <b>Qty</b> : {editQuantity ?
+                        <div className='cartproductTitle'>
+                            <p><strong style={{ cursor: "pointer" }} onClick={() => handlecartItemClick(product.skuID)}>{product.itemName}</strong></p>
+                            {editQuantity && <p>{product.itemDescription}</p>}
+                            <span style={{ color: "grey" }}>${product.price}</span>
+                        </div>
+                        <div className='cartEditquantityLayout'>
+                            {editQuantity ?
                                 <>
                                     <FiMinus className='icon-styles' onClick={() => handleQuantityUpdation("decrement", product.skuID, product.requestedQuantity, product.stockQuantity)} />
                                     <input
                                         className='quantityInput'
-                                        type='number'
                                         min="1"
+                                        // type
+                                        style={{ border: "none", textAlign: "center" }}
                                         max={product.stockQuantity}
                                         value={product.requestedQuantity}
                                         onChange={(e) => handleQuantityChange(product.skuID, product.stockQuantity, e)}
                                     />
                                     <FaPlus className='icon-styles' onClick={() => handleQuantityUpdation("increment", product.skuID, product.requestedQuantity, product.stockQuantity)} />
-                                        {errors && <p>{errors}</p>}
                                 </>
                                 : product.requestedQuantity}
                         </div>
-
+                        <div className='cartitemTotalLayout'>
+                            <p><b>${product.totalAmountPerProduct}</b></p>
+                        </div>
                     </div>
+                    {editQuantity && <p className='removecartItemButton' onClick={() => handleRemoveCartItem(product.skuID)}>Remove</p>}
                 </div>
             ))}
+            {editQuantity && <p className='removecartItemButton' onClick={handleEmptyCart}>EmptyCart</p>}
         </div>
     )
 }
