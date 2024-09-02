@@ -20,8 +20,8 @@
   }
   
   .navbar-search {
-    font-size: 1.25rem;
-    font-weight: 600;
+    /* font-size: 1.25rem; */
+    font-weight: 550;
     color: #555a5f; /* Light gray color */
   
     width: 100%;
@@ -36,8 +36,15 @@
     max-width: 500px;
     padding: 8px;
     border-radius: 20px;
-    border: none;
+    border: 2px solid #dedede !important;
     font-size: 14px;
+  }
+  
+  /* Change border to black on focus */
+  .navbar-search-input:focus {
+    border: 2px solid #626369 !important;
+     /* Black border on focus */
+    outline: none; /* Remove the default outline */
   }
   
   .navbar-icons {
@@ -45,7 +52,7 @@
     align-items: center;
     cursor: pointer;
     justify-content: space-evenly;
-    gap: 10px;
+    gap: 30px;
     color:var(--button-default);
     font-size: 24px; 
   }
@@ -62,20 +69,24 @@
   .navbar__menu button:hover {
     background:#f9fafc
      /* Change text color on hover */
+
     
   }
   
-  .navbar__menu button {
-    background-color: #f9fafc; /* Light background color */
+  .navbar__menu p {
+    font-weight: 700;
+    /* background-color: #f9fafc;  */
     color: #000; /* Text color */
-    padding: 10px 20px; /* Padding inside the button */
+    padding: 10px 20px; 
     cursor: pointer; /* Change cursor to pointer on hover */
     border: none; /* Remove default border */
     position: relative; /* Ensure the pseudo-element is positioned relative to the button */
-    overflow: hidden; /* Ensure the pseudo-element does not overflow the button */
+    overflow: hidden; 
+    margin-bottom: 0;
+    /* Ensure the pseudo-element does not overflow the button */
   }
   
-  .navbar__menu button::after {
+  .navbar__menu p::after {
     content: ''; /* No text content for the pseudo-element */
     position: absolute; /* Position it absolutely relative to the button */
     bottom: 0; /* Align it to the bottom of the button */
@@ -85,7 +96,7 @@
     background: #000; /* Color of the underline effect */
   }
   
-  .navbar__menu button:hover::after {
+  .navbar__menu p:hover::after {
     width: 100%; 
     /* Expand to full width on hover */
   }
@@ -95,18 +106,19 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    
   }
   
   .navbar-search {
     position: relative;
-    border: 1px solid black; /* Ensure suggestions are positioned relative to this container */
+   
   }
   
   .suggestions-list {
     position: absolute;
-    top: 100%; /* Position it directly below the search bar */
-    left: 0;
-    right: 0;
+    /* top: 100%;  */
+    left: 7px;
+    right: 7px;
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -129,7 +141,12 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
+  }
+
+
+  .suggestion-item:hover{
+    background-color: #ddd;
   }
   
   @media (max-width: 768px) {
@@ -158,4 +175,18 @@
     font-size: 0.9em;
   }
   
-  
+ .sale{
+  color: red !important;
+ }
+ .menuBorder{
+  border-bottom: 1px solid #d6d6d6;
+  padding-bottom: 1px;
+ }
+
+ .nav_head {
+  width: 100%;
+  max-width: 1300px; /* Adjust to your preferred max-width */
+  margin: 0 auto; /* Centers the container horizontally */
+  padding: 0 15px; /* Adds horizontal padding */
+  box-sizing: border-box; /* Ensures padding is included in the element's total width and height */
+}

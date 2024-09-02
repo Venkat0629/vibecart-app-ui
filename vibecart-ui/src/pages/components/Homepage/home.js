@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import '../Homepage/Home.css';
+import Banners from '../Homepage/Banners'; // Import the Banners component
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import { CustomLeftArrow, CustomRightArrow } from '../Homepage/CustomArrows'; // Adjust import path as necessary
 
 const categories = [
-  { id: 1, name: 'Bags', image: 'https://images.pexels.com/photos/19090/pexels-photo.jpg' },
-  { id: 2, name: 'Jackets', image: 'https://4.imimg.com/data4/RU/VC/MY-11853389/men-s-jackets.jpg' },
-  { id: 1, name: 'Bags', image: 'https://images.pexels.com/photos/19090/pexels-photo.jpg' },
-  { id: 2, name: 'Jackets', image: 'https://4.imimg.com/data4/RU/VC/MY-11853389/men-s-jackets.jpg' }
+  { id: 1, name: 'Jackets', image: 'https://media.istockphoto.com/id/948018182/photo/travel-backpack-on-summer-sea-beach.jpg?s=1024x1024&w=is&k=20&c=GprZL8N9G7cUJkmFTx1CyjcCtnkyKIrATAxlu2mc4Q8=' },
+  { id: 2, name: 'Shoes', image: 'https://images.pexels.com/photos/19090/pexels-photo.jpg' },
+
 ];
+
+const defaultImage = 'https://via.placeholder.com/150'; // Fallback image
 
 const Home = () => {
   const [topProducts, setTopProducts] = useState([]);
-  const filteredProducts = useSelector((state) => state.home.filteredProducts);
-  const bannerData = ["Banner1","Banner2","Banner3"]
+  const navigate = useNavigate();
+  const bannerData = ["Banner1", "Banner2", "Banner3"];
 
   useEffect(() => {
-    // Fetch the top 4 products from the API
     const fetchTopProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/vibecart/items?limit=4');
+        const response = await axios.get('http://localhost:8080/vibecart/ecom/items?limit=10');
         setTopProducts(response.data);
       } catch (error) {
         console.error('Error fetching top products:', error);
@@ -32,33 +33,34 @@ const Home = () => {
     fetchTopProducts();
   }, []);
 
+  const handleNavigate = (path, category = '') => {
+    const url = category ? `${path}?category=${category}` : path;
+    navigate(url);
+  };
+
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 5,
+      slidesToSlide: 5
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
+  };
+
   return (
     <div>
-      <section className="banner my-4">
-      <div className="container">
-    <Carousel
-      autoPlay
-      infiniteLoop
-      showThumbs={false}
-      showStatus={false}
-      showArrows={false}
-      interval={3000}
-      transitionTime={800}
-      dynamicHeight={false} // Set to false for consistent height
-    >
-      {bannerData.map((x,index) => (
-        <div key={index} className="banner-slide text-white text-center py-5">
-          {/* <img 
-            src={imageUrl} 
-            alt={`Slide ${index + 1}`} 
-            style={{ width: '100%', height: 'auto' }} // Ensure images fit the container
-          /> */}
-          <p>{x}</p>
-        </div>
-      ))}
-    </Carousel>
-  </div>
-      </section>
+      <Banners bannerData={bannerData} />
 
       <section className="top-categories my-4">
         <div className="container">
@@ -66,14 +68,16 @@ const Home = () => {
           <div className="row">
             {categories.map((category) => (
               <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={category.id}>
-                <Link to={`/category/${category.id}`} className="text-decoration-none">
-                  <div className="card category-card">
-                    <img src={category.image} className="card-img-top" alt={category.name} />
-                    <div className="card-body text-center">
-                      <h5 className="card-title">{category.name}</h5>
-                    </div>
+                <div
+                  className="card category-card"
+                  onClick={() => handleNavigate('/products', category.name.toLowerCase())}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img src={category.image} className="max_height" alt={category.name} />
+                  <div className="card-body text-center">
+                    <h5 className="card-title">{category.name}</h5>
                   </div>
-                </Link>
+                </div>
               </div>
             ))}
           </div>
@@ -83,22 +87,32 @@ const Home = () => {
       <section className="top-products my-4">
         <div className="container">
           <h3>Top Products</h3>
-          <div className="row">
+          <Carousel
+            responsive={responsive}
+            containerClass="carousel-container"
+            customLeftArrow={<CustomLeftArrow />}
+            customRightArrow={<CustomRightArrow />}
+          >
             {topProducts.map((product) => (
-              <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={product.itemID}>
+              <div className="col-12 mb-4" key={product.itemID}>
                 <Link to={`/product/${product.itemID}`} className="text-decoration-none">
                   <div className="card product-card">
-                    <img src={product.imageURL[0]} className="card-img-top" alt={product.itemName} />
+                    <img
+                      src={product.imageURLs.length > 0 ? `http://${product.imageURLs[0]}` : defaultImage}
+                      className="card-img-top"
+                      alt={product.itemName}
+                    />
                     <div className="card-body text-center">
+                    <p className="card-text"><strong>Price:</strong> ${product.price.toFixed(2)}</p>
                       <h5 className="card-title">{product.itemName}</h5>
-                      <p className="card-text"><strong>Category:</strong> {product.categoryName}</p>
-                      <p className="card-text"><strong>Price:</strong> ${product.price.toFixed(2)}</p>
+                      {/* <p className="card-text"><strong>Category:</strong> {product.categoryName}</p> */}
+                      {/* <p className="card-text"><strong>Price:</strong> ${product.price.toFixed(2)}</p> */}
                     </div>
                   </div>
                 </Link>
               </div>
             ))}
-          </div>
+          </Carousel>
         </div>
       </section>
     </div>
