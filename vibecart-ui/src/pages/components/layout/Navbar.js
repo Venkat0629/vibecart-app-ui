@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { IoCartOutline } from 'react-icons/io5';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { MdChecklistRtl } from "react-icons/md";
+import { FaUser } from 'react-icons/fa';
 import axios from 'axios';
 import './layout.css';
 
@@ -14,7 +15,7 @@ const Navbar = () => {
 
     useEffect(() => {
         // Fetch product data from API
-        axios.get('http://localhost:8080/vibecart/items')
+        axios.get('http://localhost:8080/vibecart/ecom/items')
             .then((response) => {
                 setProductData(response.data);
             })
@@ -29,7 +30,7 @@ const Navbar = () => {
                 .filter(product =>
                     product.itemName.toLowerCase().includes(searchTerm.toLowerCase())
                 )
-                .slice(0, 6); // Limit suggestions to 5
+                .slice(0, 5); // Limit suggestions to 5
             setSuggestions(filteredSuggestions);
         } else {
             setSuggestions([]);
@@ -48,8 +49,9 @@ const Navbar = () => {
         }
     };
 
-    const handleNavigate = (path) => {
-        navigate(path);
+    const handleNavigate = (path, category = '') => {
+        const url = category ? `${path}?category=${category}` : path;
+        navigate(url);
     };
 
     const handleSuggestionClick = (itemID, itemName) => {
@@ -58,9 +60,12 @@ const Navbar = () => {
         navigate(`/product/${itemID}`, { replace: true }); // Navigate to the product page
     };
 
+    const defaultImage = 'https://via.placeholder.com/50'; // Fallback image
+
     return (
         <div>
-            <header className="navbar-container d-flex justify-content-between align-items-center p-3 shadow">
+            <div className='nav_head'>
+            <header className="navbar-container d-flex justify-content-between align-items-center p-3">
                 <div className="navbar-title" onClick={() => handleNavigate('/')}>VibeCart</div>
                 <form className="navbar-search" onSubmit={handleSearch}>
                     <input
@@ -78,7 +83,11 @@ const Navbar = () => {
                                     onClick={() => handleSuggestionClick(suggestion.itemID, suggestion.itemName)}
                                     className="suggestion-item d-flex align-items-center"
                                 >
-                                    <img src={suggestion.imageURL[0]} alt={suggestion.itemName} className="suggestion-image" />
+                                    <img 
+                                        src={suggestion.imageURLs.length > 0 ? `http://${suggestion.imageURLs[0]}`: defaultImage} 
+                                        alt={suggestion.itemName} 
+                                        className="suggestion-image" 
+                                    />
                                     <div className="suggestion-text">
                                         <div className="suggestion-name">{suggestion.itemName}</div>
                                     </div>
@@ -88,6 +97,9 @@ const Navbar = () => {
                     )}
                 </form>
                 <div className="navbar-icons d-flex align-items-center">
+                    <div className="navbar-icon" onClick={() => handleNavigate('/profile')}>
+                        <FaUser size={22} />
+                    </div>
                     <div className="navbar-icon" onClick={() => handleNavigate('/cart')}>
                         <IoCartOutline size={28} />
                     </div>
@@ -96,13 +108,13 @@ const Navbar = () => {
                     </div>
                 </div>
             </header>
-            <nav className="bg-light py-2">
+            </div>
+            <nav className="menuBorder">
                 <div className="navbar__menu">
-                    <button onClick={() => handleNavigate('/')}>Home</button>
-                    <button onClick={() => handleNavigate('/products?category=Bags')}>Bags</button>
-                    <button onClick={() => handleNavigate('/products?category=Shoes')}>Shoes</button>
-                    <button onClick={() => handleNavigate('/products?category=Jackets')}>Jackets</button>
-                    <button onClick={() => handleNavigate('/sale')}>Sale</button>
+                    <p onClick={() => handleNavigate('/')}>Home</p>
+                    <p onClick={() => handleNavigate('/products', 'jackets')}>Jackets</p>
+                    <p onClick={() => handleNavigate('/products', 'shoes')}>Shoes</p>
+                    <p className='sale' onClick={() => handleNavigate('/sale')}>Sale</p>
                 </div>
             </nav>
         </div>

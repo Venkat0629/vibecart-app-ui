@@ -1,8 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=ABeeZee&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=ABeeZee&display=swap');
 
 body {
-    font-family: 'ABeeZee', sans-serif;  
+    font-family: 'ABeeZee', sans-serif;
+  
+} */
+
+/* styles.css */
+/* @font-face {
+    font-family: 'Macys Sans';
+    src: url('/fonts/MacysSans.woff2') format('woff2'),
+         url('/fonts/MacysSans.woff') format('woff'),
+         url('/fonts/MacysSans.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+} */
+
+body {
+    font-family: 'Macys Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+
 
 
 input,select{
@@ -46,7 +62,7 @@ img {
     --navbar-background: #003B6F;
   
     /* Button Colors */
-    --button-default: #9c171c;
+    --button-default: #8c0e12;
     --button-hover: #751619;
     --button-text: #FFFFFF;
 

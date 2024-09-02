@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
+import { MdTune } from "react-icons/md";
 import axios from 'axios';
 import {
   toggleFilterVisibility,
@@ -11,12 +12,15 @@ import {
 } from '../../redux-toolkit/productPageSlice';
 import '../Homepage/ProductPage.css';
 
+const defaultImage = 'https://via.placeholder.com/150';
+
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchTerm = searchParams.get('search')?.toLowerCase() || '';
+  const category = searchParams.get('category');
 
   const {
     filterCategories,
@@ -27,15 +31,24 @@ const ProductPage = () => {
   } = useSelector((state) => state.productPage);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:8080/vibecart/items')
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+    // Fetch products based on category or all products if no category is selected
+    const fetchProducts = () => {
+      const apiUrl = category
+        ? `http://localhost:8080/vibecart/ecom/items/category/${category}`
+        : 'http://localhost:8080/vibecart/ecom/items';
+
+      axios
+        .get(apiUrl)
+        .then((response) => {
+          setProducts(response.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+    };
+
+    fetchProducts();
+  }, [category]);
 
   const handleCategoryChange = (e) => {
     const value = e.target.value;
@@ -62,48 +75,48 @@ const ProductPage = () => {
   };
 
   const filteredProducts = products
-  .filter(
-    (product) =>
-      product.itemName.toLowerCase().includes(searchTerm) ||
-      product.itemDescription.toLowerCase().includes(searchTerm)
-  )
-  .filter((product) =>
-    filterCategories.length
-      ? filterCategories.includes(product.categoryID.toString())
-      : true
-  )
-  .filter((product) =>
-    filterColors.length
-      ? product.availableColors.some((color) =>
-          filterColors.includes(color.toLowerCase())
-        )
-      : true
-  )
-  .filter((product) => {
-    if (!filterPriceRanges.length) return true;
-    return filterPriceRanges.some((range) => {
-      if (range === '500-above') {
-        return product.price >= 500;
+    .filter(
+      (product) =>
+        product.itemName.toLowerCase().includes(searchTerm) ||
+        product.itemDescription.toLowerCase().includes(searchTerm)
+    )
+    .filter((product) =>
+      filterCategories.length
+        ? filterCategories.includes(product.categoryID.toString())
+        : true
+    )
+    .filter((product) =>
+      filterColors.length
+        ? product.availableColors.some((color) =>
+            filterColors.includes(color.toLowerCase())
+          )
+        : true
+    )
+    .filter((product) => {
+      if (!filterPriceRanges.length) return true;
+      return filterPriceRanges.some((range) => {
+        if (range === '500-above') {
+          return product.price >= 500;
+        }
+        const [min, max] = range.split('-').map(Number);
+        return product.price >= min && (max ? product.price <= max : true);
+      });
+    })
+    .sort((a, b) => {
+      if (sortOption === 'priceLowToHigh') {
+        return a.price - b.price;
+      } else if (sortOption === 'priceHighToLow') {
+        return b.price - a.price;
+      } else if (sortOption === 'nameAtoZ') {
+        return a.itemName.localeCompare(b.itemName);
+      } else if (sortOption === 'nameZtoA') {
+        return b.itemName.localeCompare(a.itemName);
       }
-      const [min, max] = range.split('-').map(Number);
-      return product.price >= min && (max ? product.price <= max : true);
+      return 0;
     });
-  })
-  .sort((a, b) => {
-    if (sortOption === 'priceLowToHigh') {
-      return a.price - b.price;
-    } else if (sortOption === 'priceHighToLow') {
-      return b.price - a.price;
-    } else if (sortOption === 'nameAtoZ') {
-      return a.itemName.localeCompare(b.itemName);
-    } else if (sortOption === 'nameZtoA') {
-      return b.itemName.localeCompare(a.itemName);
-    }
-    return 0;
-  });
+
   console.log('Filter Price Ranges:', filterPriceRanges);
   console.log('Filtered Products:', filteredProducts);
-  
 
   return (
     <div className="product-page">
@@ -115,7 +128,8 @@ const ProductPage = () => {
           className="btn filter-button"
           onClick={() => dispatch(toggleFilterVisibility())}
         >
-          {showFilters ? 'Hide Filters' : 'Show Filters'}
+          {showFilters ? 'Hide Filters' : 'Filters'}
+          <MdTune/>
         </button>
         <div className="sort-section">
           <label htmlFor="sortOption" className="form-label">Sort by:</label>
@@ -138,7 +152,8 @@ const ProductPage = () => {
           <div className="col-md-2 mb-4 filter-section">
             <div className="mb-3">
               <h5>Categories</h5>
-              <div className="form-check">
+              <h6>Jackets:</h6>
+              {/* <div className="form-check">
                 <input
                   className="form-check-input"
                   type="checkbox"
@@ -147,27 +162,72 @@ const ProductPage = () => {
                   checked={filterCategories.includes('1')}
                 />
                 <label className="form-check-label">Backpacks</label>
-              </div>
+              </div> */}
               <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="2"
-                  onChange={handleCategoryChange}
-                  checked={filterCategories.includes('2')}
-                />
-                <label className="form-check-label">Shoes</label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="3"
-                  onChange={handleCategoryChange}
-                  checked={filterCategories.includes('3')}
-                />
-                <label className="form-check-label">Handbags</label>
-              </div>
+  <input
+    className="form-check-input"
+    type="checkbox"
+    value="101" // Winter Jackets
+    onChange={handleCategoryChange}
+    checked={filterCategories.includes('101')}
+  />
+  <label className="form-check-label">Winter Jackets</label>
+</div>
+<div className="form-check">
+  <input
+    className="form-check-input"
+    type="checkbox"
+    value="102" // Winter Jackets
+    onChange={handleCategoryChange}
+    checked={filterCategories.includes('102')}
+  />
+  <label className="form-check-label">Leather Jackets</label>
+</div>
+<div className="form-check">
+  <input
+    className="form-check-input"
+    type="checkbox"
+    value="103" // Winter Jackets
+    onChange={handleCategoryChange}
+    checked={filterCategories.includes('103')}
+  />
+  <label className="form-check-label">Casual Jackets</label>
+</div>
+<div className="form-check">
+  <input
+    className="form-check-input"
+    type="checkbox"
+    value="104" // Winter Jackets
+    onChange={handleCategoryChange}
+    checked={filterCategories.includes('104')}
+  />
+  <label className="form-check-label">Outdoor &Sports 
+  Jackets</label>
+</div>
+<h6>shoes:</h6>
+<div className="form-check">
+  <input
+    className="form-check-input"
+    type="checkbox"
+    value="105" // Sports
+    onChange={handleCategoryChange}
+    checked={filterCategories.includes('105')}
+  />
+  <label className="form-check-label">Sports</label>
+</div>
+
+<div className="form-check">
+  <input
+    className="form-check-input"
+    type="checkbox"
+    value="106" // Sports
+    onChange={handleCategoryChange}
+    checked={filterCategories.includes('106')}
+  />
+  <label className="form-check-label">Casual</label>
+</div>
+
+
             </div>
 
             <div className="mb-3">
@@ -201,6 +261,36 @@ const ProductPage = () => {
                   checked={filterColors.includes('green')}
                 />
                 <label className="form-check-label">Green</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value="yellow"
+                  onChange={handleColorChange}
+                  checked={filterColors.includes('yellow')}
+                />
+                <label className="form-check-label">Yellow</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value="blue"
+                  onChange={handleColorChange}
+                  checked={filterColors.includes('blue')}
+                />
+                <label className="form-check-label">Blue</label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value="red"
+                  onChange={handleColorChange}
+                  checked={filterColors.includes('red')}
+                />
+                <label className="form-check-label">Red</label>
               </div>
             </div>
 
@@ -246,12 +336,14 @@ const ProductPage = () => {
                 <div className="col mb-4" key={product.itemID}>
                   <div className="card product-card">
                     <div className="image-container">
-                      <img src={product.imageURL[0]} className="card-img-top" alt={product.itemName} />
+                      <img
+                      src={product.imageURLs.length > 0 ? `http://${product.imageURLs[0]}` : defaultImage} 
+                      className="card-img-top" alt={product.itemName} />
                     </div>
-                    <div className="card-body">
+                    <div className="products_body">
                       <h5 className="card-title">{product.itemName}</h5>
                       <p className="card-text">${product.price}</p>
-                      <Link to={`/product/${product.itemID}`} className="btn btn-primary">View Details</Link>
+                      <Link to={`/product/${product.itemID}`} className="viewDetails">View Details</Link>
                     </div>
                   </div>
                 </div>
