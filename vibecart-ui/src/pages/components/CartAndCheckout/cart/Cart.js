@@ -20,7 +20,6 @@ const Cart = () => {
 
   useEffect(() => {
     const { cartData, address } = getCartData();
-    console.log(cartData,address)
     dispatch(updateCartData(cartData));
     dispatch(updateAddressData(address));
     dispatch(updatecartBillData((calculateTotalBill(cartData))));

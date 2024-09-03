@@ -11,39 +11,21 @@ import './cartproducts.css'
 
 const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
     const dispatch = useDispatch();
-    // categoryID
-    // : 
-    // 105
-    // categoryName
-    // : 
-    // "Sports"
-    // imageURL
-    // : 
-    // "http://localhost:8082/vibecart/ecom/items/images/energy-kicks-blue-shoe.jpeg"
-    // itemDescription
-    // : 
-    // "Elevate your performance with Energy Kicks, the ultimate shoe for high-energy activities. Crafted with a lightweight, breathable mesh upper to ensure maximum airflow and a cushioned midsole for superior shock absorption and energy return. The dynamic outsole features enhanced traction patterns for reliable grip on various surfaces. A sleek design with a padded collar and ergonomic fit provides comfort and stability, making Energy Kicks perfect for running, training, or everyday wear."
-    // itemID
-    // : 
-    // 345
-    // itemName
-    // : 
-    // "Energy Kicks"
-    // price
-    // : 
-    // 5000
-    // quantity
-    // : 
-    // 2
-    // selectedColor
-    // : 
-    // "BLUE"
-    // selectedSize
-    // : 
-    // "SIX"
-    // skuID
-    // : 
-    // 1000
+//  example obj 
+//  {
+//     "categoryID": 105,
+//     "categoryName": "Sports",
+//     "imageURL": "http://localhost:8082/vibecart/ecom/items/images/energy-kicks-blue-shoe.jpeg",
+//     "itemDescription": "Elevate your performance with Energy Kicks, the ultimate shoe for high-energy activities. Crafted with a lightweight, breathable mesh upper to ensure maximum airflow and a cushioned midsole for superior shock absorption and energy return. The dynamic outsole features enhanced traction patterns for reliable grip on various surfaces. A sleek design with a padded collar and ergonomic fit provides comfort and stability, making Energy Kicks perfect for running, training, or everyday wear.",
+//     "itemID": 345,
+//     "itemName": "Energy Kicks",
+//     "price": 5000,
+//     "quantity": 2,
+//     "selectedColor": "BLUE",
+//     "selectedSize": "SIX",
+//     "skuID": 1000
+//   }
+  
 
     const { toast, showToast, triggerToast } = useToast();
 
@@ -65,6 +47,7 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
     }
 
     const handleQuantityUpdation = (type, productId, requestedQuantity, stockQuantity) => {
+
         let updatedQuantity;
         if (type === "increment") {
             updatedQuantity = Number(requestedQuantity) + 1
@@ -119,7 +102,7 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
                         </div>
                         <div className='cartproductTitle'>
                             <p><strong style={{ cursor: "pointer" }} onClick={() => handlecartItemClick(product.skuID)}>{product.itemName}</strong></p>
-                            {editQuantity && <p>{product.itemDescription}</p>}
+                            {/* {editQuantity && <p>{product.itemDescription}</p>} */}
                             <span style={{ color: "grey" }}>${product.price}</span>
                         </div>
                         <div className='cartEditquantityLayout'>
