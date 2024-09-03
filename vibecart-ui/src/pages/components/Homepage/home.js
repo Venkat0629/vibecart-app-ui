@@ -23,7 +23,7 @@ const Home = () => {
   useEffect(() => {
     const fetchTopProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/vibecart/ecom/items?limit=10');
+        const response = await axios.get('http://localhost:8082/vibecart/ecom/items?limit=10');
         setTopProducts(response.data);
       } catch (error) {
         console.error('Error fetching top products:', error);

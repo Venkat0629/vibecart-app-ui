@@ -15,7 +15,7 @@ export const calculateBillPerProduct = (cartData) => {
     return totalAmountPerProduct
 }
 export  const getCartData = () => {
-    const cartData = localStorage.getItem("cartData");
+    const cartData = localStorage.getItem("cart");
     const shippingAddress = localStorage.getItem("shippingAddress");
 
     return {

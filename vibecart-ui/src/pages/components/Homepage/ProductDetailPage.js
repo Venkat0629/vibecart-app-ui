@@ -21,7 +21,7 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     // Fetch product details from the API
-    axios.get(`http://localhost:8080/vibecart/ecom/items/item/${productId}`)
+    axios.get(`http://localhost:8082/vibecart/ecom/items/item/${productId}`)
       .then(response => {
         const productData = {
           ...response.data,
@@ -39,7 +39,7 @@ const ProductDetailPage = () => {
   useEffect(() => {
     if (selectedColor && selectedSize && product) {
       // Fetch specific image URL and SKU ID when color and size are selected
-      axios.get(`http://localhost:8080/vibecart/ecom/products/product/item-id/${product.itemID}`, {
+      axios.get(`http://localhost:8082/vibecart/ecom/products/product/item-id/${product.itemID}`, {
         params: {
           color: selectedColor,
           size: selectedSize
@@ -67,6 +67,8 @@ const ProductDetailPage = () => {
         selectedSize,  // Add the selected size
         categoryID: product.categoryID, // Include categoryID
         categoryName: product.categoryName, // Include categoryName
+        requestedQuantity:1,
+        totalAmountPerProduct:product.price,
         skuID // Include SKU ID
       };
 
