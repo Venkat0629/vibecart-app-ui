@@ -60,7 +60,7 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
             const finalData = calculateBillPerProduct(updatedData);
             dispatch(updateCartData(finalData));
             dispatch(updatecartBillData((calculateTotalBill(finalData))));
-            localStorage.setItem("cartData", JSON.stringify(finalData));
+            localStorage.setItem("cartItems", JSON.stringify(finalData));
         }
     }
 
@@ -85,7 +85,7 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
             const finalData = calculateBillPerProduct(updatedData);
             dispatch(updateCartData(finalData));
             dispatch(updatecartBillData((calculateTotalBill(finalData))));
-            localStorage.setItem("cartData", JSON.stringify(finalData));
+            localStorage.setItem("cartItems", JSON.stringify(finalData));
         }
     }
     const handleRemoveCartItem = (productId) => {
@@ -93,7 +93,7 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
         const finalData = calculateBillPerProduct(updatedData);
         dispatch(updateCartData(finalData));
         dispatch(updatecartBillData((calculateTotalBill(finalData))));
-        localStorage.setItem("cartData", JSON.stringify(finalData));
+        localStorage.setItem("cartItems", JSON.stringify(finalData));
         triggerToast("success", "Item removed successfully")
 
     }
@@ -101,7 +101,7 @@ const CartProducts = ({ cartData, editQuantity, navigateTo }) => {
     const handleEmptyCart = () => {
         dispatch(updateCartData([]));
         dispatch(updatecartBillData((calculateTotalBill([]))));
-        localStorage.setItem("cartData", JSON.stringify([]));
+        localStorage.setItem("cartItems", JSON.stringify([]));
     }
 
     const handlecartItemClick = (productId) => {
