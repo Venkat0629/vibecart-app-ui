@@ -15,7 +15,7 @@ const Navbar = () => {
 
     useEffect(() => {
         // Fetch product data from API
-        axios.get('http://localhost:8080/vibecart/ecom/items')
+        axios.get('http://localhost:8082/vibecart/ecom/items')
             .then((response) => {
                 setProductData(response.data);
             })
