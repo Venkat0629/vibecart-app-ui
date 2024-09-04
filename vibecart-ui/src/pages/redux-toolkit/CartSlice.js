@@ -6,7 +6,10 @@ export const cartSlice = createSlice({
         cartData: [],
         address:{},
         cartBillData: {
-            totalBill: 0
+            totalBill: 0,
+            total:0,
+            promo:null,
+            offer:null
         }
     },
     reducers: {
@@ -14,7 +17,7 @@ export const cartSlice = createSlice({
             state.cartData = action.payload
         },
         updatecartBillData: (state, action) => {
-            state.cartBillData.totalBill = action.payload
+            state.cartBillData = action.payload
         },
         updateAddressData :(state,action)=> {
             state.address = action.payload

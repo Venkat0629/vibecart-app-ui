@@ -1,30 +1,52 @@
 
-export const calculateTotalBill = (cartData) => {
+export const formatAmount = (amount)=> {
+    const formattedAmount = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    }).format(amount);
+    return formattedAmount
+}
 
-    const totalCartBill = cartData.reduce((total, product) => {
-        return total + (product.price * product.requestedQuantity);
-    }, 0);
-    return Math.floor(totalCartBill)
+// export const calculateTotalBill = (cartData) => {
+
+//     const totalCartBill = cartData.reduce((total, product) => {
+//         return total + (product.price * product.requestedQuantity);
+//     }, 0);
+
+//     return Math.floor(totalCartBill);
+// }
+
+export const getQuantitydetails = async (cartData) => {
+
+    const itemsIds = cartData?.map((x) => x.skuID);
+    if(itemsIds.length > 0){
+    const response = await fetch('http://localhost:8082/vibecart/ecom/sku/total-quantity', { method: "POST",headers:{'content-type':'application/json','Accept':'application/json'}, body: JSON.stringify(itemsIds) });
+    const updatedData = await response.json();
+   
+    return updatedData;
+    }
+
+
 }
 
 export const calculateBillPerProduct = (cartData) => {
-   const totalAmountPerProduct= cartData?.map((data) => ({
+    const totalAmountPerProduct = cartData?.map((data) => ({
         ...data,
         totalAmountPerProduct: Math.floor(data.requestedQuantity * data.price)
     }));
     return totalAmountPerProduct
 }
-export  const getCartData = () => {
+export const getCartData = () => {
     const cartData = localStorage.getItem("cartItems");
     const shippingAddress = localStorage.getItem("shippingAddress");
 
     return {
-      cartData: cartData?.length > 0 ? JSON.parse(cartData) : [],
-      address: shippingAddress ? JSON.parse(shippingAddress) : {}
+        cartData: cartData?.length > 0 ? JSON.parse(cartData) : [],
+        address: shippingAddress ? JSON.parse(shippingAddress) : {}
     }
-  }
-export const handleToast = ({type,message,setShowToast,setToast}) => {
-    setToast({ type: type, message:message });
+}
+export const handleToast = ({ type, message, setShowToast, setToast }) => {
+    setToast({ type: type, message: message });
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
 };
