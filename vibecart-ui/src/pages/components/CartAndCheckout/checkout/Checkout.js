@@ -5,7 +5,7 @@ import Payment from './Payment'
 import OrderSummary from './OrderSummary'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateAddressData, updatecartBillData, updateCartData } from '../../../redux-toolkit/CartSlice'
-import { calculateTotalBill, getCartData } from '../../../commoncomponents/CommonFunctions'
+import { getCartData } from '../../../commoncomponents/CommonFunctions'
 import { useNavigate } from 'react-router-dom'
 import Accordion from './Accordian'
 import DeliveryAndGiftOptions from './CheckoutOffers'
@@ -28,11 +28,11 @@ const Checkout = () => {
 
   const toggleAccordionOnContinue = () => {
     setOpenSection(prevOpenSection =>
-      [prevOpenSection.filter(x => x !== "shipping"),"offers"]
+      [prevOpenSection.filter(x => x !== "shipping"), "offers"]
     );
   };
   const dispatch = useDispatch()
-  const { cartData, cartBillData: { totalBill }, cartBillData, address } = useSelector((state) => state.cart);
+  const { cartData, cartBillData, address } = useSelector((state) => state.cart);
 
   const navigate = useNavigate();
 
@@ -40,21 +40,29 @@ const Checkout = () => {
     navigate(path);
   }
 
+  const calculateTotalBill = (cartData) => {
+    const localBillingObject = JSON.parse(localStorage.getItem("billingData"));
+    const totalCartBill = cartData.reduce((total, product) => {
+      return total + (product.price * product.requestedQuantity);
+    }, 0);
 
+    const billingObject = { ...cartBillData, totalBill: Math.floor(totalCartBill), total: Math.floor(totalCartBill - localBillingObject?.promo), promo: localBillingObject?.promo }
+    dispatch(updatecartBillData(billingObject));
+    localStorage.setItem("billingData", JSON.stringify(billingObject))
+
+  }
   useEffect(() => {
     const { cartData, address } = getCartData();
     dispatch(updateCartData(cartData));
     dispatch(updateAddressData(address));
-    dispatch(updatecartBillData((calculateTotalBill(cartData))));
+    calculateTotalBill(cartData);
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("cartBillData", JSON.stringify(cartBillData));
-  }, [totalBill]);
+
 
   return (
-    <div class="checkout-container">
-      <div class="checkout-component-layout">
+    <div className="checkout-container">
+      <div className="checkout-component-layout">
         <div style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.1)" }}>
           <Accordion toggleAccordian={() => toggleAccordion("shipping")} isOpen={openSection.includes('shipping')} title="Shipping Address" >
             <Shipping address={address} toggleAccordionOnContinue={toggleAccordionOnContinue} />
@@ -67,11 +75,11 @@ const Checkout = () => {
         </div>
         <div >
           <Accordion toggleAccordian={() => toggleAccordion("payment")} isOpen={openSection.includes('payment')} title="Payment" >
-            <Payment address={address} />
+            <Payment address={address} cartBillData={cartBillData} />
           </Accordion>
         </div>
       </div>
-      <div class="checkout-order-container"><OrderSummary cartData={cartData} cartBillData={cartBillData} navigateTo={navigateTo} /></div>
+      <div className="checkout-order-container"><OrderSummary cartData={cartData} cartBillData={cartBillData} navigateTo={navigateTo} /></div>
     </div>
   )
 }

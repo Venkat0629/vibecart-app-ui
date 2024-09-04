@@ -5,9 +5,10 @@ import '../cartandcheckout.css';
 import { updateAddressData } from '../../../redux-toolkit/CartSlice';
 import { useDispatch } from 'react-redux';
 
-const Shipping = ({ address ,toggleAccordionOnContinue}) => {
+const Shipping = ({ address, toggleAccordionOnContinue }) => {
     const [formData, setFormData] = useState({
         fullname: '',
+        email: '',
         address: '',
         building: '',
         city: '',
@@ -30,9 +31,14 @@ const Shipping = ({ address ,toggleAccordionOnContinue}) => {
         const newErrors = {};
         const phoneRegex = /^\d{10}$/;
         const zipRegex = /^\d{6}$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
         if (!phoneRegex.test(formData.phone)) {
             newErrors.phone = 'Please enter a valid 10-digit phone number.';
+        }
+
+        if (!emailRegex.test(formData.email)) {
+            newErrors.email = 'Please enter a valid email address.';
         }
         if (!zipRegex.test(formData.zip)) {
             newErrors.zip = 'Please enter a valid 6-digit zip code.';
@@ -67,6 +73,18 @@ const Shipping = ({ address ,toggleAccordionOnContinue}) => {
                         required
                     />
                 </div>
+                <div className='form-group'>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <p>{errors.email}</p>
                 <div className='form-group'>
                     <input
                         type="text"
