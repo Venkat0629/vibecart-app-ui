@@ -12,7 +12,7 @@ return (
       <h5>Order Summary</h5>
       <p><b>Items ({totalItems})</b></p>
       <CartProducts cartData={cartData} navigateTo={navigateTo} />
-      <hr></hr>
+      {/* <hr></hr> */}
       <div className='ordersummary-bill-layout'>
         <p>Sub Total</p>
         <p><b>${cartBillData?.totalBill}</b></p>
