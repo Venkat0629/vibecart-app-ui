@@ -1,5 +1,5 @@
 
-export const formatAmount = (amount)=> {
+export const formatAmount = (amount) => {
     const formattedAmount = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -19,11 +19,22 @@ export const formatAmount = (amount)=> {
 export const getQuantitydetails = async (cartData) => {
 
     const itemsIds = cartData?.map((x) => x.skuID);
-    if(itemsIds.length > 0){
-    const response = await fetch('http://localhost:8082/vibecart/ecom/sku/total-quantity', { method: "POST",headers:{'content-type':'application/json','Accept':'application/json'}, body: JSON.stringify(itemsIds) });
-    const updatedData = await response.json();
-   
-    return updatedData;
+    if (itemsIds.length > 0) {
+        try {
+            const response = await fetch('http://localhost:8082/vibecart/ecom/sku/total-quantity', { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(itemsIds) });
+            if ([200, 201].includes(response.status)) {
+                const updatedData = await response.json();
+                return updatedData;
+            }
+            else {
+                return []
+
+            }
+        }
+        catch (e) {
+            return []
+        }
+
     }
 
 

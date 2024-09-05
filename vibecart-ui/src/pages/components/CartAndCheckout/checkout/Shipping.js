@@ -16,6 +16,8 @@ const Shipping = ({ address, toggleAccordionOnContinue }) => {
         zip: '',
         phone: ''
     });
+    const [isChecked, setIsChecked] = useState(true);
+
     const dispatch = useDispatch()
 
     const [errors, setErrors] = useState({});
@@ -182,9 +184,14 @@ const Shipping = ({ address, toggleAccordionOnContinue }) => {
                     />
                     <p>{errors.phone}</p>
                 </div>
+                <div className="payment-option">
+                    <input type="checkbox" checked={isChecked} handleChange={()=> setIsChecked(true)} />
+                    <p style={{ margin: 0, padding: 0 }}>Billing address is same as shipping address</p>
+                </div>
                 <div className="button-container">
                     <ReusableButton buttonName="Continue" />
                 </div>
+
             </form>
         </div>
     );

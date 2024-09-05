@@ -14,6 +14,8 @@ const Payment = ({ address, cartBillData }) => {
     setPromoCode(e.target.value);
     setMessage("")
   };
+  const [isChecked, setIsChecked] = useState(true);
+
   const { toast, showToast, triggerToast } = useToast();
 
   const dispatch = useDispatch();
@@ -65,7 +67,7 @@ const Payment = ({ address, cartBillData }) => {
 
       {address && Object.keys(address).length > 0 &&
         <>
-          <b>Delivery Address</b>
+          <b>Billing Address</b>
           <div>
             <p>{address.address}, {address.building}</p>
             <p>{address.city}, {address.state}, {address.zip}</p>
@@ -88,8 +90,8 @@ const Payment = ({ address, cartBillData }) => {
 
 
       <div className="payment-option">
-        <input type="checkbox" id="cod" defaultChecked />
-        <p style={{ margin: 0, padding: 0 }}>Cash on delivery</p>
+      <input type="checkbox" checked={isChecked} handleChange={()=> setIsChecked(true)} />
+      <p style={{ margin: 0, padding: 0 }}>Cash on delivery</p>
       </div>
 
       <div className="place-order">

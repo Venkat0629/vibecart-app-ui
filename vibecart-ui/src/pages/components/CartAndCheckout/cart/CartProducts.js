@@ -30,9 +30,9 @@ const CartProducts = ({ product, cartData, editQuantity, navigateTo, calculateTo
 
     const { toast, showToast, triggerToast } = useToast();
 
-    const handleQuantityChange = (productId, totalQuantity, e) => {
-        if (e.target.value > totalQuantity) {
-            setQuantityError(`${totalQuantity} max`);
+    const handleQuantityChange = (productId, stockQuantity, e) => {
+        if (e.target.value > stockQuantity) {
+            setQuantityError(`${stockQuantity} max`);
         }
         else if (e.target.value < 0) {
             setQuantityError("min 1");
@@ -49,7 +49,7 @@ const CartProducts = ({ product, cartData, editQuantity, navigateTo, calculateTo
         }
     }
 
-    const handleQuantityUpdation = (type, productId, requestedQuantity, totalQuantity) => {
+    const handleQuantityUpdation = (type, productId, requestedQuantity, stockQuantity) => {
 
         let updatedQuantity;
         if (type === "increment") {
@@ -60,8 +60,8 @@ const CartProducts = ({ product, cartData, editQuantity, navigateTo, calculateTo
 
         }
 
-        if (updatedQuantity > totalQuantity) {
-            setQuantityError(`${totalQuantity} max`);
+        if (updatedQuantity > stockQuantity) {
+            setQuantityError(`${stockQuantity} max`);
         }
         else if (updatedQuantity <= 0) {
             setQuantityError("min 1");
@@ -108,28 +108,29 @@ const CartProducts = ({ product, cartData, editQuantity, navigateTo, calculateTo
                     </div>
                     <div className='cartproductTitle'>
                         <p><strong style={{ cursor: "pointer" }} onClick={() => handlecartItemClick(product.skuID)}>{product.itemName}</strong></p>
-                        {/* {editQuantity && <p>{product.itemDescription}</p>} */}
+                        <p>{product.selectedSize}</p>
+                        {!editQuantity && <p>{product.expectedDeliveryDate}</p>}
                         <span style={{ color: "grey" }}>{formatAmount(product.price)}</span>
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column",alignItems:"center" ,flex:"0 0 15%",height:"40px"}}>
-                    <div className='cartEditquantityLayout'>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: "0 0 15%", height: "40px" }}>
+                        <div className='cartEditquantityLayout'>
 
-                        {editQuantity ?
-                        <>
-                                <FiMinus className='icon-styles' onClick={() => handleQuantityUpdation("decrement", product.skuID, product.requestedQuantity, product.totalQuantity)} />
-                                <input
-                                    className='quantityInput'
-                                    min="1"
-                                    type='number'
-                                    style={{ border: "none", textAlign: "center" }}
-                                    max={product.totalQuantity}
-                                    value={product.requestedQuantity}
-                                    onChange={(e) => handleQuantityChange(product.skuID, product.totalQuantity, e)}
-                                />
-                                <FaPlus className='icon-styles' onClick={() => handleQuantityUpdation("increment", product.skuID, product.requestedQuantity, product.totalQuantity)} />
+                            {editQuantity ?
+                                <>
+                                    <FiMinus className='icon-styles' onClick={() => handleQuantityUpdation("decrement", product.skuID, product.requestedQuantity, product.stockQuantity)} />
+                                    <input
+                                        className='quantityInput'
+                                        min="1"
+                                        type='number'
+                                        style={{ border: "none", textAlign: "center" }}
+                                        max={product.stockQuantity}
+                                        value={product.requestedQuantity}
+                                        onChange={(e) => handleQuantityChange(product.skuID, product.stockQuantity, e)}
+                                    />
+                                    <FaPlus className='icon-styles' onClick={() => handleQuantityUpdation("increment", product.skuID, product.requestedQuantity, product.stockQuantity)} />
                                 </>
-                            : product.requestedQuantity}
-                            </div>
+                                : product.requestedQuantity}
+                        </div>
 
                         <p className='errorMessage'>{quantityError}</p>
                     </div>
