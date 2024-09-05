@@ -44,10 +44,14 @@
     align-items: center;
     justify-content: center;
     gap: 5px;
-    flex: 0 0 17%;
+    padding: 5px;
     border-radius: 20px;
     border: 1px solid var(--button-default);
 }
+.errorMessage {
+    color: var(--button-default);
+}
+
 
 .cartitemTotalLayout {
     flex: 0 0 20%;

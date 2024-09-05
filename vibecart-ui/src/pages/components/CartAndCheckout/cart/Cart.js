@@ -7,7 +7,7 @@ import ReusableButton from '../../../commoncomponents/ReusableButton';
 import { getCartData, getQuantitydetails } from '../../../commoncomponents/CommonFunctions'
 import { useDispatch, useSelector } from 'react-redux';
 import { updateAddressData, updatecartBillData, updateCartData } from '../../../redux-toolkit/CartSlice';
-import ErrorBoundary from './ErrorBoundary';
+import ErrorBoundary from '../../../commoncomponents/ErrorBoundary';
 
 const Cart = () => {
 
@@ -62,7 +62,9 @@ const Cart = () => {
       <div className='cartLayout'>
         <ErrorBoundary>
         <div className='cartproductslayout'>
-          <CartProducts cartData={cartData} editQuantity="true" getcartData={getCartData} navigateTo={navigateTo} calculateTotalBill={calculateTotalBill}/>
+        {cartData?.map((product) => (
+          <CartProducts product={product} cartData={cartData} editQuantity="true" getcartData={getCartData} navigateTo={navigateTo} calculateTotalBill={calculateTotalBill}/>
+        ))}
         </div>
         </ErrorBoundary>
         <ErrorBoundary>
