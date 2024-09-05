@@ -18,14 +18,16 @@ const Cart = () => {
   const navigateTo = (path) => {
     navigate(path);
   }
-
+  console.log(cartData[0]);
   const updateItemQuantityDetails = async (cartData) => {
     const res = await getQuantitydetails(cartData);
+    console.log(res);
     const updatedCartData = cartData.map(cartItem => {
-      const updatedItem = res.find(resItem => resItem.skuID === cartItem.skuID);
+      const updatedItem = res?.find(resItem => resItem.skuID === cartItem.skuID);
+      console.log(updatedItem)
       return {
         ...cartItem,
-        totalQuantity: updatedItem ? updatedItem.totalQuantity : 0
+        stockQuantity: updatedItem ? updatedItem.totalQuantity : cartItem.stockQuantity
       };
     });
     dispatch(updateCartData(updatedCartData));

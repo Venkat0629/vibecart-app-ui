@@ -62,6 +62,20 @@
   .navbar-icon:hover {
     color: var(--button-hover);
   }
+  .cart-icon {
+    position: relative;
+  }
+   
+  .cart-item-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+  }
   
   
   
