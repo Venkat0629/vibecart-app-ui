@@ -13,6 +13,7 @@ import DeliveryAndGiftOptions from './CheckoutOffers'
 const Checkout = () => {
 
   const [openSection, setOpenSection] = useState(['shipping']);
+  
   const toggleAccordion = (type) => {
     if (openSection.includes(type)) {
       setOpenSection(prevOpenSection =>
@@ -57,8 +58,6 @@ const Checkout = () => {
     dispatch(updateAddressData(address));
     calculateTotalBill(cartData);
   }, []);
-
-
 
   return (
     <div className="checkout-container">

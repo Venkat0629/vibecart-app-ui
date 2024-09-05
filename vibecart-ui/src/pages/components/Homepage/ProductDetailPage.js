@@ -4,15 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setSelectedProduct, addToCart } from '../../redux-toolkit/productDetailSlice';
 import '../Homepage/ProductDetailPage.css';
- 
+import { updateCartData } from '../../redux-toolkit/CartSlice';
+
 const defaultImage = 'https://via.placeholder.com/600x400';
- 
+
 const ProductDetailPage = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
- 
+
   const product = useSelector((state) => state.productDetail.selectedProduct);
- 
+
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [skuID, setSkuID] = useState('');
@@ -24,7 +25,7 @@ const ProductDetailPage = () => {
   const [outOfStockMessage, setOutOfStockMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
- 
+
   useEffect(() => {
     axios
       .get(`http://localhost:8082/vibecart/ecom/items/item/${productId}`)
@@ -43,7 +44,7 @@ const ProductDetailPage = () => {
         setLoading(false);
       });
   }, [productId, dispatch]);
- 
+
   useEffect(() => {
     if (selectedColor && selectedSize && product) {
       axios.get(`http://localhost:8082/vibecart/ecom/products/product/item-id/${product.itemID}`, {
@@ -63,7 +64,7 @@ const ProductDetailPage = () => {
         });
     }
   }, [selectedColor, selectedSize, product]);
- 
+
   useEffect(() => {
     if (skuID) {
       axios
@@ -77,7 +78,7 @@ const ProductDetailPage = () => {
         });
     }
   }, [skuID]);
- 
+
   const fetchExpectedDeliveryDate = () => {
     if (skuID && zipcode.length === 6) {
       axios
@@ -93,25 +94,25 @@ const ProductDetailPage = () => {
         });
     }
   };
- 
+
   const handleZipcodeChange = (e) => {
     const value = e.target.value;
     setZipcode(value);
- 
+
     if (value.length === 6) {
       fetchExpectedDeliveryDate();
     } else {
       setExpectedDeliveryDate('');
     }
   };
- 
+
   // const handleAddToCart = () => {
   //   if (selectedColor && selectedSize && product) {
   //     if (stockQuantity === null || stockQuantity <= 0) {
   //       setOutOfStockMessage('Out of stock');
   //       return;
   //     }
- 
+
   //     const cartItem = {
   //       itemID: product.itemID,
   //       itemName: product.itemName,
@@ -124,11 +125,11 @@ const ProductDetailPage = () => {
   //       categoryName: product.categoryName,
   //       skuID,
   //     };
- 
+
   //     let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
- 
+
   //     const itemExists = cartItems.some((item) => item.skuID === cartItem.skuID);
- 
+
   //     if (itemExists) {
   //       alert('This item with the same SKU ID is already in your cart.');
   //     } else {
@@ -141,14 +142,14 @@ const ProductDetailPage = () => {
   //     alert('Please select a color and size.');
   //   }
   // };
- 
+
   const handleAddToCart = () => {
     if (selectedColor && selectedSize && product) {
       if (stockQuantity === null || stockQuantity <= 0) {
         setOutOfStockMessage('Out of stock');
         return;
       }
- 
+
       // Create a list of offers with the required details
       const offerDetails = offers.map((offer) => ({
         offerId: offer.offerId,
@@ -157,7 +158,7 @@ const ProductDetailPage = () => {
         offerDiscountValue: offer.offerDiscountValue,
         offerType: offer.offerType,
       }));
- 
+
       const cartItem = {
         itemID: product.itemID,
         itemName: product.itemName,
@@ -166,53 +167,54 @@ const ProductDetailPage = () => {
         imageURL: currentImage,
         selectedColor,
         selectedSize,
-        requestedQuantity:1,
+        requestedQuantity: 1,
         categoryID: product.categoryID,
         categoryName: product.categoryName,
         skuID,
-        totalAmountPerProduct:product.price,
+        totalAmountPerProduct: product.price,
         stockQuantity,
         zipcode,
         expectedDeliveryDate,
         offers: offerDetails // Added offers
       };
- 
+
       let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
- 
+
       const itemExists = cartItems.some((item) => item.skuID === cartItem.skuID);
- 
+
       if (itemExists) {
         alert('This item with the same SKU ID is already in your cart.');
       } else {
         cartItems.push(cartItem);
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
         dispatch(addToCart(cartItem));
+        dispatch(updateCartData(cartItems));
         alert(`${product.itemName} in ${selectedColor} color and ${selectedSize} size has been added to your cart.`);
       }
     } else {
       alert('Please select a color and size.');
     }
   };
- 
- 
+
+
   if (loading) {
     return <div className="loading">Loading product details...</div>;
   }
- 
+
   if (error) {
     return <div className="error">{error}</div>;
   }
- 
+
   if (!product) {
     return <div className="error">Product not found.</div>;
   }
- 
+
   const breadcrumbs = [
     { label: 'Home', path: '/' },
     { label: 'Products', path: '/products' },
     { label: product.itemName, path: `/product/${productId}` },
   ];
- 
+
   return (
     <div className="product-detail-page">
       <div className="container">
@@ -234,13 +236,13 @@ const ProductDetailPage = () => {
               <img src={currentImage} alt={product.itemName} />
             </div>
           </div>
- 
+
           {/* Product Details */}
           <div className="col-md-5 product-details">
             <h1>{product.itemName}</h1>
             {skuID && <h3 className="sku">SKU ID: {skuID}</h3>}
             <h4 className="category">Category: {product.categoryName}</h4>
- 
+
             {/* Color Selection */}
             <div className="selection-group">
               <label htmlFor="color">Select Color:</label>
@@ -256,7 +258,7 @@ const ProductDetailPage = () => {
                 ))}
               </div>
             </div>
- 
+
             {/* Size Selection */}
             <div className="selection-group">
               <label htmlFor="size">Select Size:</label>
@@ -272,13 +274,13 @@ const ProductDetailPage = () => {
                 ))}
               </div>
             </div>
- 
+
             <h2 className="price">${product.price.toFixed(2)}</h2>
- 
+
             {outOfStockMessage && <p className="text-danger">{outOfStockMessage}</p>}
-         
+
             <p className="description">{product.itemDescription}</p>
- 
+
             {/* Offers Section */}
             {offers.length > 0 && (
               <div className="offers-section">
@@ -293,28 +295,28 @@ const ProductDetailPage = () => {
                 </ul>
               </div>
             )}
- 
+
             {/* Add to Cart Button */}
             <button className="add-to-cart" onClick={handleAddToCart}>
               Add to Cart
             </button>
- 
+
             {/* Delivery Availability */}
             <div className="delivery-availability">
               <label htmlFor="zipcode">Delivery Availability:</label>
               <div>
                 <div className="zipcode-input">
-                <input
-                  type="text"
-                  id="zipcode"
-                  placeholder="Enter Zip Code"
-                  value={zipcode}
-                  onChange={handleZipcodeChange}
-                />
-               
-                <button type="button" className="check-availability" onClick={fetchExpectedDeliveryDate}>
-                  Check
-                </button>
+                  <input
+                    type="text"
+                    id="zipcode"
+                    placeholder="Enter Zip Code"
+                    value={zipcode}
+                    onChange={handleZipcodeChange}
+                  />
+
+                  <button type="button" className="check-availability" onClick={fetchExpectedDeliveryDate}>
+                    Check
+                  </button>
                 </div>
                 {expectedDeliveryDate && (
                   <p className="expected-delivery" style={{ marginTop: '10px', color: 'green' }}>
@@ -329,5 +331,5 @@ const ProductDetailPage = () => {
     </div>
   );
 };
- 
+
 export default ProductDetailPage;

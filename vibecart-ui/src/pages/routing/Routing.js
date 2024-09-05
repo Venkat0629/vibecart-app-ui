@@ -10,6 +10,7 @@ import ProductDetailPage from "../components/Homepage/ProductDetailPage"; // Imp
 import Cart from '../../pages/components/CartAndCheckout/cart/Cart'
 import Checkout from '../components/CartAndCheckout/checkout/Checkout';
 import Orders from '../components/CartAndCheckout/orders/Orders'
+import MyOrders from '../components/CartAndCheckout/orders/Orders';
 
 export const Routing = () => {
   return (
@@ -24,7 +25,7 @@ export const Routing = () => {
           <Route path="/product/:productId" element={<ProductDetailPage />} /> 
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout/>} />
-          <Route path="/orders" element={<Orders />} />
+          <Route path="/orders" element={<MyOrders />} />
         </Routes>
       </main>
       <div className="footerLayout">
