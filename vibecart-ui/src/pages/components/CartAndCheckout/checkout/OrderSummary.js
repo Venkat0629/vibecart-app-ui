@@ -7,16 +7,19 @@ const OrderSummary = ({ cartData, cartBillData, navigateTo }) => {
 
   const totalItems = cartData.reduce((total, product) => {
     return total + Number(product.requestedQuantity);
-}, 0);  
-const formattedPrice = formatAmount(cartBillData?.total);
-const formattedTotalBill = formatAmount(cartBillData?.totalBill);
-const formattedpromo = formatAmount(cartBillData?.promo);
+  }, 0);
+  const formattedPrice = formatAmount(cartBillData?.total);
+  const formattedTotalBill = formatAmount(cartBillData?.totalBill);
+  const formattedpromo = formatAmount(cartBillData?.promo);
 
-return (
+  return (
     <div className='ordersummary-checkout-container'>
       <h5>Order Summary</h5>
       <p><b>Items ({totalItems})</b></p>
-      <CartProducts cartData={cartData} navigateTo={navigateTo} />
+      {cartData?.map((product) => (
+
+        <CartProducts product={product} cartData={cartData} navigateTo={navigateTo} />
+      ))}
       {/* <hr></hr> */}
       <div className='ordersummary-bill-layout'>
         <p>Sub Total</p>
@@ -33,9 +36,9 @@ return (
       <hr></hr>
       <div className='ordersummary-bill-layout'>
         <p>Total</p>
-       <p> <b>{formattedPrice}</b></p>
+        <p> <b>{formattedPrice}</b></p>
       </div>
-     
+
     </div>
   )
 }

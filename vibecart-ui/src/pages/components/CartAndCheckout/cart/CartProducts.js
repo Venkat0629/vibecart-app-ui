@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FiMinus } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
 import { calculateBillPerProduct, formatAmount } from '../../../commoncomponents/CommonFunctions'
-import {  updateCartData } from '../../../redux-toolkit/CartSlice';
+import { updateCartData } from '../../../redux-toolkit/CartSlice';
 import { useDispatch } from 'react-redux';
 import Toaster from '../../../commoncomponents/Toaster';
 import useToast from '../../../commoncomponents/ToastHook';
@@ -10,7 +10,8 @@ import './cartproducts.css'
 
 
 
-const CartProducts = ({ cartData, editQuantity, navigateTo ,calculateTotalBill}) => {
+const CartProducts = ({ product, cartData, editQuantity, navigateTo, calculateTotalBill }) => {
+    const [quantityError, setQuantityError] = useState(null);
     const dispatch = useDispatch();
     //  example obj 
     //  {
@@ -31,18 +32,20 @@ const CartProducts = ({ cartData, editQuantity, navigateTo ,calculateTotalBill})
 
     const handleQuantityChange = (productId, totalQuantity, e) => {
         if (e.target.value > totalQuantity) {
-            triggerToast("error", `Sorry, we only have ${totalQuantity} items left in stock.`)
+            setQuantityError(`${totalQuantity} max`);
         }
         else if (e.target.value < 0) {
-            triggerToast("error", "Please enter a valid quantity")
+            setQuantityError("min 1");
         }
 
         else {
+
             const updatedData = cartData.map((data) => productId === data.skuID ? { ...data, requestedQuantity: e.target.value } : data);
             const finalData = calculateBillPerProduct(updatedData);
             dispatch(updateCartData(finalData));
             calculateTotalBill(finalData);
             localStorage.setItem("cartItems", JSON.stringify(finalData));
+            setQuantityError("")
         }
     }
 
@@ -58,10 +61,11 @@ const CartProducts = ({ cartData, editQuantity, navigateTo ,calculateTotalBill})
         }
 
         if (updatedQuantity > totalQuantity) {
-            triggerToast("error", `Sorry, we only have ${totalQuantity} items left in stock.`)
+            setQuantityError(`${totalQuantity} max`);
         }
         else if (updatedQuantity <= 0) {
-            triggerToast("error", "please enter quantity greater than 0");
+            setQuantityError("min 1");
+
         }
         else {
             const updatedData = cartData.map((data) => productId === data.skuID ? { ...data, requestedQuantity: updatedQuantity } : data);
@@ -69,6 +73,8 @@ const CartProducts = ({ cartData, editQuantity, navigateTo ,calculateTotalBill})
             dispatch(updateCartData(finalData));
             calculateTotalBill(finalData);
             localStorage.setItem("cartItems", JSON.stringify(finalData));
+            setQuantityError("")
+
         }
     }
     const handleRemoveCartItem = (productId) => {
@@ -95,41 +101,45 @@ const CartProducts = ({ cartData, editQuantity, navigateTo ,calculateTotalBill})
     return (
         <div className='cartproducts'>
             {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
-            {cartData?.map((product) => (
-                <div key={product.skuID} className='cartProductsContainer'>
-                    <div key={product.skuID} className='cartproductDetails'>
-                        <div className='cartproductImage'>
-                            <img src={product.imageURL} alt="Product" className='icon-styles' onClick={() => handlecartItemClick(product.skuID)} />
-                        </div>
-                        <div className='cartproductTitle'>
-                            <p><strong style={{ cursor: "pointer" }} onClick={() => handlecartItemClick(product.skuID)}>{product.itemName}</strong></p>
-                            {/* {editQuantity && <p>{product.itemDescription}</p>} */}
-                            <span style={{ color: "grey" }}>{formatAmount(product.price)}</span>
-                        </div>
-                        <div className='cartEditquantityLayout'>
-                            {editQuantity ?
-                                <>
-                                    <FiMinus className='icon-styles' onClick={() => handleQuantityUpdation("decrement", product.skuID, product.requestedQuantity, product.totalQuantity)} />
-                                    <input
-                                        className='quantityInput'
-                                        min="1"
-                                        // type
-                                        style={{ border: "none", textAlign: "center" }}
-                                        max={product.totalQuantity}
-                                        value={product.requestedQuantity}
-                                        onChange={(e) => handleQuantityChange(product.skuID, product.totalQuantity, e)}
-                                    />
-                                    <FaPlus className='icon-styles' onClick={() => handleQuantityUpdation("increment", product.skuID, product.requestedQuantity, product.totalQuantity)} />
-                                </>
-                                : product.requestedQuantity}
-                        </div>
-                        <div className='cartitemTotalLayout'>
-                            <p><b>{formatAmount(product.totalAmountPerProduct)}</b></p>
-                        </div>
+            <div key={product.skuID} className='cartProductsContainer'>
+                <div key={product.skuID} className='cartproductDetails'>
+                    <div className='cartproductImage'>
+                        <img src={product.imageURL} alt="Product" className='icon-styles' onClick={() => handlecartItemClick(product.skuID)} />
                     </div>
-                    {editQuantity && <p className='removecartItemButton' onClick={() => handleRemoveCartItem(product.skuID)}>Remove</p>}
+                    <div className='cartproductTitle'>
+                        <p><strong style={{ cursor: "pointer" }} onClick={() => handlecartItemClick(product.skuID)}>{product.itemName}</strong></p>
+                        {/* {editQuantity && <p>{product.itemDescription}</p>} */}
+                        <span style={{ color: "grey" }}>{formatAmount(product.price)}</span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column",alignItems:"center" ,flex:"0 0 15%",height:"40px"}}>
+                    <div className='cartEditquantityLayout'>
+
+                        {editQuantity ?
+                        <>
+                                <FiMinus className='icon-styles' onClick={() => handleQuantityUpdation("decrement", product.skuID, product.requestedQuantity, product.totalQuantity)} />
+                                <input
+                                    className='quantityInput'
+                                    min="1"
+                                    type='number'
+                                    style={{ border: "none", textAlign: "center" }}
+                                    max={product.totalQuantity}
+                                    value={product.requestedQuantity}
+                                    onChange={(e) => handleQuantityChange(product.skuID, product.totalQuantity, e)}
+                                />
+                                <FaPlus className='icon-styles' onClick={() => handleQuantityUpdation("increment", product.skuID, product.requestedQuantity, product.totalQuantity)} />
+                                </>
+                            : product.requestedQuantity}
+                            </div>
+
+                        <p className='errorMessage'>{quantityError}</p>
+                    </div>
+
+                    <div className='cartitemTotalLayout'>
+                        <p><b>{formatAmount(product.totalAmountPerProduct)}</b></p>
+                    </div>
                 </div>
-            ))}
+                {editQuantity && <p className='removecartItemButton' onClick={() => handleRemoveCartItem(product.skuID)}>Remove</p>}
+            </div>
             {editQuantity && <p className='removecartItemButton' onClick={handleEmptyCart}>EmptyCart</p>}
         </div>
     )

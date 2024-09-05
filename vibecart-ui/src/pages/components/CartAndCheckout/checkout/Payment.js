@@ -24,7 +24,7 @@ const Payment = ({ address, cartBillData }) => {
       ...data[0],
       ...cartBillData,
       total: discountedValue,
-      promo:(cartBillData?.totalBill * discountValue) / 100
+      promo: (cartBillData?.totalBill * discountValue) / 100
     }
     dispatch(updatecartBillData(updatedCartBillData));
     localStorage.setItem("billingData", JSON.stringify(updatedCartBillData))
@@ -61,7 +61,7 @@ const Payment = ({ address, cartBillData }) => {
 
   return (
     <div className="payment-container">
-                  {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
+      {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
 
       {address && Object.keys(address).length > 0 &&
         <>
@@ -89,7 +89,7 @@ const Payment = ({ address, cartBillData }) => {
 
       <div className="payment-option">
         <input type="checkbox" id="cod" defaultChecked />
-        <h6>Cash on delivery</h6>
+        <p style={{ margin: 0, padding: 0 }}>Cash on delivery</p>
       </div>
 
       <div className="place-order">
