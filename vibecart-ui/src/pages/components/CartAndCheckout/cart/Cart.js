@@ -1,30 +1,30 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './cart.css';
 import OrderSummary from './OrderSummary';
 import CartProducts from './CartProducts';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ReusableButton from '../../../commoncomponents/ReusableButton';
 import { getCartData, getQuantitydetails } from '../../../commoncomponents/CommonFunctions'
 import { useDispatch, useSelector } from 'react-redux';
 import { updateAddressData, updatecartBillData, updateCartData } from '../../../redux-toolkit/CartSlice';
 import ErrorBoundary from '../../../commoncomponents/ErrorBoundary';
+import Loader from '../../../commoncomponents/Loading';
 
 const Cart = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cartData, cartBillData: {  promo }, cartBillData } = useSelector((state) => state.cart);
+  const [loading, setLoading] = useState(true);
+  const { cartData, cartBillData: { promo }, cartBillData } = useSelector((state) => state.cart);
 
   const navigateTo = (path) => {
     navigate(path);
   }
-  console.log(cartData[0]);
+
   const updateItemQuantityDetails = async (cartData) => {
     const res = await getQuantitydetails(cartData);
-    console.log(res);
     const updatedCartData = cartData.map(cartItem => {
       const updatedItem = res?.find(resItem => resItem.skuID === cartItem.skuID);
-      console.log(updatedItem)
       return {
         ...cartItem,
         stockQuantity: updatedItem ? updatedItem.totalQuantity : cartItem.stockQuantity
@@ -38,9 +38,10 @@ const Cart = () => {
     const totalCartBill = cartData.reduce((total, product) => {
       return total + (product.price * product.requestedQuantity);
     }, 0);
-    
+
     const billingObject = { ...cartBillData, totalBill: Math.floor(totalCartBill), total: Math.floor(totalCartBill - promo) }
     dispatch(updatecartBillData(billingObject));
+
   }
   useEffect(() => {
     const { cartData, address } = getCartData();
@@ -51,6 +52,8 @@ const Cart = () => {
     if (Object.keys(address).length > 0) {
       dispatch(updateAddressData(address));
     }
+    setLoading(false);
+
   }, []);
 
 
@@ -58,21 +61,28 @@ const Cart = () => {
     localStorage.setItem("billingData", JSON.stringify(cartBillData))
   }, [cartBillData]);
 
+  const handleEmptyCart = () => {
+    dispatch(updateCartData([]));
+    calculateTotalBill([]);
+    localStorage.clear()
+  }
   return (
-
+loading ? <Loader/> :
     cartData?.length > 0 ?
       <div className='cartLayout'>
         <ErrorBoundary>
-        <div className='cartproductslayout'>
-        {cartData?.map((product) => (
-          <CartProducts product={product} cartData={cartData} editQuantity="true" getcartData={getCartData} navigateTo={navigateTo} calculateTotalBill={calculateTotalBill}/>
-        ))}
-        </div>
+          <div className='cartproductslayout'>
+            {cartData?.map((product) => (
+              <CartProducts product={product} cartData={cartData} editQuantity="true" getcartData={getCartData} navigateTo={navigateTo} calculateTotalBill={calculateTotalBill} />
+            ))}
+            <p className='removecartItemButton' onClick={handleEmptyCart}>EmptyCart</p>
+
+          </div>
         </ErrorBoundary>
         <ErrorBoundary>
-        <div className='orderSummaryLayout'>
-          <OrderSummary cartData={cartData} cartBillData={cartBillData} navigateTo={navigateTo} getcartData={getCartData} />
-        </div>
+          <div className='orderSummaryLayout'>
+            <OrderSummary cartData={cartData} cartBillData={cartBillData} navigateTo={navigateTo} getcartData={getCartData} />
+          </div>
         </ErrorBoundary>
       </div> :
       <div className='emptyCart'>
