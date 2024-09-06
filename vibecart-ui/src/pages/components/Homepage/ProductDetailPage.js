@@ -28,7 +28,7 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8082/vibecart/ecom/items/item/${productId}`)
+      .get(`http://localhost:6060/vibecart/ecom/items/item/${productId}`)
       .then((response) => {
         const productData = {
           ...response.data,
@@ -47,7 +47,7 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     if (selectedColor && selectedSize && product) {
-      axios.get(`http://localhost:8082/vibecart/ecom/products/product/item-id/${product.itemID}`, {
+      axios.get(`http://localhost:6060/vibecart/ecom/products/product/item-id/${product.itemID}`, {
         params: { color: selectedColor, size: selectedSize }
       })
         .then(response => {

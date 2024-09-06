@@ -34,8 +34,8 @@ const ProductPage = () => {
     // Fetch products based on category or all products if no category is selected
     const fetchProducts = () => {
       const apiUrl = category
-        ? `http://localhost:8082/vibecart/ecom/items/category/${category}`
-        : 'http://localhost:8082/vibecart/ecom/items';
+        ? `http://localhost:6060/vibecart/ecom/items/category/${category}`
+        : 'http://localhost:6060/vibecart/ecom/items';
 
       axios
         .get(apiUrl)

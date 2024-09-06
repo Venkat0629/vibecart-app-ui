@@ -5,4 +5,5 @@
     box-sizing: border-box;
     color: #333;
     outline: none;
+    border-radius: 20px;
 }
