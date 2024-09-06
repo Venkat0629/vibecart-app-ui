@@ -35,17 +35,20 @@ const Cart = () => {
   }
 
   const calculateTotalBill = (cartData) => {
+    const data = JSON.parse(localStorage.getItem("billingData"));
     const totalCartBill = cartData.reduce((total, product) => {
       return total + (product.price * product.requestedQuantity);
     }, 0);
 
-    const billingObject = { ...cartBillData, totalBill: Math.floor(totalCartBill), total: Math.floor(totalCartBill - promo - cartOffer) }
+    const billingObject = { ...data, totalBill: Math.floor(totalCartBill), total: Math.floor(totalCartBill - promo - cartOffer) }
+    
     dispatch(updatecartBillData(billingObject));
+    localStorage.setItem("billingData",JSON.stringify(billingObject));
+    setLoading(false);
 
   }
 
   const applyItemOffer = async (cartData) => {
-    const data = JSON.parse(localStorage.getItem("cartItems"));
    
     const updatedcartDatabyItemOffer = cartData?.map((x) => ({
       ...x,
@@ -72,15 +75,9 @@ const Cart = () => {
     if (Object.keys(address).length > 0) {
       dispatch(updateAddressData(address));
     }
-    setLoading(false);
 
   }, []);
 
-  
-
-  useEffect(() => {
-    
-  }, [cartBillData]);
 
   const handleEmptyCart = () => {
     dispatch(updateCartData([]));
@@ -96,7 +93,7 @@ const Cart = () => {
               {cartData?.map((product) => (
                 <CartProducts product={product} cartData={cartData} editQuantity="true" getcartData={getCartData} navigateTo={navigateTo} calculateTotalBill={calculateTotalBill} />
               ))}
-              <p className='removecartItemButton' onClick={handleEmptyCart}>EmptyCart</p>
+              <u className='removecartItemButton' onClick={handleEmptyCart}>EmptyCart</u>
 
             </div>
           </ErrorBoundary>

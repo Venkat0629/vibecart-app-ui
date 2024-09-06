@@ -9,11 +9,14 @@ import { getCartData } from '../../../commoncomponents/CommonFunctions'
 import { useNavigate } from 'react-router-dom'
 import Accordion from './Accordian'
 import DeliveryAndGiftOptions from './CheckoutOffers'
+import Loader from '../../../commoncomponents/Loading'
 
 const Checkout = () => {
 
   const [openSection, setOpenSection] = useState(['shipping']);
+  const [loading, setLoading] = useState(true);
   const [flag, setFlag] = useState(false);
+  
   const toggleAccordion = (type) => {
     if (openSection.includes(type)) {
       setOpenSection(prevOpenSection =>
@@ -29,7 +32,7 @@ const Checkout = () => {
 
   const toggleAccordionOnContinue = () => {
     setOpenSection(prevOpenSection =>
-      [prevOpenSection.filter(x => x !== "shipping"), "offers"]
+      [prevOpenSection.filter(x => x !== "shipping"), "payment"]
     );
   };
   const dispatch = useDispatch()
@@ -42,15 +45,12 @@ const Checkout = () => {
   }
 
   const calculateTotalBill = (cartData) => {
-    // const getShippinaddress = JSON.parse(localStorage.getItem("shippingAddress"));
     const getbillingdata = JSON.parse(localStorage.getItem("billingData"));
-console.log(getbillingdata)
+
     if (getbillingdata && Object.keys(getbillingdata).length > 0) {
-      console.log("fhghgyv")
       setFlag(true);
     }
     else {
-      console.log("else")
       const billing = { ...cartBillData, totalBill: 0, total: 0, promo: 0, cartOffer: 0 }
       const totalCartBill = cartData.reduce((total, product) => {
         return total + (product.price * product.requestedQuantity);
@@ -58,7 +58,6 @@ console.log(getbillingdata)
       const billingObject = { ...cartBillData, totalBill: Math.floor(totalCartBill), total: Math.floor(totalCartBill - billing?.promo - billing?.cartOffer), promo: billing?.promo, cartOffer: billing?.cartOffer }
       dispatch(updatecartBillData(billingObject));
       localStorage.setItem("billingData", JSON.stringify(billingObject))
-      console.log(billingObject)
       setFlag(true);
     }
   }
@@ -68,10 +67,10 @@ console.log(getbillingdata)
       const response = await fetch('http://localhost:5501/api/v1/vibe-cart/offers/bill');
       if (response.ok) {
         const offers = await response.json();
+        localStorage.setItem("cartOffers",JSON.stringify(offers));
         const storedData = JSON.parse(localStorage.getItem('billingData'));
-        console.log(storedData)
-          
-        
+
+
         const totalBill = storedData.totalBill;
         const filterCorrectCartOffer = offers?.filter((x) => x.billAmount < totalBill);
 
@@ -89,39 +88,32 @@ console.log(getbillingdata)
             discount = closestOffer.offerDiscountValue;
           }
         }
-        console.log(storedData)
         const newTotalBill = totalBill - discount - storedData.promo;
-        // storedData.cartOffer = discount;
-        // storedData.total = newTotalBill;
+
         const billingObject = { ...storedData, cartOffer: discount, total: newTotalBill }
-        console.log(billingObject)
         dispatch(updatecartBillData(billingObject));
         localStorage.setItem("billingData", JSON.stringify(billingObject));
       }
     } catch (error) {
       console.error('Failed to update billing data:', error);
     }
+    finally {
+      setLoading(false);
+    }
   };
 
 
   useEffect(() => {
-
-
-      const { cartData, address } = getCartData();
-      calculateTotalBill(cartData);
-
-      dispatch(updateCartData(cartData));
-      dispatch(updateAddressData(address));
-
-      // Await the result of calculateTotalBill
-
-      // Once calculateTotalBill is done, call fetchAndStoreDiscount
-      }, []);
+    const { cartData, address } = getCartData();
+    calculateTotalBill(cartData);
+    dispatch(updateCartData(cartData));
+    dispatch(updateAddressData(address));
+  }, []);
   useEffect(() => {
     fetchAndStoreDiscount()
   }, [flag])
 
-  return (
+  return (loading ? <Loader /> :
     <div className="checkout-container">
       <div className="checkout-component-layout">
         <div style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.1)" }}>
@@ -129,11 +121,11 @@ console.log(getbillingdata)
             <Shipping address={address} toggleAccordionOnContinue={toggleAccordionOnContinue} />
           </Accordion>
         </div>
-        <div style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.1)" }}>
+        {/* <div style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.1)" }}>
           <Accordion toggleAccordian={() => toggleAccordion("offers")} isOpen={openSection.includes('offers')} title="Offers">
             <DeliveryAndGiftOptions />
           </Accordion>
-        </div>
+        </div> */}
         <div >
           <Accordion toggleAccordian={() => toggleAccordion("payment")} isOpen={openSection.includes('payment')} title="Payment" >
             <Payment address={address} cartBillData={cartBillData} />
