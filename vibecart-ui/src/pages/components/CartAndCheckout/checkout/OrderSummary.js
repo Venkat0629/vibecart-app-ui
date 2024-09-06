@@ -11,6 +11,7 @@ const OrderSummary = ({ cartData, cartBillData, navigateTo }) => {
   const formattedPrice = formatAmount(cartBillData?.total);
   const formattedTotalBill = formatAmount(cartBillData?.totalBill);
   const formattedpromo = formatAmount(cartBillData?.promo);
+  const formattedCartOffer =formatAmount(cartBillData?.cartOffer);
 
   return (
     <div className='ordersummary-checkout-container'>
@@ -31,7 +32,7 @@ const OrderSummary = ({ cartData, cartBillData, navigateTo }) => {
       </div>
       <div className='ordersummary-bill-layout'>
         <p>Offers</p>
-        <p><b>NA</b></p>
+        <p><b>{formattedCartOffer}</b></p>
       </div>
       <hr></hr>
       <div className='ordersummary-bill-layout'>

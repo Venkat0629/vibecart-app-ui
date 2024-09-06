@@ -15,7 +15,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const { cartData, cartBillData: { promo }, cartBillData } = useSelector((state) => state.cart);
+  const { cartData, cartBillData: { promo } , cartBillData:{cartOffer}, cartBillData } = useSelector((state) => state.cart);
 
   const navigateTo = (path) => {
     navigate(path);
@@ -39,7 +39,7 @@ const Cart = () => {
       return total + (product.price * product.requestedQuantity);
     }, 0);
 
-    const billingObject = { ...cartBillData, totalBill: Math.floor(totalCartBill), total: Math.floor(totalCartBill - promo) }
+    const billingObject = { ...cartBillData, totalBill: Math.floor(totalCartBill), total: Math.floor(totalCartBill - promo - cartOffer) }
     dispatch(updatecartBillData(billingObject));
 
   }
@@ -76,8 +76,10 @@ const Cart = () => {
 
   }, []);
 
+  
 
   useEffect(() => {
+    
   }, [cartBillData]);
 
   const handleEmptyCart = () => {
