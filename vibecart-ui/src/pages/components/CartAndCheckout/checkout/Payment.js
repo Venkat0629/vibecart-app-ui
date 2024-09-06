@@ -20,11 +20,12 @@ const Payment = ({ address, cartBillData }) => {
 
   const dispatch = useDispatch();
   const updateBillingwrtPromo = (data) => {
+    const localbillingdata = JSON.parse(localStorage.getItem("billingData"));
     const discountValue = data[0].offerDiscountValue || 0;
-    const discountedValue = cartBillData?.totalBill - (cartBillData?.totalBill * discountValue) / 100;
+    const discountedValue = cartBillData?.totalBill -localbillingdata?.cartOffer- (cartBillData?.totalBill * discountValue) / 100;
     const updatedCartBillData = {
       ...data[0],
-      ...cartBillData,
+      ...localbillingdata,
       total: discountedValue,
       promo: (cartBillData?.totalBill * discountValue) / 100
     }

@@ -9,7 +9,8 @@ export const cartSlice = createSlice({
             totalBill: 0,
             total:0,
             promo:null,
-            offer:null
+            offer:null,
+            cartOffer:null
         }
     },
     reducers: {
