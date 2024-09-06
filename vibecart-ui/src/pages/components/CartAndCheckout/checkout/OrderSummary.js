@@ -11,11 +11,13 @@ const OrderSummary = ({ cartData, cartBillData, navigateTo }) => {
   const formattedPrice = formatAmount(cartBillData?.total);
   const formattedTotalBill = formatAmount(cartBillData?.totalBill);
   const formattedpromo = formatAmount(cartBillData?.promo);
-  const formattedCartOffer =formatAmount(cartBillData?.cartOffer);
+  const formattedCartOffer = formatAmount(cartBillData?.cartOffer);
+  const cartOffers = JSON.parse(localStorage.getItem("cartOffers"));
+  const promoCode = localStorage.getItem("promoCode");
 
   return (
     <div className='ordersummary-checkout-container'>
-      <h5>Order Summary</h5>
+      <span style={{color:"grey"}}>ORDER SUMMARY</span>
       <p><b>Items ({totalItems})</b></p>
       {cartData?.map((product) => (
 
@@ -24,20 +26,38 @@ const OrderSummary = ({ cartData, cartBillData, navigateTo }) => {
       {/* <hr></hr> */}
       <div className='ordersummary-bill-layout'>
         <p>Sub Total</p>
-        <p><b>{formattedTotalBill}</b></p>
+        <p style={{ fontSize: "20px", color: "#333333" }}><b>{formattedTotalBill}</b></p>
       </div>
       <div className='ordersummary-bill-layout'>
-        <p>Promo applied</p>
-        <p><b>{formattedpromo}</b></p>
+        {promoCode ?
+          <>
+            <p style={{ backgroundColor: "lightgrey" }}>{promoCode}</p>
+            <p style={{ color: "#28A745" }}><b>{formattedpromo}</b></p>
+          </>
+          :
+          <>
+            <p>Promo applied</p>
+            <p><b>{formattedpromo}</b></p>
+          </>
+        }
       </div>
       <div className='ordersummary-bill-layout'>
-        <p>Offers</p>
-        <p><b>{formattedCartOffer}</b></p>
+        {cartOffers ?
+          <>
+            <p style={{ backgroundColor: "lightgrey" }}>{cartOffers[0]?.offerName}</p>
+            <p style={{ color: "#28A745" }}><b>{formattedCartOffer}</b></p>
+          </>
+          :
+          <>
+            <p>Offers</p>
+            <p><b>{formattedCartOffer}</b></p>
+          </>
+        }
       </div>
       <hr></hr>
       <div className='ordersummary-bill-layout'>
         <p>Total</p>
-        <p> <b>{formattedPrice}</b></p>
+        <p style={{ fontSize: "25px",color:"#FF5733" }}>  <b>{formattedPrice}</b></p>
       </div>
 
     </div>

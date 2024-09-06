@@ -5,15 +5,19 @@ import { MdChecklistRtl } from "react-icons/md";
 import { FaUser } from 'react-icons/fa';
 import axios from 'axios';
 import './layout.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCartData } from '../../commoncomponents/CommonFunctions';
+import { updateCartData } from '../../redux-toolkit/CartSlice';
 
 const Navbar = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
-    const [productData, setProductData] = useState([]); // Ensure productData is defined
+    const [productData, setProductData] = useState([]);
     const { cartData } = useSelector((state) => state.cart);
     const navigate = useNavigate();
     const location = useLocation();
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         // Fetch product data from API
@@ -43,6 +47,11 @@ const Navbar = () => {
         // Clear suggestions on route change
         setSuggestions([]);
     }, [location]);
+
+    useEffect(() => {
+        const { cartData } = getCartData();
+        dispatch(updateCartData(cartData));
+    }, [])
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -108,9 +117,9 @@ const Navbar = () => {
                                 <span className="cart-item-count">{cartData?.length}</span>
                             )}
                         </div>
-                        <div className="navbar-icon" title='Orders' onClick={() => handleNavigate('/orders')}>
+                        {/* <div className="navbar-icon" title='Orders' onClick={() => handleNavigate('/orders')}>
                             <b>Orders</b>
-                        </div>
+                        </div> */}
                     </div>
                 </header>
             </div>

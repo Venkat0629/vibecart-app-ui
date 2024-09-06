@@ -13,7 +13,7 @@ const OrderSummary = ({ cartData, cartBillData, navigateTo, getcartData }) => {
     }, 0);
 
     const formattedPrice = formatAmount(cartBillData?.totalBill);
-    
+
     const handleCheckout = () => {
         const { cartData } = getcartData();
         const invalidIQuantityitems = cartData.filter((x) => x.requestedQuantity <= 0);
@@ -27,7 +27,10 @@ const OrderSummary = ({ cartData, cartBillData, navigateTo, getcartData }) => {
     return (
         <div className='orderSummary'>
             {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
-            <p> Sub total ({totalItems} items) :<b>{formattedPrice}</b></p>
+            <div style={{marginBottom:"10px"}}>
+                <span style={{ color: "grey" }}>PRICE DETAILS</span>
+            </div>
+            <p> Sub total ({totalItems} items):  <b>{formattedPrice}</b></p>
             <div>
                 <ReusableButton buttonName="Checkout" handleClick={handleCheckout} />
                 <p><strong>By continuing with your purchase you agree to our terms,conditions and privacy policy</strong></p>

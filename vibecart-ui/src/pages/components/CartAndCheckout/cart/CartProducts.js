@@ -88,7 +88,7 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
                     </div>
                     <div className='cartproductTitle'>
                         <p><strong style={{ cursor: "pointer" }} onClick={() => handlecartItemClick(product.skuID)}>{product.itemName}</strong></p>
-                        <p>{product.selectedSize}</p>
+                        <p style={{ margin: 0 }}>{product.selectedSize}</p>
                         {!editQuantity && <p>{product.expectedDeliveryDate}</p>}
                         <span style={{ color: "grey" }}>{formatAmount(product.oldPrice)}</span>
                     </div>
@@ -120,14 +120,21 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
 
                             <p><b>{formatAmount(product.AmountPerProduct)}</b></p> :
                             <div>
-                                <p>{formatAmount(product.AmountPerProduct)}</p>
-                                <p><b>{formatAmount(product.totalAmountPerProductAfterOffer)}</b></p>
+                                <s>{formatAmount(product.AmountPerProduct)}</s>
+                                <p style={{ fontSize: "20px" }}><b>{formatAmount(product.totalAmountPerProductAfterOffer)}</b></p>
                             </div>
                         }
                     </div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <p style={{ backgroundColor: "#f5f5f5", color: "#8c0e12" }}>{product.offers.length > 0 ? product.offers[0].offerName : null}</p>
+                    <div className='offer-container'>
+                        <p className="offer-text">
+                         {product.offers.length > 0 ? product.offers[0].offerName : null}
+                        </p>
+                        <p className="offer-popup" style={{ backgroundColor: "#f5f5f5", color: "#8c0e12" }}>
+                            <b>Discount value: {product.offers[0]?.offerDiscountValue}</b>
+                        </p>
+                    </div>
                     {editQuantity && <p className='removecartItemButton' onClick={() => handleRemoveCartItem(product.skuID)}>Remove</p>}
                 </div>
             </div>

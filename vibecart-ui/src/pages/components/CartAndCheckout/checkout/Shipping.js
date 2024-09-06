@@ -188,7 +188,7 @@ const Shipping = ({ address, toggleAccordionOnContinue }) => {
                     <input type="checkbox" checked={isChecked} handleChange={()=> setIsChecked(true)} />
                     <p style={{ margin: 0, padding: 0 }}>Billing address is same as shipping address</p>
                 </div>
-                <div className="button-container">
+                <div className="button-container" style={{marginTop:"10px"}}>
                     <ReusableButton buttonName="Continue" />
                 </div>
 
