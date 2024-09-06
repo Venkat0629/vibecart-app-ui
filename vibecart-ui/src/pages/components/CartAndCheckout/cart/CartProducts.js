@@ -71,7 +71,7 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
 
     }
 
-    const { cartData} = useSelector((state) => state.cart);
+    const { cartData } = useSelector((state) => state.cart);
 
 
     const handlecartItemClick = (productId) => {
@@ -90,7 +90,7 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
                         <p><strong style={{ cursor: "pointer" }} onClick={() => handlecartItemClick(product.skuID)}>{product.itemName}</strong></p>
                         <p>{product.selectedSize}</p>
                         {!editQuantity && <p>{product.expectedDeliveryDate}</p>}
-                        <span style={{ color: "grey" }}>{formatAmount(product.price)}</span>
+                        <span style={{ color: "grey" }}>{formatAmount(product.oldPrice)}</span>
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: "0 0 15%", height: "40px" }}>
                         <div className='cartEditquantityLayout'>
@@ -116,11 +116,18 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
                     </div>
 
                     <div className='cartitemTotalLayout'>
-                        <p><b>{formatAmount(product.totalAmountPerProduct)}</b></p>
+                        {product.oldPrice === product.price ?
+
+                            <p><b>{formatAmount(product.AmountPerProduct)}</b></p> :
+                            <div>
+                                <p>{formatAmount(product.AmountPerProduct)}</p>
+                                <p><b>{formatAmount(product.totalAmountPerProductAfterOffer)}</b></p>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <p style={{backgroundColor:"#f5f5f5",color:"#8c0e12"}}>{product.offers.length > 0 ? product.offers[0].offerName : null}</p>
+                    <p style={{ backgroundColor: "#f5f5f5", color: "#8c0e12" }}>{product.offers.length > 0 ? product.offers[0].offerName : null}</p>
                     {editQuantity && <p className='removecartItemButton' onClick={() => handleRemoveCartItem(product.skuID)}>Remove</p>}
                 </div>
             </div>

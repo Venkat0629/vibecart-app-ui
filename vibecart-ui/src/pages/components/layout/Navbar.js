@@ -17,7 +17,7 @@ const Navbar = () => {
 
     useEffect(() => {
         // Fetch product data from API
-        axios.get('http://localhost:8082/vibecart/ecom/items')
+        axios.get('http://localhost:6060/vibecart/ecom/items')
             .then((response) => {
                 setProductData(response.data);
             })
@@ -109,7 +109,7 @@ const Navbar = () => {
                             )}
                         </div>
                         <div className="navbar-icon" title='Orders' onClick={() => handleNavigate('/orders')}>
-                            <MdChecklistRtl />
+                            <b>Orders</b>
                         </div>
                     </div>
                 </header>

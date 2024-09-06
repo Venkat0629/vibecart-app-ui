@@ -13,7 +13,7 @@ import DeliveryAndGiftOptions from './CheckoutOffers'
 const Checkout = () => {
 
   const [openSection, setOpenSection] = useState(['shipping']);
-  
+
   const toggleAccordion = (type) => {
     if (openSection.includes(type)) {
       setOpenSection(prevOpenSection =>
@@ -42,6 +42,8 @@ const Checkout = () => {
   }
 
   const calculateTotalBill = (cartData) => {
+    const billing = { ...cartBillData, totalBill: 0, total: 0, promo: 0 }
+    localStorage.setItem("billingData", JSON.stringify(billing));
     const localBillingObject = JSON.parse(localStorage.getItem("billingData"));
     const totalCartBill = cartData.reduce((total, product) => {
       return total + (product.price * product.requestedQuantity);

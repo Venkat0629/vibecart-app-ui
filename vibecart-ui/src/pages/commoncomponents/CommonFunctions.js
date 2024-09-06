@@ -43,7 +43,8 @@ export const getQuantitydetails = async (cartData) => {
 export const calculateBillPerProduct = (cartData) => {
     const totalAmountPerProduct = cartData?.map((data) => ({
         ...data,
-        totalAmountPerProduct: Math.floor(data.requestedQuantity * data.price)
+        totalAmountPerProductAfterOffer: Math.floor(data.requestedQuantity * data.price),
+        AmountPerProduct: Math.floor(data.requestedQuantity * data.oldPrice)
     }));
     return totalAmountPerProduct
 }
