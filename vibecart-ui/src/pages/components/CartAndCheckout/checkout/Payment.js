@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import './checkoutcomponents.css'
 import ReusableButton from "../../../commoncomponents/ReusableButton";
 import { useDispatch } from "react-redux";
@@ -10,6 +10,7 @@ import Toaster from "../../../commoncomponents/Toaster";
 const Payment = ({ address, cartBillData }) => {
   const [promoCode, setPromoCode] = useState('');
   const [message, setMessage] = useState('');
+  const [promoCodeApplied, setPromoCodeApplied] = useState(false);
   const handlePromoCodeChange = (e) => {
     setPromoCode(e.target.value);
     setMessage("")
@@ -44,6 +45,8 @@ const Payment = ({ address, cartBillData }) => {
           triggerToast("success", `Promo code applied successfully! Discount: ${data[0].offerDiscountValue}%`)
 
           updateBillingwrtPromo(data);
+          localStorage.setItem('promoCode', promoCode);
+          setPromoCodeApplied(true);
         } else {
           setMessage('Invalid promo code. Please try again.');
         }
@@ -61,6 +64,13 @@ const Payment = ({ address, cartBillData }) => {
       setMessage('Please enter a promo code.');
     }
   };
+  useEffect(() => {
+    const storedPromoCode = localStorage.getItem('promoCode');
+    if (storedPromoCode) {
+      setPromoCode(storedPromoCode);
+      setPromoCodeApplied(true);
+    }
+  }, []);
 
   return (
     <div className="payment-container">
@@ -83,8 +93,9 @@ const Payment = ({ address, cartBillData }) => {
             placeholder="Promo code"
             value={promoCode}
             onChange={handlePromoCodeChange}
+            disabled={promoCodeApplied}
           />
-          <ReusableButton buttonName="Apply" handleClick={handleApplyPromoCode} />
+          {!promoCodeApplied && (<ReusableButton buttonName="Apply" handleClick={handleApplyPromoCode} />)}
         </div>
         {message && <p style={{ color: "red" }}>{message}</p>}
       </div>
