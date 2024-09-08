@@ -1,5 +1,4 @@
-// redux-toolkit/productPageSlice.js
-
+// productPageSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -7,43 +6,37 @@ const initialState = {
   filterColors: [],
   filterPriceRanges: [],
   sortOption: '',
-  showFilters: false,
+  showFilters: true,
 };
 
 const productPageSlice = createSlice({
   name: 'productPage',
   initialState,
   reducers: {
-    toggleFilterVisibility: (state) => {
-      state.showFilters = !state.showFilters;
-    },
-    setFilterCategories: (state, action) => {
+    setFilterCategories(state, action) {
       state.filterCategories = action.payload;
     },
-    setFilterColors: (state, action) => {
+    setFilterColors(state, action) {
       state.filterColors = action.payload;
     },
-    setFilterPriceRanges: (state, action) => {
+    setFilterPriceRanges(state, action) {
       state.filterPriceRanges = action.payload;
     },
-    setSortOption: (state, action) => {
+    setSortOption(state, action) {
       state.sortOption = action.payload;
     },
-    clearFilters: (state) => {
-      state.filterCategories = [];
-      state.filterColors = [];
-      state.filterPriceRanges = [];
+    toggleFilterVisibility(state) {
+      state.showFilters = !state.showFilters;
     },
   },
 });
 
 export const {
-  toggleFilterVisibility,
   setFilterCategories,
   setFilterColors,
   setFilterPriceRanges,
   setSortOption,
-  clearFilters,
+  toggleFilterVisibility,
 } = productPageSlice.actions;
 
 export default productPageSlice.reducer;
