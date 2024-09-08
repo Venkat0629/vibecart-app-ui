@@ -4,18 +4,21 @@ import OrderSummary from './OrderSummary';
 import CartProducts from './CartProducts';
 import { useNavigate } from 'react-router-dom';
 import ReusableButton from '../../../commoncomponents/ReusableButton';
-import { calculateBillPerProduct, getCartData, getQuantitydetails } from '../../../commoncomponents/CommonFunctions'
+import { getCartData, getQuantitydetails } from '../../../commoncomponents/CommonFunctions'
 import { useDispatch, useSelector } from 'react-redux';
 import { updateAddressData, updatecartBillData, updateCartData } from '../../../redux-toolkit/CartSlice';
 import ErrorBoundary from '../../../commoncomponents/ErrorBoundary';
 import Loader from '../../../commoncomponents/Loading';
+import useToast from '../../../commoncomponents/ToastHook';
+import Toaster from '../../../commoncomponents/Toaster';
 
 const Cart = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const { cartData, cartBillData: { promo } , cartBillData:{cartOffer}, cartBillData } = useSelector((state) => state.cart);
+  const { cartData, cartBillData } = useSelector((state) => state.cart);
+  const { toast, showToast, triggerToast } = useToast();
 
   const navigateTo = (path) => {
     navigate(path);
@@ -23,37 +26,49 @@ const Cart = () => {
 
   const updateItemQuantityDetails = async (cartData) => {
     const res = await getQuantitydetails(cartData);
-    const updatedCartData = cartData.map(cartItem => {
-      const updatedItem = res?.find(resItem => resItem.skuID === cartItem.skuID);
-      return {
-        ...cartItem,
-        stockQuantity: updatedItem ? updatedItem.totalQuantity : cartItem.stockQuantity
-      };
-    });
-    dispatch(updateCartData(updatedCartData));
-    localStorage.setItem("cartItems", JSON.stringify(updatedCartData));
-    applyItemOffer(cartData);
+    if (res?.length > 0) {
+      const updatedCartData = cartData.map(cartItem => {
+        const updatedItem = res?.find(resItem => resItem.skuID === cartItem.skuID);
+        return {
+          ...cartItem,
+          stockQuantity: updatedItem ? updatedItem.totalQuantity : cartItem.stockQuantity
+        };
+      });
+      dispatch(updateCartData(updatedCartData));
+      localStorage.setItem("cartItems", JSON.stringify(updatedCartData));
+      applyItemOffer(cartData);
+    }
+    else {
+      triggerToast("error", "Failed to get stock details!")
+    }
   }
 
   const calculateTotalBill = (cartData) => {
     const data = JSON.parse(localStorage.getItem("billingData"));
+    console.log(data);
     const totalCartBill = cartData.reduce((total, product) => {
       return total + (product.price * product.requestedQuantity);
     }, 0);
 
-    const billingObject = { ...data, totalBill: Math.floor(totalCartBill), total: Math.floor(totalCartBill - promo - cartOffer) }
-    
+    const billingObject = {
+      ...data,
+      totalBill: Math.floor(totalCartBill),
+      total: Math.floor(totalCartBill - (data?.promo ?? 0) - (data?.cartOffer ?? 0)),
+      promo: data?.promo ?? 0,
+      cartOffer: data?.cartOffer ?? 0
+    };
+
     dispatch(updatecartBillData(billingObject));
-    localStorage.setItem("billingData",JSON.stringify(billingObject));
+    localStorage.setItem("billingData", JSON.stringify(billingObject));
     setLoading(false);
 
   }
 
   const applyItemOffer = async (cartData) => {
-   
+
     const updatedcartDatabyItemOffer = cartData?.map((x) => ({
       ...x,
-      price:!x.oldPrice && x.offers[0] ? (x.price - x.offers[0]?.offerDiscountValue) : x.price,
+      price: !x.oldPrice && x.offers[0] ? (x.price - x.offers[0]?.offerDiscountValue) : x.price,
       oldPrice: x.oldPrice ?? x.price
     }));
     const totalAmountPerProduct = updatedcartDatabyItemOffer?.map((data) => ({
@@ -71,7 +86,6 @@ const Cart = () => {
       updateItemQuantityDetails(cartData);
       calculateTotalBill(cartData);
       setLoading(false);
-
     }
 
     if (Object.keys(address).length > 0) {
@@ -91,6 +105,7 @@ const Cart = () => {
     loading ? <Loader /> :
       cartData?.length > 0 ?
         <div className='cartLayout'>
+          {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
           <ErrorBoundary>
             <div className='cartproductslayout'>
               {cartData?.map((product) => (

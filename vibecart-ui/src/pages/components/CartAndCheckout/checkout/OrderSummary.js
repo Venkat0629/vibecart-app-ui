@@ -5,7 +5,7 @@ import { formatAmount } from '../../../commoncomponents/CommonFunctions';
 
 const OrderSummary = ({ cartData, cartBillData, navigateTo }) => {
 
-  const totalItems = cartData.reduce((total, product) => {
+  const totalItems = cartData?.reduce((total, product) => {
     return total + Number(product.requestedQuantity);
   }, 0);
   const formattedPrice = formatAmount(cartBillData?.total);
@@ -21,7 +21,7 @@ const OrderSummary = ({ cartData, cartBillData, navigateTo }) => {
       <p><b>Items ({totalItems})</b></p>
       {cartData?.map((product) => (
 
-        <CartProducts product={product} cartData={cartData} navigateTo={navigateTo} />
+        <CartProducts key={product.skuID} product={product} cartData={cartData} navigateTo={navigateTo} />
       ))}
       {/* <hr></hr> */}
       <div className='ordersummary-bill-layout'>

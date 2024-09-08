@@ -84,10 +84,10 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
 
             <div key={product.skuID} className='cartproductDetails'>
                 <div style={{flex:editQuantity ? "0 0 12%" : "0 0 20%"}}>
-                    <img src={product.imageURL} alt="Product" className='icon-styles' onClick={editQuantity ? () => handlecartItemClick(product.skuID): ""} />
+                    <img src={product.imageURL} alt="Product" className='icon-styles' onClick={editQuantity ? () => handlecartItemClick(product.skuID): null} />
                 </div>
                 <div className='cartproductTitle'>
-                    <p> <strong style={{ cursor: "pointer" }} onClick={editQuantity ? () => handlecartItemClick(product.skuID):""}>{product.itemName}</strong></p>
+                    <p> <strong style={{ cursor: "pointer" }} onClick={editQuantity ? () => handlecartItemClick(product.skuID):null}>{product.itemName}</strong></p>
                     <p><span style={{color:"#555"}}>Size:</span> {product.selectedSize}</p>
                     {!editQuantity && product.expectedDeliveryDate &&
                         <><p  style={{color: '#555' }}>Estimated Delivery:</p>

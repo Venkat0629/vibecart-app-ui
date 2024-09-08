@@ -8,7 +8,7 @@ import useToast from "../../../commoncomponents/ToastHook";
 import Toaster from "../../../commoncomponents/Toaster";
 import { useNavigate } from "react-router-dom";
 
-const Payment = ({ address, cartBillData }) => {
+const Payment = ({ address }) => {
   const [promoCode, setPromoCode] = useState('');
   const [message, setMessage] = useState('');
   const [promoCodeApplied, setPromoCodeApplied] = useState(false);
@@ -27,12 +27,16 @@ const Payment = ({ address, cartBillData }) => {
   const updateBillingwrtPromo = (data) => {
     const localbillingdata = JSON.parse(localStorage.getItem("billingData"));
     const discountValue = data[0].offerDiscountValue || 0;
-    const discountedValue = cartBillData?.totalBill - localbillingdata?.cartOffer - (cartBillData?.totalBill * discountValue) / 100;
+    const discountedValue =
+      (localbillingdata?.totalBill ?? 0) -
+      (localbillingdata?.cartOffer ?? 0) -
+      ((localbillingdata?.totalBill ?? 0) * (discountValue ?? 0)) / 100;
+
     const updatedCartBillData = {
       ...data[0],
       ...localbillingdata,
       total: discountedValue,
-      promo: (cartBillData?.totalBill * discountValue) / 100
+      promo: (localbillingdata?.totalBill * discountValue) / 100
     }
     dispatch(updatecartBillData(updatedCartBillData));
     localStorage.setItem("billingData", JSON.stringify(updatedCartBillData))
@@ -105,10 +109,8 @@ const Payment = ({ address, cartBillData }) => {
         const filteredItemfields = cartItems?.map(item => ({ sku: item.skuID, orderQuantity: item.requestedQuantity }));
         const res = await fetch(`http://localhost:8090/vibe-cart/orders/stock-reservation-call?customerZipcode=${finalObject?.shippingzipCode}`, { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(filteredItemfields) });
         if ([200, 201].includes(res.status)) {
-          const resp = res.json;
           const response = await fetch('http://localhost:6060/vibecart/ecom/orders/createOrder', { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(finalObject) });
           if ([200, 201].includes(response.status)) {
-            const respp = response.json;
             setLoading(false)
             navigate('/orderConfirmation');
           }
