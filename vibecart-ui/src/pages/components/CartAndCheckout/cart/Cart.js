@@ -31,7 +31,8 @@ const Cart = () => {
       };
     });
     dispatch(updateCartData(updatedCartData));
-    localStorage.setItem("cartItems", JSON.stringify(updatedCartData))
+    localStorage.setItem("cartItems", JSON.stringify(updatedCartData));
+    applyItemOffer(cartData);
   }
 
   const calculateTotalBill = (cartData) => {
@@ -68,13 +69,15 @@ const Cart = () => {
     const { cartData, address } = getCartData();
     if (cartData?.length > 0) {
       updateItemQuantityDetails(cartData);
-      applyItemOffer(cartData);
       calculateTotalBill(cartData);
+      setLoading(false);
+
     }
 
     if (Object.keys(address).length > 0) {
       dispatch(updateAddressData(address));
     }
+    setLoading(false);
 
   }, []);
 

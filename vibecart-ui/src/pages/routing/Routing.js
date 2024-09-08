@@ -8,7 +8,7 @@ import ProductDetailPage from "../components/Homepage/ProductDetailPage";
 import Cart from '../../pages/components/CartAndCheckout/cart/Cart'
 import Checkout from '../components/CartAndCheckout/checkout/Checkout';
 import MyOrders from '../components/CartAndCheckout/orders/Orders';
-
+import OrderConfirmation from '../components/CartAndCheckout/orders/orderConfirmation';
 export const Routing = () => {
   return (
     <div className="routing">
@@ -23,6 +23,7 @@ export const Routing = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout/>} />
           <Route path="/orders" element={<MyOrders />} />
+          <Route path="/orderConfirmation" element={<OrderConfirmation/>} />
         </Routes>
       </main>
       <div className="footerLayout">

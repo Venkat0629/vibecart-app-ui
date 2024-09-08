@@ -79,64 +79,66 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
     }
 
     return (
-        <div className='cartproducts'>
+        <div key={product.skuID} className='cartProductsContainer'>
             {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
-            <div key={product.skuID} className='cartProductsContainer'>
-                <div key={product.skuID} className='cartproductDetails'>
-                    <div className='cartproductImage'>
-                        <img src={product.imageURL} alt="Product" className='icon-styles' onClick={() => handlecartItemClick(product.skuID)} />
-                    </div>
-                    <div className='cartproductTitle'>
-                        <p><strong style={{ cursor: "pointer" }} onClick={() => handlecartItemClick(product.skuID)}>{product.itemName}</strong></p>
-                        <p style={{ margin: 0 }}>{product.selectedSize}</p>
-                        {!editQuantity && <p>{product.expectedDeliveryDate}</p>}
-                        <span style={{ color: "grey" }}>{formatAmount(product.oldPrice)}</span>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: "0 0 15%", height: "40px" }}>
-                        <div className='cartEditquantityLayout'>
 
-                            {editQuantity ?
-                                <>
-                                    <FiMinus className='icon-styles' onClick={() => handleQuantityUpdation("decrement", product.skuID, product.requestedQuantity, product.stockQuantity)} />
-                                    <input
-                                        className='quantityInput'
-                                        min="1"
-                                        type='number'
-                                        style={{ border: "none", textAlign: "center" }}
-                                        max={product.stockQuantity}
-                                        value={product.requestedQuantity}
-                                        onChange={(e) => handleQuantityChange(product.skuID, product.stockQuantity, e)}
-                                    />
-                                    <FaPlus className='icon-styles' onClick={() => handleQuantityUpdation("increment", product.skuID, product.requestedQuantity, product.stockQuantity)} />
-                                </>
-                                : product.requestedQuantity}
+            <div key={product.skuID} className='cartproductDetails'>
+                <div style={{flex:editQuantity ? "0 0 12%" : "0 0 20%"}}>
+                    <img src={product.imageURL} alt="Product" className='icon-styles' onClick={editQuantity ? () => handlecartItemClick(product.skuID): ""} />
+                </div>
+                <div className='cartproductTitle'>
+                    <p> <strong style={{ cursor: "pointer" }} onClick={editQuantity ? () => handlecartItemClick(product.skuID):""}>{product.itemName}</strong></p>
+                    <p><span style={{color:"#555"}}>Size:</span> {product.selectedSize}</p>
+                    {!editQuantity && product.expectedDeliveryDate &&
+                        <><p  style={{color: '#555' }}>Estimated Delivery:</p>
+                            <p style={{color: '#444'}}>{product.expectedDeliveryDate}</p></>
+                    }
+                    <span style={{ color: "grey" }}>{formatAmount(product.oldPrice)}</span>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: "0 0 15%", height: "40px" }}>
+                    <div className='cartEditquantityLayout'>
+
+                        {editQuantity ?
+                            <>
+                                <FiMinus className='icon-styles' onClick={() => handleQuantityUpdation("decrement", product.skuID, product.requestedQuantity, product.stockQuantity)} />
+                                <input
+                                    className='quantityInput'
+                                    min="1"
+                                    type='number'
+                                    style={{ border: "none", textAlign: "center" }}
+                                    max={product.stockQuantity}
+                                    value={product.requestedQuantity}
+                                    onChange={(e) => handleQuantityChange(product.skuID, product.stockQuantity, e)}
+                                />
+                                <FaPlus className='icon-styles' onClick={() => handleQuantityUpdation("increment", product.skuID, product.requestedQuantity, product.stockQuantity)} />
+                            </>
+                            : product.requestedQuantity}
+                    </div>
+
+                    <p className='errorMessage'>{quantityError}</p>
+                </div>
+
+                <div className='cartitemTotalLayout'>
+                    {product.oldPrice === product.price ?
+
+                        <p><b>{formatAmount(product.AmountPerProduct)}</b></p> :
+                        <div>
+                            <s>{formatAmount(product.AmountPerProduct)}</s>
+                            <p style={{ fontSize: "20px" }}><b>{formatAmount(product.totalAmountPerProductAfterOffer)}</b></p>
                         </div>
-
-                        <p className='errorMessage'>{quantityError}</p>
-                    </div>
-
-                    <div className='cartitemTotalLayout'>
-                        {product.oldPrice === product.price ?
-
-                            <p><b>{formatAmount(product.AmountPerProduct)}</b></p> :
-                            <div>
-                                <s>{formatAmount(product.AmountPerProduct)}</s>
-                                <p style={{ fontSize: "20px" }}><b>{formatAmount(product.totalAmountPerProductAfterOffer)}</b></p>
-                            </div>
-                        }
-                    </div>
+                    }
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <div className='offer-container'>
-                        <p className="offer-text">
-                         {product.offers.length > 0 ? product.offers[0].offerName : null}
-                        </p>
-                        <p className="offer-popup" style={{ backgroundColor: "#f5f5f5", color: "#8c0e12" }}>
-                            <b>Discount value: {product.offers[0]?.offerDiscountValue}</b>
-                        </p>
-                    </div>
-                    {editQuantity && <p className='removecartItemButton' onClick={() => handleRemoveCartItem(product.skuID)}>Remove</p>}
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div className='offer-container'>
+                    <p className="offer-text">
+                        {product.offers.length > 0 ? product.offers[0].offerName : null}
+                    </p>
+                    <p className="offer-popup" style={{ backgroundColor: "#f5f5f5", color: "#8c0e12" }}>
+                        <b>Discount value: {product.offers[0]?.offerDiscountValue}</b>
+                    </p>
                 </div>
+                {editQuantity && <p className='removecartItemButton' onClick={() => handleRemoveCartItem(product.skuID)}>Remove</p>}
             </div>
         </div>
     )

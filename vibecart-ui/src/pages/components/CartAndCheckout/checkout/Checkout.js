@@ -88,9 +88,9 @@ const Checkout = () => {
             discount = closestOffer.offerDiscountValue;
           }
         }
-        const newTotalBill = totalBill - discount - storedData.promo;
+        const newTotalBill = totalBill - discount || 0 - storedData?.promo || 0;
 
-        const billingObject = { ...storedData, cartOffer: discount, total: newTotalBill }
+        const billingObject = { ...storedData, cartOffer: discount || 0, total: newTotalBill ,promo:storedData.promo || 0}
         dispatch(updatecartBillData(billingObject));
         localStorage.setItem("billingData", JSON.stringify(billingObject));
       }
@@ -110,13 +110,13 @@ const Checkout = () => {
     dispatch(updateAddressData(address));
   }, []);
   useEffect(() => {
-    fetchAndStoreDiscount()
+    fetchAndStoreDiscount();
   }, [flag])
 
   return (loading ? <Loader /> :
     <div className="checkout-container">
       <div className="checkout-component-layout">
-        <div style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.1)" }}>
+        <div >
           <Accordion toggleAccordian={() => toggleAccordion("shipping")} isOpen={openSection.includes('shipping')} title="Shipping Address" >
             <Shipping address={address} toggleAccordionOnContinue={toggleAccordionOnContinue} />
           </Accordion>
