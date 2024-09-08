@@ -6,6 +6,7 @@ import { setSelectedProduct, addToCart } from '../../redux-toolkit/productDetail
 import '../Homepage/ProductDetailPage.css';
 import Breadcrumbs from '../Homepage/Breadcrumbs';
 import { MdLocalOffer } from "react-icons/md";
+import { updateCartData } from '../../redux-toolkit/CartSlice';
  
 // Default image if none is provided
 const defaultImage = 'https://via.placeholder.com/600x400';
@@ -157,7 +158,7 @@ const ProductDetailPage = () => {
     };
  
     fetchOffersBySKU();
-  }, [skuID]);
+  }, [product,selectedColor,selectedSize]);
  
  
  
@@ -211,9 +212,11 @@ const ProductDetailPage = () => {
         imageURL: currentImage,
         selectedColor,
         selectedSize,
+        requestedQuantity: 1,
         categoryID: product.categoryID,
         categoryName: product.categoryName,
         skuID,
+        totalAmountPerProduct: product.price,
         stockQuantity,
         zipcode,
         expectedDeliveryDate,

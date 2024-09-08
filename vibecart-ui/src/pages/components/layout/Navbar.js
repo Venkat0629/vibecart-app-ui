@@ -16,6 +16,7 @@ const Navbar = () => {
     const [activeMenu, setActiveMenu] = useState(''); // Track the active menu item
     const navigate = useNavigate();
     const location = useLocation();
+    const { cartData } = useSelector((state) => state.cart);
 
     const dispatch = useDispatch();
 
@@ -113,14 +114,14 @@ const Navbar = () => {
                     </form>
                     <div className="navbar-icons d-flex align-items-center">
                         <div className="navbar-icon" onClick={() => handleNavigate('/profile')}>
-                            <FaRegUserCircle className="user-icon" size={28} color='#dd1e25'/>
+                            <FaRegUserCircle className="user-icon" size={28} color='#dd1e25' />
                         </div>
-                        <div className="navbar-icon" onClick={() => handleNavigate('/cart')}>
-                            <IoCartOutline color='#dd1e25'  size={32} />
+                        <div className="navbar-icon cart-icon" onClick={() => handleNavigate('/cart')}>
+                            <IoCartOutline size={28} />
+                            {cartData?.length > 0 && (
+                                <span className="cart-item-count">{cartData?.length}</span>
+                            )}
                         </div>
-                        {/* <div className="navbar-icon" title='Orders' onClick={() => handleNavigate('/orders')}>
-                            Orders
-                        </div> */}
                     </div>
                 </header>
             </div>

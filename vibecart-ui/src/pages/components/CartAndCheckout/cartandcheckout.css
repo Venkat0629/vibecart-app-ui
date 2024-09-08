@@ -6,6 +6,6 @@
     color: #333;
     outline: none;
 }
-input[type="checkbox"] {
+.checkout-container input[type="checkbox"] {
     width: auto;
 }
