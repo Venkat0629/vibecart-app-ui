@@ -2,16 +2,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     color: black;
 
 }
 .cartProductsContainer{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-
 }
 
 .cartproductDetails {
@@ -28,10 +27,7 @@
     display: flex;
     justify-content: flex-start;
     margin-right: 10px;
-}
-
-.cartproductImage {
-    flex: 0 0 10%;
+    margin-top: 10px;
 }
 
 .cartproductTitle {
@@ -42,6 +38,10 @@
     width: 100%;
     color: black;
     flex: 1;
+}
+.cartproductTitle p {
+    margin: 0; /* Removes default margin from <p> elements */
+    padding: 2px 0; /* Adjust the padding to create a small gap */
 }
 
 .cartEditquantityLayout {

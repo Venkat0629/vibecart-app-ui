@@ -31,7 +31,7 @@ const OrderSummary = ({ cartData, cartBillData, navigateTo }) => {
       <div className='ordersummary-bill-layout'>
         {promoCode ?
           <>
-            <p style={{ backgroundColor: "lightgrey" }}>{promoCode}</p>
+            <p style={{ color: "#28A745" }}>{promoCode}</p>
             <p style={{ color: "#28A745" }}><b>{formattedpromo}</b></p>
           </>
           :
@@ -44,7 +44,7 @@ const OrderSummary = ({ cartData, cartBillData, navigateTo }) => {
       <div className='ordersummary-bill-layout'>
         {cartOffers ?
           <>
-            <p style={{ backgroundColor: "lightgrey" }}>{cartOffers[0]?.offerName}</p>
+            <p style={{ color: "#28A745" }}>{cartOffers[0]?.offerName}</p>
             <p style={{ color: "#28A745" }}><b>{formattedCartOffer}</b></p>
           </>
           :
@@ -56,7 +56,7 @@ const OrderSummary = ({ cartData, cartBillData, navigateTo }) => {
       </div>
       <hr></hr>
       <div className='ordersummary-bill-layout'>
-        <p>Total</p>
+        <p style={{fontSize:"20px"}}><b>Total</b></p>
         <p style={{ fontSize: "25px",color:"#FF5733" }}>  <b>{formattedPrice}</b></p>
       </div>
 

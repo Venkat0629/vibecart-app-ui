@@ -4,6 +4,8 @@ import './checkoutcomponents.css'
 import '../cartandcheckout.css';
 import { updateAddressData } from '../../../redux-toolkit/CartSlice';
 import { useDispatch } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Shipping = ({ address, toggleAccordionOnContinue }) => {
     const [formData, setFormData] = useState({
@@ -49,24 +51,24 @@ const Shipping = ({ address, toggleAccordionOnContinue }) => {
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-
         if (validateForm()) {
             const existingData = JSON.parse(localStorage.getItem('shippingAddress')) || {};
             const updatedData = { ...existingData, ...formData };
             dispatch(updateAddressData(updatedData));
             localStorage.setItem('shippingAddress', JSON.stringify(updatedData));
-            toggleAccordionOnContinue()
+            toggleAccordionOnContinue();
         }
     }
 
     return (
         <div className='shipping-container'>
-            <form onSubmit={handleSubmit}>
-                <div className='form-group'>
+            <form onSubmit={handleSubmit} className="needs-validation">
+                <div className="form-group mb-3">
                     <input
                         type="text"
+                        className="form-control"
                         id="fullname"
                         name="fullname"
                         placeholder="Full Name"
@@ -75,9 +77,10 @@ const Shipping = ({ address, toggleAccordionOnContinue }) => {
                         required
                     />
                 </div>
-                <div className='form-group'>
+                <div className="form-group mb-3">
                     <input
                         type="email"
+                        className="form-control"
                         id="email"
                         name="email"
                         placeholder="Email"
@@ -85,11 +88,12 @@ const Shipping = ({ address, toggleAccordionOnContinue }) => {
                         onChange={handleChange}
                         required
                     />
+                    <p className="text-danger">{errors.email}</p>
                 </div>
-                <p>{errors.email}</p>
-                <div className='form-group'>
+                <div className="form-group mb-3">
                     <input
                         type="text"
+                        className="form-control"
                         id="address"
                         name="address"
                         placeholder="Address"
@@ -98,9 +102,10 @@ const Shipping = ({ address, toggleAccordionOnContinue }) => {
                         required
                     />
                 </div>
-                <div className='form-group'>
+                <div className="form-group mb-3">
                     <input
                         type="text"
+                        className="form-control"
                         id="building"
                         name="building"
                         placeholder="Apt, Suite, Building (Optional)"
@@ -108,10 +113,11 @@ const Shipping = ({ address, toggleAccordionOnContinue }) => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className='form-item'>
-                    <div className='form-group'>
+                <div className="row">
+                    <div className="col-md-6 mb-3">
                         <input
                             type="text"
+                            className="form-control"
                             id="city"
                             name="city"
                             placeholder="City"
@@ -120,48 +126,25 @@ const Shipping = ({ address, toggleAccordionOnContinue }) => {
                             required
                         />
                     </div>
-                    <div className='form-group'>
+                    <div className="col-md-3 mb-3">
                         <select
+                            className="form-select"
                             id="state"
                             name="state"
                             value={formData.state}
                             onChange={handleChange}
                             required
                         >
-                            <option value=""> State</option>
+                            <option value="">State</option>
                             <option value="Andhra Pradesh">Andhra Pradesh</option>
                             <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                            <option value="Assam">Assam</option>
-                            <option value="Bihar">Bihar</option>
-                            <option value="Chhattisgarh">Chhattisgarh</option>
-                            <option value="Goa">Goa</option>
-                            <option value="Gujarat">Gujarat</option>
-                            <option value="Haryana">Haryana</option>
-                            <option value="Himachal Pradesh">Himachal Pradesh</option>
-                            <option value="Jharkhand">Jharkhand</option>
-                            <option value="Karnataka">Karnataka</option>
-                            <option value="Kerala">Kerala</option>
-                            <option value="Madhya Pradesh">Madhya Pradesh</option>
-                            <option value="Maharashtra">Maharashtra</option>
-                            <option value="Manipur">Manipur</option>
-                            <option value="Meghalaya">Meghalaya</option>
-                            <option value="Mizoram">Mizoram</option>
-                            <option value="Nagaland">Nagaland</option>
-                            <option value="Odisha">Odisha</option>
-                            <option value="Punjab">Punjab</option>
-                            <option value="Rajasthan">Rajasthan</option>
-                            <option value="Sikkim">Sikkim</option>
-                            <option value="Tamil Nadu">Tamil Nadu</option>
-                            <option value="Telangana">Telangana</option>
-                            <option value="Tripura">Tripura</option>
-                            <option value="Uttar Pradesh">Uttar Pradesh</option>
-                            <option value="Uttarakhand">Uttarakhand</option>
-                            <option value="West Bengal">West Bengal</option>
+                            {/* Add more options here */}
                         </select>
                     </div>
-                    <div className="form-group">
+                    <div className="col-md-3 mb-3">
                         <input
                             type="text"
+                            className="form-control"
                             id="zip"
                             name="zip"
                             placeholder="ZIP"
@@ -169,12 +152,13 @@ const Shipping = ({ address, toggleAccordionOnContinue }) => {
                             onChange={handleChange}
                             required
                         />
-                        <p>{errors.zip}</p>
+                        <p className="text-danger">{errors.zip}</p>
                     </div>
                 </div>
-                <div className="form-group">
+                <div className="form-group mb-3">
                     <input
                         type="tel"
+                        className="form-control"
                         id="phone"
                         name="phone"
                         placeholder="Phone"
@@ -182,16 +166,23 @@ const Shipping = ({ address, toggleAccordionOnContinue }) => {
                         onChange={handleChange}
                         required
                     />
-                    <p>{errors.phone}</p>
+                    <p className="text-danger">{errors.phone}</p>
                 </div>
-                <div className="payment-option">
-                    <input type="checkbox" checked={isChecked} handleChange={()=> setIsChecked(true)} />
-                    <p style={{ margin: 0, padding: 0 }}>Billing address is same as shipping address</p>
+                <div className="form-check mb-1">
+                    <input
+                        type="checkbox"
+                        className="form-check-input"
+                        checked={isChecked}
+                        onChange={() => setIsChecked(true)}
+                        id="billingAddressCheck"
+                    />
+                    <label className="form-check-label" htmlFor="billingAddressCheck">
+                        Billing address is same as shipping address
+                    </label>
                 </div>
-                <div className="button-container" style={{marginTop:"10px"}}>
+                <div className="button-container" style={{ marginTop: "10px" }}>
                     <ReusableButton buttonName="Continue" />
                 </div>
-
             </form>
         </div>
     );

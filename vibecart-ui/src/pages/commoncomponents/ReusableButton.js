@@ -1,9 +1,9 @@
 import React from 'react'
 import './commoncomponents.css'
 
-const ReusableButton = ({buttonName,handleClick}) => {
+const ReusableButton = ({buttonName,handleClick,disabled}) => {
   return (
-    <button className="button-css" onClick={handleClick} >{buttonName}</button>
+    <button className="button-css" disabled={disabled} onClick={handleClick} >{buttonName}</button>
   )
 }
 

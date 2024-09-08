@@ -5,5 +5,7 @@
     box-sizing: border-box;
     color: #333;
     outline: none;
-    border-radius: 15px;
+}
+input[type="checkbox"] {
+    width: auto;
 }
