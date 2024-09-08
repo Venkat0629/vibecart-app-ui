@@ -9,6 +9,7 @@ import Cart from '../../pages/components/CartAndCheckout/cart/Cart'
 import Checkout from '../components/CartAndCheckout/checkout/Checkout';
 import Orders from '../components/CartAndCheckout/orders/Orders'
 import Sale from '../components/Homepage/Sale';
+import OrderConfirmation from '../components/CartAndCheckout/orders/orderConfirmation';
 
 
 export const Routing = () => {
@@ -27,6 +28,8 @@ export const Routing = () => {
           <Route path="/checkout" element={<Checkout/>} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/sale" element={<Sale />} />
+          <Route path="/orderConfirmation" element={<OrderConfirmation/>} />
+
         </Routes>
       </main>
       <div className="footerLayout">
