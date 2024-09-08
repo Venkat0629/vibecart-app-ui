@@ -24,7 +24,7 @@
 .custom-class {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
  
 }
 
@@ -46,11 +46,14 @@
 .sort-section {
   display: flex;
   align-items: center;
+  /* margin-right: 30px; */
 }
 
 .sort-section label {
   margin-right: 10px;
   font-weight: bold;
+  width: 90px;
+  height: 17px;
 }
 
 .sort-section select {
@@ -74,6 +77,7 @@
   /* border: 1px solid grey; */
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
   color: white;
+  /* margin-left: 30px; */
 }
 
 .filter-section h5 {
@@ -127,6 +131,12 @@
   object-fit: cover;
   display: block;
 }
+.card-title1{
+  font-size: 1.2rem;
+}
+.image-container1{
+    height: 250px;
+}
 
 /* Placeholder image styling */
 .image-container img {
@@ -146,7 +156,7 @@
 }
 
 .viewDetails {
-  width: 200px;
+  /* width: 200px; */
   height: 48px;
   display: flex;
   justify-content: center;
@@ -181,4 +191,121 @@
   .sort-section select {
       margin-top: 10px;
   }
+}
+
+.buttonsection
+  {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.search-results-info {
+  /* Light background to make the text stand out */
+  color: #333; /* Dark text for readability */
+  padding: 10px 15px; /* Some padding for spacing */
+  border-radius: 5px; /* Rounded corners for a modern look */
+   /* Light border to define the area */
+   /* Subtle shadow for depth */
+  font-size: 20px; /* Slightly larger font for better readability */
+  font-weight: 500; /* Semi-bold text for emphasis */
+  margin-bottom: 20px; /* Space below the element */
+  /* Center-align the text */
+}
+
+.search-results-info span {
+  color: #007bff; /* Highlighted color for search term */
+  font-weight: 600; /* Bold font for the search term */
+}
+
+.product_filter{
+  display: flex;
+  /* justify-content: ; */
+}
+
+
+.product-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 25%;
+  padding: 20px;
+}
+
+.filter-section {
+  margin-bottom: 20px;
+}
+
+.filter-group {
+  margin-bottom: 10px;
+}
+
+.sorting-options {
+  margin-bottom: 20px;
+}
+
+.product-list {
+  width: 75%;
+  padding: 20px;
+}
+
+.offers-section {
+  color: red;
+  font-weight: bold;
+  /* font-family: 'Times New Roman', Times, serif; */
+  font-family: Arial, sans-serif;
+}
+ 
+.price-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+ 
+.offer-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #e74c3c; /* Discounted price color */
+  margin: 0;
+}
+.spinner-container {
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  color: #8c0e12; /* Change to your preferred color */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+ 
+.original-price {
+  font-size: 1rem;
+  color: #000; /* Color of the text */
+  text-decoration: line-through;
+  text-decoration-color: grey; /* Color of the strike-through line */
+  margin: 0;
+}
+ 
+ 
+.discount-details {
+  font-size: 0.9rem;
+  color: #2ecc71; /* Discount percentage color */
+  margin: 0;
+}
+
+.productdiscount{
+  display: flex;
+  gap: 10px;
 }
