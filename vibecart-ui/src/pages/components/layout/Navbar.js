@@ -145,12 +145,12 @@ const Navbar = () => {
                     >
                         Shoes
                     </p>
-                    <p
+                    {/* <p
                         className='sale'
                         onClick={() => handleNavigate('/sale', '', 'Sale')}
                     >
                         Sale
-                    </p>
+                    </p> */}
                 </div>
             </nav>
         </div>
