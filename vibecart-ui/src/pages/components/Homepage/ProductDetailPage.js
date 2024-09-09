@@ -59,17 +59,17 @@ const ProductDetailPage = () => {
  
         if (productId <1000900) {
           // Handle itemId
-          url = `http://localhost:5401/vibecart/ecom/items/item/${productId}`;
+          url = `http://10.3.45.15:4001/vibecart/ecom/items/item/${productId}`;
           response = await axios.get(url);
         } else {
           // Handle skuId
-          url = `http://localhost:5401/vibecart/ecom/products/product/sku-id/${productId}`;
+          url = `http://10.3.45.15:4001/vibecart/ecom/products/product/sku-id/${productId}`;
           response = await axios.get(url);
         }
 
         const productData = response.data;
         dispatch(setSelectedProduct(productData));
-        if (url === `http://localhost:5401/vibecart/ecom/items/item/${productId}`) {
+        if (url === `http://10.3.45.15:4001/vibecart/ecom/items/item/${productId}`) {
           setCurrentImage(productData.imageURLs[0] ? `http://${productData.imageURLs[0]}` : defaultImage);
         } else {
           setCurrentImage(productData.imageURL ? `http://${productData.imageURL}` : defaultImage);
@@ -91,13 +91,13 @@ const ProductDetailPage = () => {
     const fetchSkuDetails = async () => {
       if (selectedColor && selectedSize && product) {
         try {
-          const response = await axios.get(`http://localhost:5401/vibecart/ecom/products/product/item-id/${product.itemID}`, {
+          const response = await axios.get(`http://10.3.45.15:4001/vibecart/ecom/products/product/item-id/${product.itemID}`, {
             params: { color: selectedColor, size: selectedSize }
           });
           const { skuID, imageURL } = response.data;
           setSkuID(skuID); // Update SKU ID
           setCurrentImage(`http://${imageURL}`);
-          const stockResponse = await axios.get(`http://localhost:5601/vibe-cart/scm/inventory/quantity-by-sku`, {
+          const stockResponse = await axios.get(`http://10.3.45.15:4001/vibe-cart/scm/inventory/quantity-by-sku`, {
             params: { sku: skuID }
           });
           setStockQuantity(stockResponse.data.data ?? 0);
@@ -115,7 +115,7 @@ const ProductDetailPage = () => {
     const fetchOffersByItemID = async () => {
       if (product && product.itemID) {
         try {
-          const response = await axios.get(`http://localhost:5501/api/v1/vibe-cart/offers/item/${product.itemID}`);
+          const response = await axios.get(`http://10.3.45.15:4001/api/v1/vibe-cart/offers/item/${product.itemID}`);
           const offers = response.data || [];
           setOffersByItemID(offers);
 
@@ -140,7 +140,7 @@ const ProductDetailPage = () => {
     const fetchOffersBySKU = async () => {
       if (skuID) {
         try {
-          const response = await axios.get(`http://localhost:5501/api/v1/vibe-cart/offers/sku/${skuID}`);
+          const response = await axios.get(`http://10.3.45.15:4001/api/v1/vibe-cart/offers/sku/${skuID}`);
           const offers = response.data || [];
           setOffersBySKU(offers);
 
@@ -167,7 +167,7 @@ const ProductDetailPage = () => {
   const fetchExpectedDeliveryDate = async () => {
     if (skuID && zipcode.length === 6) {
       try {
-        const response = await axios.get(`http://localhost:5601/vibe-cart/scm/inventory/expected-delivery-date`, {
+        const response = await axios.get(`http://10.3.45.15:4001/vibe-cart/scm/inventory/expected-delivery-date`, {
           params: { sku: skuID, zipcode: zipcode }
         });
         setExpectedDeliveryDate(formatDateWithOrdinal(response.data));

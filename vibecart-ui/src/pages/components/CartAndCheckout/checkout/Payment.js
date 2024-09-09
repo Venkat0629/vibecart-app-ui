@@ -44,7 +44,7 @@ const Payment = ({ address }) => {
   }
   const validatePromoCode = async () => {
     try {
-      const apiUrl = `http://localhost:5501/api/v1/vibe-cart/offers/coupon/${promoCode}`;
+      const apiUrl = `http://10.3.45.15:4001/api/v1/vibe-cart/offers/coupon/${promoCode}`;
       const response = await fetch(apiUrl);
       const data = await response.json();
 
@@ -113,9 +113,9 @@ const Payment = ({ address }) => {
         const cartItems = JSON.parse(localStorage.getItem("cartItems"));
         const filteredItemfields = cartItems?.map(item => ({ sku: item.skuID, orderQuantity: item.requestedQuantity }));
         
-        const res = await fetch(`http://localhost:5601/vibe-cart/scm/orders/stock-reservation-call?customerZipcode=${finalObject?.shippingzipCode}`, { method: "PUT", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(filteredItemfields) });
+        const res = await fetch(`http://10.3.45.15:4001/vibe-cart/scm/orders/stock-reservation-call?customerZipcode=${finalObject?.shippingzipCode}`, { method: "PUT", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(filteredItemfields) });
         if ([200, 201].includes(res.status)) {
-          const response = await fetch('http://localhost:5401/vibecart/ecom/orders/createOrder', { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(finalObject) });
+          const response = await fetch('http://10.3.45.15:4001/vibecart/ecom/orders/createOrder', { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(finalObject) });
           if ([200, 201].includes(response.status)) {
             setLoading(false)
             navigate('/orderConfirmation');
