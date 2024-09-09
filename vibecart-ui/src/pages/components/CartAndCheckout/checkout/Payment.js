@@ -82,9 +82,9 @@ const Payment = ({ address }) => {
     if (shippingAddress && Object.keys(shippingAddress).length > 0) {
       setLoading(true);
       const now = new Date();
-      const orderDate = now.toISOString();
+      const orderDate = now?.toISOString();
       const expdelivery = new Date(cartItems[0]?.formattedExpecteddeliverydate);
-      const exp = expdelivery.toISOString();
+      const exp = expdelivery?.toISOString();
       const totalItems = cartItems.reduce((total, product) => {
         return total + Number(product.requestedQuantity);
       }, 0);
