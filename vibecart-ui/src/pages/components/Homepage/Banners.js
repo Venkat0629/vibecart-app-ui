@@ -38,8 +38,8 @@ const Banners = () => {
           dynamicHeight={false}
         >
           {bannerData.map((banner, index) => (
-            <div key={index} onClick={() => handleBannerClick(banner.query)}>
-              <img src={banner.image} alt={`Banner ${index + 1}`} className="carousel-image" />
+            <div key={index} onClick={() => handleBannerClick(banner.query)} className="carousel-image" >
+              <img src={banner.image} alt={`Banner ${index + 1}`} />
             </div>
           ))}
         </Carousel>

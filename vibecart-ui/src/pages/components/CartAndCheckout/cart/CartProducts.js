@@ -15,7 +15,8 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
     const { toast, showToast, triggerToast } = useToast();
 
     const handleQuantityChange = (productId, stockQuantity, e) => {
-        if (e.target.value > stockQuantity) {
+     
+        if (Number(e.target.value) > stockQuantity) {
             setQuantityError(`${stockQuantity} max`);
         }
         else if (e.target.value < 0) {
@@ -34,7 +35,6 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
     }
 
     const handleQuantityUpdation = (type, productId, requestedQuantity, stockQuantity) => {
-
         let updatedQuantity;
         if (type === "increment") {
             updatedQuantity = Number(requestedQuantity) + 1
@@ -43,7 +43,6 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
             updatedQuantity = Number(requestedQuantity) - 1
 
         }
-
         if (updatedQuantity > stockQuantity) {
             setQuantityError(`${stockQuantity} max`);
         }
@@ -100,7 +99,7 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
 
                         {editQuantity ?
                             <>
-                                <FiMinus className='icon-styles' onClick={() => handleQuantityUpdation("decrement", product.skuID, product.requestedQuantity, product.stockQuantity)} />
+                                <FiMinus className='icon-styles' onClick={() => handleQuantityUpdation("decrement", product.skuID, product.requestedQuantity, product.stockQuantity,product)} />
                                 <input
                                     className='quantityInput'
                                     min="1"

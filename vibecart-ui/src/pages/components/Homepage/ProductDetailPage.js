@@ -7,17 +7,16 @@ import '../Homepage/ProductDetailPage.css';
 import Breadcrumbs from '../Homepage/Breadcrumbs';
 import { MdLocalOffer } from "react-icons/md";
 import { updateCartData } from '../../redux-toolkit/CartSlice';
- 
+
 // Default image if none is provided
 const defaultImage = 'https://via.placeholder.com/600x400';
- 
+
 // Function to format date with ordinal suffix
 const formatDateWithOrdinal = (dateString) => {
   const date = new Date(dateString);
   const day = date.getDate();
   const month = date.toLocaleString('default', { month: 'long' });
   const year = date.getFullYear();
- 
   const ordinalSuffix = (day) => {
     if (day >= 11 && day <= 13) return 'th'; // Special cases for 11, 12, 13
     switch (day % 10) {
@@ -27,15 +26,20 @@ const formatDateWithOrdinal = (dateString) => {
       default: return 'th';
     }
   };
- 
-  return `${day}${ordinalSuffix(day)} ${month} ${year}`;
+
+  if (day === "NaN" || "NaNth") {
+    return ""
+  }
+  else {
+    return `${day}${ordinalSuffix(day)} ${month} ${year}`;
+  }
 };
- 
+
 const ProductDetailPage = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productDetail.selectedProduct);
- 
+
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [skuID, setSkuID] = useState('');
@@ -49,14 +53,14 @@ const ProductDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [offerPrice, setOfferPrice] = useState(null);
- 
-   
+
+
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
         let response;
         let url = '';
- 
+
         if (productId < 900) {
           // Handle itemId
           url = `http://localhost:6060/vibecart/ecom/items/item/${productId}`;
@@ -66,7 +70,7 @@ const ProductDetailPage = () => {
           url = `http://localhost:6060/vibecart/ecom/products/product/sku-id/${productId}`;
           response = await axios.get(url);
         }
- 
+
         const productData = response.data;
         dispatch(setSelectedProduct(productData));
         if (url === `http://localhost:6060/vibecart/ecom/items/item/${productId}`) {
@@ -82,11 +86,11 @@ const ProductDetailPage = () => {
         setLoading(false);
       }
     };
- 
+
     fetchProductDetails();
   }, [productId, dispatch]);
- 
- 
+
+
   useEffect(() => {
     const fetchSkuDetails = async () => {
       if (selectedColor && selectedSize && product) {
@@ -100,17 +104,17 @@ const ProductDetailPage = () => {
           const stockResponse = await axios.get(`http://localhost:8090/vibe-cart/inventory/quantity-by-sku`, {
             params: { sku: skuID }
           });
-          setStockQuantity(stockResponse.data);
-          setOutOfStockMessage(stockResponse.data <= 0 ? 'Out of stock' : '');
+          setStockQuantity(stockResponse.data.data ?? 0);
+          setOutOfStockMessage(stockResponse.data.data <= 0 ? 'Out of stock' : '');
         } catch (error) {
           console.error('Error fetching SKU ID and image URL:', error);
         }
       }
     };
- 
+
     fetchSkuDetails();
   }, [selectedColor, selectedSize, product]);
- 
+
   useEffect(() => {
     const fetchOffersByItemID = async () => {
       if (product && product.itemID) {
@@ -118,7 +122,7 @@ const ProductDetailPage = () => {
           const response = await axios.get(`http://localhost:5501/api/v1/vibe-cart/offers/item/${product.itemID}`);
           const offers = response.data || [];
           setOffersByItemID(offers);
- 
+
           // Compute offerPrice
           const offer = offers.find(o => o.offerDiscountType === 'PERCENTAGE');
           if (offer) {
@@ -131,11 +135,11 @@ const ProductDetailPage = () => {
         }
       }
     };
- 
+
     fetchOffersByItemID();
   }, [product]);
- 
- 
+
+
   useEffect(() => {
     const fetchOffersBySKU = async () => {
       if (skuID) {
@@ -143,7 +147,7 @@ const ProductDetailPage = () => {
           const response = await axios.get(`http://localhost:5501/api/v1/vibe-cart/offers/sku/${skuID}`);
           const offers = response.data || [];
           setOffersBySKU(offers);
- 
+
           // Compute offerPrice
           const offer = offers.find(o => o.offerDiscountType === 'PERCENTAGE');
           if (offer) {
@@ -156,14 +160,14 @@ const ProductDetailPage = () => {
         }
       }
     };
- 
+
     fetchOffersBySKU();
-  }, [product,selectedColor,selectedSize]);
- 
- 
- 
- 
- 
+  }, [product, selectedColor, selectedSize]);
+
+
+
+
+
   const fetchExpectedDeliveryDate = async () => {
     if (skuID && zipcode.length === 6) {
       try {
@@ -177,25 +181,25 @@ const ProductDetailPage = () => {
       }
     }
   };
- 
+
   const handleZipcodeChange = (e) => {
     const value = e.target.value;
     setZipcode(value);
- 
+
     if (value.length === 6) {
       fetchExpectedDeliveryDate();
     } else {
       setExpectedDeliveryDate('');
     }
   };
- 
+
   const handleAddToCart = () => {
     if (selectedColor && selectedSize && product) {
       if (stockQuantity === null || stockQuantity <= 0) {
         setOutOfStockMessage('Out of stock');
         return;
       }
- 
+
       const offerDetails = [...offersByItemID, ...offersBySKU].map((offer) => ({
         offerId: offer.offerId,
         offerName: offer.offerName,
@@ -203,7 +207,7 @@ const ProductDetailPage = () => {
         offerDiscountValue: offer.offerDiscountValue,
         offerType: offer.offerType,
       }));
- 
+
       const cartItem = {
         itemID: product.itemID,
         itemName: product.itemName,
@@ -222,11 +226,11 @@ const ProductDetailPage = () => {
         expectedDeliveryDate,
         offers: offerDetails // Added offers
       };
- 
+
       let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
- 
+
       const itemExists = cartItems.some((item) => item.skuID === cartItem.skuID);
- 
+
       if (itemExists) {
         alert('This item with the same SKU ID is already in your cart.');
       } else {
@@ -240,25 +244,25 @@ const ProductDetailPage = () => {
       alert('Please select a color and size.');
     }
   };
- 
+
   if (loading) {
     return <div className="loading">Loading product details...</div>;
   }
- 
+
   if (error) {
     return <div className="error">{error}</div>;
   }
- 
+
   if (!product) {
     return <div className="error">Product not found.</div>;
   }
- 
+
   const breadcrumbs = [
     { label: 'Home', path: '/' },
     { label: 'Products', path: '/products' },
     { label: product.itemName, path: `/product/${productId}` },
   ];
- 
+
   return (
     <div className="product-detail-page">
       <Breadcrumbs breadcrumbs={breadcrumbs} className="container" />
@@ -281,13 +285,13 @@ const ProductDetailPage = () => {
               <img src={currentImage} alt={product.itemName} />
             </div>
           </div>
- 
+
           {/* Product Details */}
           <div className="col-md-6 product-details">
             <h1>{product.itemName}</h1>
             {skuID && <h3 className="sku">SKU ID: {skuID}</h3>}
             <h4 className="category">Category: {product.categoryName}</h4>
- 
+
             {/* Color Selection */}
             <div className="selection-group">
               <label htmlFor="color">Select Color:</label>
@@ -303,7 +307,7 @@ const ProductDetailPage = () => {
                 ))}
               </div>
             </div>
- 
+
             {/* Size Selection */}
             <div className="selection-group">
               <label htmlFor="size">Select Size:</label>
@@ -319,27 +323,27 @@ const ProductDetailPage = () => {
                 ))}
               </div>
             </div>
- 
-            
-     
- 
- 
- 
- 
- {/* Price Display */}
+
+
+
+
+
+
+
+            {/* Price Display */}
             <div className="price-section">
               {offerPrice !== null && offerPrice < product.price ? (
                 <>
-                <div className='pipdiscounts'>
-                  <h2 className="offer-price price">${offerPrice.toFixed(2)}</h2>
-                  <h2 className="original-price  ">${product.price.toFixed(2)}</h2>
+                  <div className='pipdiscounts'>
+                    <h2 className="offer-price price">${offerPrice.toFixed(2)}</h2>
+                    <h2 className="original-price  ">${product.price.toFixed(2)}</h2>
                   </div>
                 </>
               ) : (
                 <h2 className="price">${product.price.toFixed(2)}</h2>
               )}
             </div>
- 
+
             {/* {outOfStockMessage && <p className="text-danger">{outOfStockMessage}</p>}
             <p className="description">{product.itemDescription}</p>
  
@@ -359,15 +363,15 @@ const ProductDetailPage = () => {
               </div>
             )}
   */}
- 
- 
- 
- 
- 
+
+
+
+
+
             {outOfStockMessage && <p className="text-danger">{outOfStockMessage}</p>}
- 
+
             <p className="description">{product.itemDescription}</p>
- 
+
             {/* Offers Section */}
             {offersByItemID.length > 0 && (
               <div className="offers-section">
@@ -383,7 +387,7 @@ const ProductDetailPage = () => {
                 </ul>
               </div>
             )}
- 
+
             {offersBySKU.length > 0 && (
               <div className="offers-section">
                 <h3>Available SKU Offers:</h3>
@@ -398,12 +402,12 @@ const ProductDetailPage = () => {
                 </ul>
               </div>
             )}
- 
+
             {/* Add to Cart Button */}
             <button className="add-to-cart" onClick={handleAddToCart}>
               Add to Cart
             </button>
- 
+
             {/* Delivery Availability */}
             <div className="delivery-availability">
               <label htmlFor="zipcode">Delivery Availability:</label>
@@ -422,7 +426,7 @@ const ProductDetailPage = () => {
                 </div>
                 {expectedDeliveryDate && (
                   <p className="expected-delivery" style={{ marginTop: '10px', color: 'green' }}>
-                    <span style={{color:'grey'}}>Expected Delivery:</span> {expectedDeliveryDate}
+                    <span style={{ color: 'grey' }}>Expected Delivery:</span> {expectedDeliveryDate}
                   </p>
                 )}
               </div>
@@ -433,5 +437,5 @@ const ProductDetailPage = () => {
     </div>
   );
 };
- 
+
 export default ProductDetailPage;

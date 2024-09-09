@@ -107,7 +107,7 @@ const Payment = ({ address }) => {
       try {
         const cartItems = JSON.parse(localStorage.getItem("cartItems"));
         const filteredItemfields = cartItems?.map(item => ({ sku: item.skuID, orderQuantity: item.requestedQuantity }));
-        const res = await fetch(`http://localhost:8090/vibe-cart/orders/stock-reservation-call?customerZipcode=${finalObject?.shippingzipCode}`, { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(filteredItemfields) });
+        const res = await fetch(`http://localhost:8090/vibe-cart/scm/orders/stock-reservation-call?customerZipcode=${finalObject?.shippingzipCode}`, { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(filteredItemfields) });
         if ([200, 201].includes(res.status)) {
           const response = await fetch('http://localhost:6060/vibecart/ecom/orders/createOrder', { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(finalObject) });
           if ([200, 201].includes(response.status)) {

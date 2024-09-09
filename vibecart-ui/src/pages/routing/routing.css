@@ -9,13 +9,16 @@
     flex: 0 0 auto;
     color: #f8f9fa;
     background-color: white;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    width: 100%;
 }
 
 .content{
     flex: 1;
     overflow-y: auto;
-    /* background-color: #fafafc; */
-
+    margin-top: 150px;
 }
 
 .footerLayout{

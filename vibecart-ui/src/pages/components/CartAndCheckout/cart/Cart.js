@@ -19,7 +19,6 @@ const Cart = () => {
   const [loading, setLoading] = useState(true);
   const { cartData, cartBillData } = useSelector((state) => state.cart);
   const { toast, showToast, triggerToast } = useToast();
-
   const navigateTo = (path) => {
     navigate(path);
   }
@@ -45,7 +44,6 @@ const Cart = () => {
 
   const calculateTotalBill = (cartData) => {
     const data = JSON.parse(localStorage.getItem("billingData"));
-    console.log(data);
     const totalCartBill = cartData.reduce((total, product) => {
       return total + (product.price * product.requestedQuantity);
     }, 0);

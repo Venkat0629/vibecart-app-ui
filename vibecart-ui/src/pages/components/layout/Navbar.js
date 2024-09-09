@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { IoCartOutline } from 'react-icons/io5';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { FaUser, FaSearch } from 'react-icons/fa'; // Import FaSearch
+import { FaSearch } from 'react-icons/fa';
 import { FaRegUserCircle } from "react-icons/fa";
 import axios from 'axios';
 import './layout.css';
@@ -13,7 +13,7 @@ const Navbar = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [productData, setProductData] = useState([]);
-    const [activeMenu, setActiveMenu] = useState(''); // Track the active menu item
+    const [activeMenu, setActiveMenu] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
     const { cartData } = useSelector((state) => state.cart);
