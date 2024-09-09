@@ -395,7 +395,7 @@ const ProductDetailPage = () => {
 
             {offersBySKU.length > 0 && (
               <div className="offers-section">
-                <h3>Available Offers:</h3>
+                <h4>Available Offers:</h4>
                   {/* {offersBySKU.map((offer) => (
                     <div key={offer.offerId}>
                       <MdLocalOffer style={{ color: '#8c0e12', fontSize: '20px', margin: '20px' }} />
