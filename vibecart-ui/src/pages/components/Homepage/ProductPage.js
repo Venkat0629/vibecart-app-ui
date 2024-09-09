@@ -235,20 +235,22 @@ const ProductPage = () => {
  
       {/* Hero Section */}
       <div className="hero-section">
-        <h1 className="text-center my-4">Explore Our Products</h1>
+        <h3 className="text-center my-4">Explore Our Products</h3>
       </div>
  
       {/* Search Results Information */}
+      <div className="container">
       {searchTerm && (
         <p className="search-results-info">
           {products.length} search result{products.length !== 1 ? "s" : ""} for
           "{searchTerm}"
         </p>
       )}
- 
+      </div>
+
       {/* Filter and Sort Controls */}
-      <div className="container mb-4 mt-4 custom-class">
-        {/* Filter Toggle Button */}
+      <div className="filter-container container">
+       <div className="filters">
         <button
           className="btn filter-button"
           onClick={() => dispatch(toggleFilterVisibility())}
@@ -258,7 +260,9 @@ const ProductPage = () => {
         </button>
  
         {/* Sort Section */}
-        <div className="sort-section">
+       
+      </div>
+      <div className="sort-section">
           <label htmlFor="sortOption" className="form-label">
             Sort by:
           </label>
@@ -550,7 +554,7 @@ const ProductPage = () => {
           )}
  
           {/* Products Grid */}
-          <div className={showFilters ? "col-md-9" : "col-12"}>
+          <div className={showFilters ? "col-md-9" : "col-13"}>
             <div className="product_filter">
               <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                 {loading ? (
