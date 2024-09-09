@@ -72,7 +72,7 @@ const Payment = ({ address }) => {
       setMessage('Please enter a promo code.');
     }
   };
-
+ 
   const handlePlaceOrder = async () => {
     const cartItems = JSON.parse(localStorage.getItem("cartItems"))
     const billingData = JSON.parse(localStorage.getItem("billingData"))
@@ -107,19 +107,22 @@ const Payment = ({ address }) => {
       try {
         const cartItems = JSON.parse(localStorage.getItem("cartItems"));
         const filteredItemfields = cartItems?.map(item => ({ sku: item.skuID, orderQuantity: item.requestedQuantity }));
-        const res = await fetch(`http://localhost:8090/vibe-cart/scm/orders/stock-reservation-call?customerZipcode=${finalObject?.shippingzipCode}`, { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(filteredItemfields) });
+        
+        const res = await fetch(`http://localhost:5601/vibe-cart/scm/orders/stock-reservation-call?customerZipcode=${finalObject?.shippingzipCode}`, { method: "PUT", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(filteredItemfields) });
         if ([200, 201].includes(res.status)) {
-          const response = await fetch('http://localhost:6060/vibecart/ecom/orders/createOrder', { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(finalObject) });
+          const response = await fetch('http://localhost:5401/vibecart/ecom/orders/createOrder', { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(finalObject) });
           if ([200, 201].includes(response.status)) {
             setLoading(false)
             navigate('/orderConfirmation');
           }
         }
+        else{
+          triggerToast("error", "Failed reserving Item")
+        }
         setLoading(false);
       }
       catch (e) {
         setLoading(false)
-        console.log(e)
       }
     }
     else {
@@ -170,7 +173,12 @@ const Payment = ({ address }) => {
       </div>
 
       <div className="place-order">
-        <p><strong>By placing an order, you are agreeing to our Privacy Policy and Terms of Use</strong></p>
+        <p className="">
+          By continuing with your purchase, you agree to our{' '}
+          <a href="/terms" target="_blank" rel="noopener noreferrer" className="">terms</a>,{' '}
+          <a href="/terms" target="_blank" rel="noopener noreferrer" className="">conditions</a>, and{' '}
+          <a href="/terms" target="_blank" rel="noopener noreferrer" className="">privacy policy</a>.
+        </p>
         <ReusableButton buttonName="Place Order" handleClick={handlePlaceOrder} disabled={loading} />
       </div>
     </div>

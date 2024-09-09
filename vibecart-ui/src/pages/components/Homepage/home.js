@@ -36,7 +36,7 @@ const Home = () => {
     const fetchTopProducts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:6060/vibecart/ecom/products?limit=10"
+          "http://localhost:5401/vibecart/ecom/products?limit=10"
         );
         if (Array.isArray(response.data)) {
           const uniqueProducts = [];

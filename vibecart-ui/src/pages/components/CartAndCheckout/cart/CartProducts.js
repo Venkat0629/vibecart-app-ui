@@ -11,16 +11,21 @@ import './cartproducts.css'
 const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill }) => {
     const [quantityError, setQuantityError] = useState(null);
     const dispatch = useDispatch();
-
     const { toast, showToast, triggerToast } = useToast();
 
     const handleQuantityChange = (productId, stockQuantity, e) => {
      
         if (Number(e.target.value) > stockQuantity) {
             setQuantityError(`${stockQuantity} max`);
+            setTimeout(() => {
+                setQuantityError(null);
+              }, 4000);
         }
         else if (e.target.value < 0) {
             setQuantityError("min 1");
+            setTimeout(() => {
+                setQuantityError(null);
+              }, 4000);
         }
 
         else {
@@ -45,9 +50,15 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
         }
         if (updatedQuantity > stockQuantity) {
             setQuantityError(`${stockQuantity} max`);
+            setTimeout(() => {
+                setQuantityError(null);
+              }, 4000);
         }
         else if (updatedQuantity <= 0) {
             setQuantityError("min 1");
+            setTimeout(() => {
+                setQuantityError(null);
+              }, 4000);
 
         }
         else {
@@ -86,7 +97,7 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
                     <img src={product.imageURL} alt="Product" className='icon-styles' onClick={editQuantity ? () => handlecartItemClick(product.skuID): null} />
                 </div>
                 <div className='cartproductTitle'>
-                    <p> <strong style={{ cursor: "pointer" }} onClick={editQuantity ? () => handlecartItemClick(product.skuID):null}>{product.itemName}</strong></p>
+                    <h5> <strong style={{ cursor: "pointer" }} onClick={editQuantity ? () => handlecartItemClick(product.skuID):null}>{product.itemName}</strong></h5>
                     <p><span style={{color:"#555"}}>Size:</span> {product.selectedSize}</p>
                     {!editQuantity && product.expectedDeliveryDate &&
                         <><p  style={{color: '#555' }}>Estimated Delivery:</p>
@@ -135,6 +146,7 @@ const CartProducts = ({ product, editQuantity, navigateTo, calculateTotalBill })
                     </p>
                     <p className="offer-popup" style={{ backgroundColor: "#f5f5f5", color: "#8c0e12" }}>
                         <b>Discount value: {product.offers[0]?.offerDiscountValue}</b>
+                        <p style={{color:"#8c0e12"}}><b>{product.offers[0]?.offerDescription ?? ""}</b></p>
                     </p>
                 </div>
                 {editQuantity && <p className='removecartItemButton' onClick={() => handleRemoveCartItem(product.skuID)}>Remove</p>}
