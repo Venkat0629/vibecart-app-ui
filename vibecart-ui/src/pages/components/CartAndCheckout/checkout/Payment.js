@@ -75,29 +75,33 @@ const Payment = ({ address }) => {
  
   const handlePlaceOrder = async () => {
     const cartItems = JSON.parse(localStorage.getItem("cartItems"))
-    const billingData = JSON.parse(localStorage.getItem("billingData"))
+    const billingData = JSON.parse(localStorage.getItem("billingData"));
+  
     const shippingAddress = JSON.parse(localStorage.getItem("shippingAddress"));
     const offerDetails = JSON.parse(localStorage.getItem("cartOffers"));
     if (shippingAddress && Object.keys(shippingAddress).length > 0) {
       setLoading(true);
       const now = new Date();
       const orderDate = now.toISOString();
+      const expdelivery = new Date(cartItems[0]?.formattedExpecteddeliverydate);
+      const exp = expdelivery.toISOString();
       const totalItems = cartItems.reduce((total, product) => {
         return total + Number(product.requestedQuantity);
       }, 0);
-      const finalCartItems = cartItems?.map((x)=> ({...x,skuId:x.skuID,itemId:x.itemID,category:x.categoryName,quantity:x.requestedQuantity,totalPrice:x.totalAmountPerproductAfterOffer}));
+      const finalCartItems = cartItems?.map((x)=> ({skuId:x.skuID,itemId:x.itemID,itemName:x.itemName,category:x.categoryName,selectedSize:x.selectedSize,selectedColor:x.selectedColor,quantity:x.requestedQuantity,price:x.price,totalPrice:x.totalAmountPerProductAfterOffer}));
+     
       const finalObject = {
         customer: { customerName: shippingAddress?.fullname, email: shippingAddress?.email, phoneNumber: shippingAddress?.phone },
         orderItems: finalCartItems,
         orderDate: orderDate,
         createdDate: "",
         updatedDate: "",
-        subTotal: billingData?.totalAmount,
+        subTotal: billingData?.totalBill,
         totalAmount: billingData?.total,
         discountPrice: billingData.cartOffer || 0 + billingData.promo | 0,
         offerId: offerDetails[0]?.offerId || "",
         totalQuantity: totalItems,
-        estimated_delivery_date: cartItems[0]?.estimatedDeliveryDate,
+        estimated_delivery_date: exp,
         shippingAddress: { name: shippingAddress.fullname, email: shippingAddress.email, phoneNumber: shippingAddress.phone, address: shippingAddress.address, city: shippingAddress.city, state: shippingAddress.state, zipcode: shippingAddress?.zip },
         billingAddress: { name: shippingAddress.fullname, email: shippingAddress.email, phoneNumber: shippingAddress.phone, address: shippingAddress.address, city: shippingAddress.city, state: shippingAddress.state, zipcode: shippingAddress?.zip },
         shippingzipCode: shippingAddress?.zip,
@@ -116,8 +120,13 @@ const Payment = ({ address }) => {
             setLoading(false)
             navigate('/orderConfirmation');
           }
+          else{
+            setLoading(false);
+          }
         }
         else{
+          setLoading(false);
+
           triggerToast("error", "Failed reserving Item")
         }
         setLoading(false);

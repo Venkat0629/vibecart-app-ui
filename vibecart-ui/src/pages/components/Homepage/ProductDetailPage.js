@@ -48,6 +48,7 @@ const ProductDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [offerPrice, setOfferPrice] = useState(null);
+  const [formattedExpecteddeliverydate, setFormattedExpectedDeliveryDate] = useState('')
 
 
   useEffect(() => {
@@ -170,6 +171,7 @@ const ProductDetailPage = () => {
           params: { sku: skuID, zipcode: zipcode }
         });
         setExpectedDeliveryDate(formatDateWithOrdinal(response.data));
+        setFormattedExpectedDeliveryDate(response.data.data);
       } catch (error) {
         console.error('Error fetching expected delivery date:', error);
         setExpectedDeliveryDate('');
@@ -219,6 +221,7 @@ const ProductDetailPage = () => {
         stockQuantity,
         zipcode,
         expectedDeliveryDate,
+        formattedExpecteddeliverydate,
         offers: offerDetails // Added offers
       };
 
