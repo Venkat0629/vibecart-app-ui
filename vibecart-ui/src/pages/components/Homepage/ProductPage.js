@@ -595,7 +595,7 @@ const ProductPage = () => {
                               alt={product.itemName || "Product"}
                             />
                           </div>
-                          <div className="card-body">
+                          <div className="card-body bh">
                             <h5 className="card-title">{product.itemName}</h5>
                             <div className="price-section">
                               {bestOffer ? (
