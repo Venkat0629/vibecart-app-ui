@@ -76,7 +76,7 @@ const Navbar = () => {
     return (
         <div>
             <div className='nav_head container'>
-                <header className="navbar-container d-flex justify-content-between align-items-center p-3">
+                <header className="navbar-container d-flex justify-content-between align-items-center">
                     <div className="navbar-title" onClick={() => handleNavigate('/', '', 'Home')}>
                         <span className='half'>VIBE</span>CART
                     </div>
@@ -117,7 +117,7 @@ const Navbar = () => {
                             <FaRegUserCircle className="user-icon" size={28} color='#dd1e25' />
                         </div>
                         <div className="navbar-icon cart-icon" onClick={() => handleNavigate('/cart')}>
-                            <IoCartOutline size={28} />
+                            <IoCartOutline size={32} color='#dd1e25' />
                             {cartData?.length > 0 && (
                                 <span className="cart-item-count">{cartData?.length}</span>
                             )}

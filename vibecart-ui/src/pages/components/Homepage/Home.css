@@ -1,8 +1,8 @@
 /* Fixed dimensions for product cards */
 .product-card {
-  width: 90%; /* Adjust based on your layout */
-  max-width: 250px; /* Set a max-width */
-  height: 400px; /* Set a fixed height */
+  /* width: 90%;  */
+  /* max-width: 250px;  */
+  /* height: 400px;  */
   margin: 0 5px;
   overflow: hidden;
   display: flex;
@@ -31,9 +31,10 @@
 .product-card .card-body {
  /* Set the remaining height */
   /* padding: 15px; */
-  /* display: flex; */
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 170px;
   /* text-align: center; */
 }
 
@@ -44,7 +45,7 @@
  .home-page{
   padding-top: 20px;
   padding-bottom: 20px;
-  /* margin-top: 20px; */
+  margin-top: 20px;
  }
 
 .product-card .card-title {

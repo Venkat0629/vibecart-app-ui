@@ -3,15 +3,16 @@
 .product-page {
   padding-top: 20px;
   padding-bottom: 20px;
+  margin-top: 20px;
 }
 
 
 
 /* General Styles */
 .product-card {
-  width: 90%; /* Adjust based on your layout */
-  max-width: 250px; /* Set a max-width */
-  height: 400px; /* Set a fixed height */
+  /* width: 90%;  */
+  /* max-width: 250px;  */
+  /* height: 400px; */
   margin: 0 5px;
   overflow: hidden;
   display: flex;
@@ -25,8 +26,15 @@
   background: linear-gradient(45deg, #8c0e12, #181516);
   color: white;
   text-align: center;
-  padding: 20px 0;
+ 
   /* border-radius: 10px; */
+}
+.hero-section h3 {
+  padding: 20px 0;
+}
+
+.product-page .filter-aside {
+  padding-right: 0;
 }
 
 /* Filter and Sort Section Container */
@@ -55,7 +63,6 @@
 .sort-section {
   display: flex;
   align-items: center;
-  margin-right: 50px;
 }
 
 .sort-section label {
@@ -85,6 +92,8 @@
   /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); */
   /* border: 1px solid grey; */
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #d6d6d6;
+  border-radius: 5px;
   color: white;
   /* margin-left: 30px; */
 }
@@ -93,7 +102,7 @@
   margin-bottom: 15px;
   font-weight: bold;
   color: #8c0e12;;
-  border-bottom: 2px solid #8c0e12;;
+  border-bottom:1px solid #d6d6d6;
   padding-bottom: 5px;
 }
 
@@ -114,7 +123,7 @@
 
 .filter-section .form-check {
   margin-bottom: 10px;
-  margin-left: 20px;
+  /* margin-left: 20px; */
 }
 
 .filter-section .form-check-input:checked {
@@ -218,14 +227,19 @@
 .search-results-info {
   /* Light background to make the text stand out */
   color: #333; /* Dark text for readability */
-  padding: 10px 15px; /* Some padding for spacing */
+  padding: 10px 0px; /* Some padding for spacing */
   border-radius: 5px; /* Rounded corners for a modern look */
    /* Light border to define the area */
    /* Subtle shadow for depth */
-  font-size: 20px; /* Slightly larger font for better readability */
+  font-size: 25px; /* Slightly larger font for better readability */
   font-weight: 500; /* Semi-bold text for emphasis */
   margin-bottom: 20px; /* Space below the element */
+  margin-top: 0.5rem; /* Space below the element */
   /* Center-align the text */
+}
+
+.search-results-info .search-word {
+  color: #8c0e12;
 }
 
 .search-results-info span {
@@ -314,7 +328,7 @@
  .filter-container{
      display: flex;
      justify-content: space-between;
-     margin: 25px;
+     margin: 25px 0;
  }
  
 .discount-details {
