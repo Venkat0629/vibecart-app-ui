@@ -36,7 +36,7 @@ const Home = () => {
     const fetchTopProducts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5401/vibecart/ecom/products?limit=10"
+          "http://10.3.45.15:4001/vibecart/ecom/products?limit=10"
         );
         if (Array.isArray(response.data)) {
           const uniqueProducts = [];
@@ -65,7 +65,7 @@ const Home = () => {
     const fetchOffers = async (itemId) => {
       try {
         const response = await axios.get(
-          `http://localhost:5501/api/v1/vibe-cart/offers/item/${itemId}`
+          `http://10.3.45.15:4001/api/v1/vibe-cart/offers/item/${itemId}`
         );
         setOffers((prevOffers) => ({
           ...prevOffers,

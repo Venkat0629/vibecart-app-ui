@@ -65,7 +65,7 @@ const ProductPage = () => {
       } else if (category) {
         apiUrl = `http://127.0.0.1:8000/api/vibe-cart/${category}`;
       } else {
-        apiUrl = "http://localhost:5401/vibecart/ecom/items";
+        apiUrl = "http://10.3.45.15:4001/vibecart/ecom/items";
       }
  
       try {
@@ -104,7 +104,7 @@ const ProductPage = () => {
         const offerPromises = products.map((product) =>
           axios
             .get(
-              `http://localhost:5501/api/v1/vibe-cart/offers/item/${product.itemID}`
+              `http://10.3.45.15:4001/api/v1/vibe-cart/offers/item/${product.itemID}`
             )
             .then((response) => {
               newOffers[product.itemID] = response.data;
