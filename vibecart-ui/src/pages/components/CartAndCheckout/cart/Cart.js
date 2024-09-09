@@ -105,6 +105,7 @@ const Cart = () => {
   return (
     loading ? <Loader /> :
       cartData?.length > 0 ?
+      <div className='container'>      
         <div className='cartLayout'>
           {showToast && <Toaster toastType={toast.type} toastMessage={toast.message} />}
           <ErrorBoundary>
@@ -121,6 +122,7 @@ const Cart = () => {
               <OrderSummary cartData={cartData} cartBillData={cartBillData} navigateTo={navigateTo} getcartData={getCartData} disabled={disableCheckout}/>
             </div>
           </ErrorBoundary>
+        </div>
         </div> :
         <div className='emptyCart'>
           <h2>Your cart is empty!</h2>
