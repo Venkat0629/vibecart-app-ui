@@ -36,24 +36,24 @@ const Home = () => {
     const fetchTopProducts = async () => {
       try {
         const response = await axios.get(
-          "http://10.3.45.15:4001/vibecart/ecom/products?limit=10"
+          "http://localhost:5401/vibecart/ecom/products?limit=10"
         );
         if (Array.isArray(response.data)) {
-          const uniqueProducts = [];
-          const itemIDs = new Set();
+          // const uniqueProducts = [];
+          // const itemIDs = new Set();
 
-          response.data.forEach((product) => {
-            if (
-              (product.size === "SIX" || product.size === "SMALL") &&
-              !itemIDs.has(product.itemID)
-            ) {
-              uniqueProducts.push(product);
-              itemIDs.add(product.itemID);
-            }
-          });
+          // response.data.forEach((product) => {
+          //   if (
+          //     (product.size === "SIX" || product.size === "SMALL") &&
+          //     !itemIDs.has(product.itemID)
+          //   ) {
+          //     uniqueProducts.push(product);
+          //     itemIDs.add(product.itemID);
+          //   }
+          // });
 
-          setTopProducts(uniqueProducts);
-          uniqueProducts.forEach((product) => fetchOffers(product.itemID));
+          setTopProducts(response.data);
+          response.data.forEach((product) => fetchOffers(product.itemID));
         } else {
           console.error("API response is not in expected array format.");
         }
@@ -65,7 +65,7 @@ const Home = () => {
     const fetchOffers = async (itemId) => {
       try {
         const response = await axios.get(
-          `http://10.3.45.15:4001/api/v1/vibe-cart/offers/item/${itemId}`
+          `http://localhost:5501/api/v1/vibe-cart/offers/item/${itemId}`
         );
         setOffers((prevOffers) => ({
           ...prevOffers,
