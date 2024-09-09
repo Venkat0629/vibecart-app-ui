@@ -162,7 +162,7 @@ const ProductDetailPage = () => {
     };
 
     fetchOffersBySKU();
-  }, [product, selectedColor, selectedSize]);
+  }, [skuID]);
 
 
 
@@ -373,10 +373,10 @@ const ProductDetailPage = () => {
             <p className="description">{product.itemDescription}</p>
 
             {/* Offers Section */}
-            {offersByItemID.length > 0 && (
+            {/* {offersByItemID.length > 0 && (
               <div className="offers-section">
                 <h3>Available Offers:</h3>
-                {/* <ul>
+                <ul>
                   {offersByItemID.map((offer) => (
                     <div key={offer.offerId}>
                       <MdLocalOffer style={{ color: '#8c0e12', fontSize: '20px', margin: '20px' }} />
@@ -384,18 +384,18 @@ const ProductDetailPage = () => {
                       {offer.offerDiscountType === 'PERCENTAGE' ? '%' : '$'} off
                     </div>
                   ))}
-                </ul> */}
+                </ul>
                   <div >
                       <MdLocalOffer style={{ color: '#8c0e12', fontSize: '20px', margin: '20px' }} />
                       {offersByItemID[0]?.offerName}: {offersByItemID[0]?.offerDiscountValue}
                       {offersByItemID[0]?.offerDiscountType === 'PERCENTAGE' ? '%' : '$'} off
                     </div>
               </div>
-            )}
+            )} */}
 
             {offersBySKU.length > 0 && (
               <div className="offers-section">
-                <h3>Available SKU Offers:</h3>
+                <h3>Available Offers:</h3>
                   {/* {offersBySKU.map((offer) => (
                     <div key={offer.offerId}>
                       <MdLocalOffer style={{ color: '#8c0e12', fontSize: '20px', margin: '20px' }} />
