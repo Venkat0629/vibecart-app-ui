@@ -21,17 +21,17 @@
 
 .breadcrumbs a {
   text-decoration: none;
-  color: #007bff; /* Blue color */
-  font-weight: bold;
+  color: #6c757d;
+  /* font-weight: bold; */
   transition: color 0.3s ease;
 }
 
 .breadcrumbs a:hover {
-  color: #0056b3; /* Darker blue on hover */
+  color: #dd1e25; /* Darker blue on hover */
 }
 
 .breadcrumbs span {
-  color: #6c757d; /* Grey color for the current page */
+  color: #dd1e25; /* Grey color for the current page */
   font-weight: normal;
 }
 

@@ -60,8 +60,8 @@ const ProductDetailPage = () => {
       try {
         let response;
         let url = '';
-
-        if (productId < 900) {
+ 
+        if (productId <1000900) {
           // Handle itemId
           url = `http://localhost:6060/vibecart/ecom/items/item/${productId}`;
           response = await axios.get(url);
@@ -101,7 +101,7 @@ const ProductDetailPage = () => {
           const { skuID, imageURL } = response.data;
           setSkuID(skuID); // Update SKU ID
           setCurrentImage(`http://${imageURL}`);
-          const stockResponse = await axios.get(`http://localhost:8090/vibe-cart/inventory/quantity-by-sku`, {
+          const stockResponse = await axios.get(`http://localhost:8090/vibe-cart/scm/inventory/quantity-by-sku`, {
             params: { sku: skuID }
           });
           setStockQuantity(stockResponse.data.data ?? 0);
@@ -137,9 +137,9 @@ const ProductDetailPage = () => {
     };
 
     fetchOffersByItemID();
-  }, [product]);
-
-
+  }, [product,selectedColor,selectedSize]);
+ 
+ 
   useEffect(() => {
     const fetchOffersBySKU = async () => {
       if (skuID) {
@@ -171,7 +171,7 @@ const ProductDetailPage = () => {
   const fetchExpectedDeliveryDate = async () => {
     if (skuID && zipcode.length === 6) {
       try {
-        const response = await axios.get(`http://localhost:8090/vibe-cart/inventory/expected-delivery-date`, {
+        const response = await axios.get(`http://localhost:8090/vibe-cart/scm/inventory/expected-delivery-date`, {
           params: { sku: skuID, zipcode: zipcode }
         });
         setExpectedDeliveryDate(formatDateWithOrdinal(response.data));
@@ -412,7 +412,7 @@ const ProductDetailPage = () => {
             <div className="delivery-availability">
               <label htmlFor="zipcode">Delivery Availability:</label>
               <div>
-                <div className="zipcode-input">
+                <div className="zipcode-input input-group">
                   <input
                     type="text"
                     id="zipcode"

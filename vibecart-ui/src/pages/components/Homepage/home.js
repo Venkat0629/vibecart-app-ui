@@ -125,7 +125,7 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="home-page">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
       <Banners bannerData={bannerData} />
       <section className="top-categories my-4">
