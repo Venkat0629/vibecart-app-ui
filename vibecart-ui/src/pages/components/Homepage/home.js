@@ -38,7 +38,6 @@ const Home = () => {
         const response = await axios.get(
           "http://localhost:6060/vibecart/ecom/products?limit=10"
         );
-        console.log("API response:", response.data);
         if (Array.isArray(response.data)) {
           const uniqueProducts = [];
           const itemIDs = new Set();
@@ -179,7 +178,6 @@ const Home = () => {
                     to={`/product/${product.skuID}`}
                     className="text-decoration-none"
                   >
-                    {console.log(product.itemID)}
                     <div className="card product-card">
                       <img
                         src={

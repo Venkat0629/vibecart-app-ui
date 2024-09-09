@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { LiaSpinnerSolid } from "react-icons/lia";
 import { MdTune } from "react-icons/md";
-
+ 
+ 
 import Breadcrumbs from "../Homepage/Breadcrumbs";
 import axios from "axios";
 import "../Homepage/ProductPage.css";
-
+ 
 // Import Redux actions (ensure these are correctly defined in your Redux slice)
 import {
   setFilterCategories,
@@ -16,16 +17,16 @@ import {
   setSortOption,
   toggleFilterVisibility,
 } from "../../redux-toolkit/productPageSlice"; // Adjust the path based on your project structure
-
+ 
 const defaultImage = "https://via.placeholder.com/150";
-
+ 
 const ProductPage = () => {
   // Local state for products, offers, loading, and error
   const [products, setProducts] = useState([]);
   const [offers, setOffers] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+ 
   // Redux dispatch and state selectors
   const dispatch = useDispatch();
   const {
@@ -35,19 +36,20 @@ const ProductPage = () => {
     sortOption,
     showFilters,
   } = useSelector((state) => state.productPage);
-
+ 
   // React Router's location to parse query parameters
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchTerm = searchParams.get("searchquery")?.toLowerCase() || "";
   const category = searchParams.get("category");
-
+ 
   // Breadcrumbs for navigation
   const breadcrumbs = [
     { label: "Home", path: "/" },
     { label: "Products", path: "/products" },
   ];
-
+ 
+ 
   /**
    * Fetch products based on searchTerm or category.
    * This effect runs whenever 'searchTerm' or 'category' changes.
@@ -56,7 +58,7 @@ const ProductPage = () => {
     const fetchProducts = async () => {
       setLoading(true);
       setError(null);
-
+ 
       let apiUrl = "";
       if (searchTerm) {
         apiUrl = `http://127.0.0.1:8000/api/vibe-cart/?searchquery=${searchTerm}`;
@@ -65,16 +67,14 @@ const ProductPage = () => {
       } else {
         apiUrl = "http://localhost:6060/vibecart/ecom/items";
       }
-
+ 
       try {
         const response = await axios.get(apiUrl);
         if (response.data && Array.isArray(response.data.items)) {
-          // Filter products by size
           const filteredProducts = response.data.items.filter(
             (product) => product.size === "SIX" || product.size === "SMALL"
           );
-          console.log(filteredProducts)
-
+ 
           setProducts(filteredProducts);
         } else {
           setProducts([]);
@@ -86,10 +86,10 @@ const ProductPage = () => {
         setLoading(false);
       }
     };
-
+ 
     fetchProducts();
   }, [category, searchTerm]);
-
+ 
   /**
    * Fetch offers for each product.
    * This effect runs whenever 'products' changes.
@@ -98,7 +98,7 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchAllOffers = async () => {
       const newOffers = {};
-
+ 
       try {
         // Create an array of promises for fetching offers
         const offerPromises = products.map((product) =>
@@ -118,10 +118,10 @@ const ProductPage = () => {
               newOffers[product.itemID] = null; // Or any default value
             })
         );
-
+ 
         // Wait for all offer fetches to complete
         await Promise.all(offerPromises);
-
+ 
         // Update the 'offers' state once with all fetched offers
         setOffers(newOffers);
       } catch (error) {
@@ -129,14 +129,14 @@ const ProductPage = () => {
         // Optionally handle overall offer fetching errors
       }
     };
-
+ 
     if (products.length > 0) {
       fetchAllOffers();
     } else {
       setOffers({});
     }
   }, [products]);
-
+ 
   /**
    * Function to calculate the discounted price based on the discount type.
    * @param {number} price - Original price of the product.
@@ -152,12 +152,12 @@ const ProductPage = () => {
     }
     return price;
   };
-
+ 
   /**
    * Handlers for filter changes.
    * These handlers toggle the inclusion of a filter value in the respective Redux state arrays.
    */
-
+ 
   const handleCategoryChange = (e) => {
     const value = e.target.value;
     const updatedCategories = filterCategories.includes(value)
@@ -165,25 +165,23 @@ const ProductPage = () => {
       : [...filterCategories, value];
     dispatch(setFilterCategories(updatedCategories));
   };
-
+ 
   const handleColorChange = (e) => {
     const value = e.target.value;
     const updatedColors = filterColors.includes(value)
       ? filterColors.filter((color) => color !== value)
       : [...filterColors, value];
-    console.log(updatedColors);
     dispatch(setFilterColors(updatedColors));
   };
-
+ 
   const handlePriceRangeChange = (e) => {
     const value = e.target.value;
     const updatedPriceRanges = filterPriceRanges.includes(value)
       ? filterPriceRanges.filter((priceRange) => priceRange !== value)
       : [...filterPriceRanges, value];
-    console.log(updatedPriceRanges);
     dispatch(setFilterPriceRanges(updatedPriceRanges));
   };
-
+ 
   /**
    * Apply filters and sorting to the fetched products.
    * This creates a new array 'filteredProducts' based on the current filter and sort criteria.
@@ -204,7 +202,7 @@ const ProductPage = () => {
         ? filterColors.includes(product.color.toLowerCase())
         : true
     )
-
+ 
     .filter((product) => {
       if (!filterPriceRanges.length) return true;
       return filterPriceRanges.some((range) => {
@@ -227,22 +225,19 @@ const ProductPage = () => {
       }
       return 0;
     });
+ 
 
-  // Optional: Logging for debugging
-  console.log("Filter Price Ranges:", filterPriceRanges);
-  console.log("Filtered Products:", filteredProducts);
-  // console.log('Filtered Products:', products[0].color);
-
+ 
   return (
     <div className="product-page">
       {/* Breadcrumb Navigation */}
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-
+ 
       {/* Hero Section */}
       <div className="hero-section">
         <h1 className="text-center my-4">Explore Our Products</h1>
       </div>
-
+ 
       {/* Search Results Information */}
       {searchTerm && (
         <p className="search-results-info">
@@ -250,7 +245,7 @@ const ProductPage = () => {
           "{searchTerm}"
         </p>
       )}
-
+ 
       {/* Filter and Sort Controls */}
       <div className="container mb-4 mt-4 custom-class">
         {/* Filter Toggle Button */}
@@ -261,7 +256,7 @@ const ProductPage = () => {
           {showFilters ? "Hide Filters" : "Filters"}
           <MdTune />
         </button>
-
+ 
         {/* Sort Section */}
         <div className="sort-section">
           <label htmlFor="sortOption" className="form-label">
@@ -281,7 +276,7 @@ const ProductPage = () => {
           </select>
         </div>
       </div>
-
+ 
       {/* Main Content: Filters and Products */}
       <div className="container">
         <div className="row">
@@ -372,7 +367,7 @@ const ProductPage = () => {
                   </label>
                 </div>
               </div>
-
+ 
               {/* Colors Filter */}
               <div className="mb-3">
                 <h5>Colors</h5>
@@ -480,7 +475,7 @@ const ProductPage = () => {
                     Pink
                   </label>
                 </div>
-
+ 
                 <div className="form-check">
                   <input
                     className="form-check-input"
@@ -508,7 +503,7 @@ const ProductPage = () => {
                   </label>
                 </div>
               </div>
-
+ 
               <div className="mb-3">
                 <h5>Price Range</h5>
                 <div className="form-check">
@@ -553,7 +548,7 @@ const ProductPage = () => {
               </div>
             </div>
           )}
-
+ 
           {/* Products Grid */}
           <div className={showFilters ? "col-md-9" : "col-12"}>
             <div className="product_filter">
@@ -582,8 +577,8 @@ const ProductPage = () => {
                         className="col mb-4"
                         key={`${product.itemID}-${product.color}-${product.size}-${product.skuId}`}
                       >
-                        <div className="card product-card1">
-                          <div className="image-container1">
+                        <div className="card product-card">
+                          <div >
                             <img
                               src={
                                 product.imageURL
@@ -594,8 +589,8 @@ const ProductPage = () => {
                               alt={product.itemName || "Product"}
                             />
                           </div>
-                          <div className="products_body">
-                            <h5 className="card-title1">{product.itemName}</h5>
+                          <div className="card-body">
+                            <h5 className="card-title">{product.itemName}</h5>
                             <div className="price-section">
                               {bestOffer ? (
                                 <>
@@ -607,7 +602,7 @@ const ProductPage = () => {
                                     ${originalPrice.toFixed(2)}
                                   </p>
                                   </div>
-                                  
+                                 
                                   <p className="discount-details">
                                     {bestOffer.offerDiscountValue}
                                     {bestOffer.offerDiscountType ===
@@ -647,5 +642,5 @@ const ProductPage = () => {
     </div>
   );
 };
-
+ 
 export default ProductPage;
