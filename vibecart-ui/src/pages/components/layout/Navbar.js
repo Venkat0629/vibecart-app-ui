@@ -21,7 +21,7 @@ const Navbar = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        axios.get('http://localhost:6060/vibecart/ecom/items')
+        axios.get('http://localhost:5401/vibecart/ecom/items')
             .then((response) => {
                 setProductData(response.data);
             })

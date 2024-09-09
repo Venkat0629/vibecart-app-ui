@@ -10,6 +10,7 @@ import Checkout from '../components/CartAndCheckout/checkout/Checkout';
 import Orders from '../components/CartAndCheckout/orders/Orders'
 import Sale from '../components/Homepage/Sale';
 import OrderConfirmation from '../components/CartAndCheckout/orders/orderConfirmation';
+import TermsConditions from '../commoncomponents/TermsConditions';
 
 
 export const Routing = () => {
@@ -29,7 +30,7 @@ export const Routing = () => {
           <Route path="/orders" element={<Orders />} />
           <Route path="/sale" element={<Sale />} />
           <Route path="/orderConfirmation" element={<OrderConfirmation/>} />
-
+          <Route path="/terms" element={<TermsConditions/>} />
         </Routes>
       </main>
       <div className="footerLayout">

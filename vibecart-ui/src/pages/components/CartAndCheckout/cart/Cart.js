@@ -17,6 +17,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [disableCheckout, setDisableCheckout] = useState(false);
   const { cartData, cartBillData } = useSelector((state) => state.cart);
   const { toast, showToast, triggerToast } = useToast();
   const navigateTo = (path) => {
@@ -36,9 +37,11 @@ const Cart = () => {
       dispatch(updateCartData(updatedCartData));
       localStorage.setItem("cartItems", JSON.stringify(updatedCartData));
       applyItemOffer(cartData);
+      setDisableCheckout(false);
     }
     else {
-      triggerToast("error", "Failed to get stock details!")
+      triggerToast("error", "Failed to get stock details!");
+      setDisableCheckout(true);
     }
   }
 
@@ -115,14 +118,14 @@ const Cart = () => {
           </ErrorBoundary>
           <ErrorBoundary>
             <div className='orderSummaryLayout'>
-              <OrderSummary cartData={cartData} cartBillData={cartBillData} navigateTo={navigateTo} getcartData={getCartData} />
+              <OrderSummary cartData={cartData} cartBillData={cartBillData} navigateTo={navigateTo} getcartData={getCartData} disabled={disableCheckout}/>
             </div>
           </ErrorBoundary>
         </div> :
         <div className='emptyCart'>
           <h2>Your cart is empty!</h2>
           <p>Browse our collection to find something you'll love.</p>
-          <ReusableButton buttonName="Go to Homepage" handleClick={() => navigateTo('/')} />
+          <ReusableButton buttonName="Go to Homepage" handleClick={() => navigateTo('/')}    />
         </div>
   );
 };

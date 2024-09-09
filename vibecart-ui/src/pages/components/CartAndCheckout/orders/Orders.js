@@ -10,7 +10,7 @@ const MyOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch('http://localhost:8090/vibe-cart/orders/getAllOrders');
+        const response = await fetch('http://localhost:5601/vibe-cart/orders/getAllOrders');
         if (!response.ok) throw new Error('Network response was not ok');
         const result = await response.json();
  
