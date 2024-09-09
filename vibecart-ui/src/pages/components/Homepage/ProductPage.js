@@ -59,9 +59,9 @@ const ProductPage = () => {
 
       let apiUrl = "";
       if (searchTerm) {
-        apiUrl = `http://127.0.0.1:8000/api/vibe-cart/?searchquery=${searchTerm}`;
+        apiUrl = `http://10.3.45.15:5701/api/vibe-cart/?searchquery=${searchTerm}`;
       } else if (category) {
-        apiUrl = `http://127.0.0.1:8000/api/vibe-cart/${category}`;
+        apiUrl = `http://10.3.45.15:5701/api/vibe-cart/${category}`;
       } else {
         apiUrl = "http://10.3.45.15:4001/vibecart/ecom/items";
       }
