@@ -85,9 +85,10 @@ const Payment = ({ address }) => {
       const totalItems = cartItems.reduce((total, product) => {
         return total + Number(product.requestedQuantity);
       }, 0);
+      const finalCartItems = cartItems?.map((x)=> ({...x,skuId:x.skuID,itemId:x.itemID,category:x.categoryName,quantity:x.requestedQuantity,totalPrice:x.totalAmountPerproductAfterOffer}));
       const finalObject = {
         customer: { customerName: shippingAddress?.fullname, email: shippingAddress?.email, phoneNumber: shippingAddress?.phone },
-        orderItems: cartItems,
+        orderItems: finalCartItems,
         orderDate: orderDate,
         createdDate: "",
         updatedDate: "",
