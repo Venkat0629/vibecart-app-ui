@@ -47,7 +47,7 @@ const Checkout = () => {
 
   const fetchAndStoreDiscount = async () => {
     try {
-      const response = await fetch('http://10.3.45.15:4001/api/v1/vibe-cart/offers/bill');
+      const response = await fetch('http://localhost:4001/api/v1/vibe-cart/offers/bill');
       if (response.ok) {
         const offers = await response.json();
         localStorage.setItem("cartOffers", JSON.stringify(offers));

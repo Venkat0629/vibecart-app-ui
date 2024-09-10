@@ -21,7 +21,7 @@ export const getQuantitydetails = async (cartData) => {
     const itemsIds = cartData?.map((x) => x.skuID);
     if (itemsIds.length > 0) {
         try {
-            const response = await fetch('http://10.3.45.15:4001/vibecart/ecom/sku/total-quantity', { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(itemsIds) });
+            const response = await fetch('http://localhost:4001/vibecart/ecom/sku/total-quantity', { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(itemsIds) });
             if ([200, 201].includes(response.status)) {
                 const updatedData = await response.json();
                 return updatedData;
