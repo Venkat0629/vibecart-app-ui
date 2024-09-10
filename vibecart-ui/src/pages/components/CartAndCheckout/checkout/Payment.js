@@ -72,24 +72,27 @@ const Payment = ({ address }) => {
       setMessage('Please enter a promo code.');
     }
   };
- 
+
   const handlePlaceOrder = async () => {
     const cartItems = JSON.parse(localStorage.getItem("cartItems"))
     const billingData = JSON.parse(localStorage.getItem("billingData"));
-  
+
     const shippingAddress = JSON.parse(localStorage.getItem("shippingAddress"));
     const offerDetails = JSON.parse(localStorage.getItem("cartOffers"));
     if (shippingAddress && Object.keys(shippingAddress).length > 0) {
       setLoading(true);
       const now = new Date();
       const orderDate = now?.toISOString();
-      const expdelivery = new Date(cartItems[0]?.formattedExpecteddeliverydate);
-      const exp = expdelivery?.toISOString();
+      const expdelivery = new Date(cartItems[0]?.formattedExpecteddeliverydate || "2024-09-10");
+      const exp = isNaN(expdelivery.getTime())
+        ? "2024-09-10T18:01:25.829Z" 
+        : expdelivery.toISOString() || "2024-09-10T18:01:25.829Z";
+
       const totalItems = cartItems.reduce((total, product) => {
         return total + Number(product.requestedQuantity);
       }, 0);
-      const finalCartItems = cartItems?.map((x)=> ({skuId:x.skuID,itemId:x.itemID,itemName:x.itemName,category:x.categoryName,selectedSize:x.selectedSize,selectedColor:x.selectedColor,quantity:x.requestedQuantity,price:x.price,totalPrice:x.totalAmountPerProductAfterOffer}));
-     
+      const finalCartItems = cartItems?.map((x) => ({ skuId: x.skuID, itemId: x.itemID, itemName: x.itemName, category: x.categoryName, selectedSize: x.selectedSize, selectedColor: x.selectedColor, quantity: x.requestedQuantity, price: x.price, totalPrice: x.totalAmountPerProductAfterOffer }));
+
       const finalObject = {
         customer: { customerName: shippingAddress?.fullname, email: shippingAddress?.email, phoneNumber: shippingAddress?.phone },
         orderItems: finalCartItems,
@@ -112,7 +115,7 @@ const Payment = ({ address }) => {
       try {
         const cartItems = JSON.parse(localStorage.getItem("cartItems"));
         const filteredItemfields = cartItems?.map(item => ({ sku: item.skuID, orderQuantity: item.requestedQuantity }));
-        
+
         const res = await fetch(`http://10.3.45.15:4001/vibe-cart/scm/orders/stock-reservation-call?customerZipcode=${finalObject?.shippingzipCode}`, { method: "PUT", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(filteredItemfields) });
         if ([200, 201].includes(res.status)) {
           const response = await fetch('http://10.3.45.15:4001/vibecart/ecom/orders/createOrder', { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(finalObject) });
@@ -120,11 +123,11 @@ const Payment = ({ address }) => {
             setLoading(false)
             navigate('/orderConfirmation');
           }
-          else{
+          else {
             setLoading(false);
           }
         }
-        else{
+        else {
           setLoading(false);
 
           triggerToast("error", "Failed reserving Item")
