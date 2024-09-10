@@ -12,7 +12,7 @@
 .product-card {
   /* width: 90%;  */
   /* max-width: 250px;  */
-  /* height: 400px; */
+  /* height: 500px; */
   margin: 0 5px;
   overflow: hidden;
   display: flex;
@@ -20,6 +20,10 @@
   box-sizing: border-box;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
   background-color: #fff; /* Ensure background is set */
+}
+
+.bh{
+  height: 165px;
 }
 /* Hero Section */
 .hero-section {
@@ -182,14 +186,14 @@
   font-size: 16px;
   align-items: center;
   border-radius: 40px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   cursor: pointer;
   padding: 10px 12px !important;
   background-color: #8c0e12;
   border: 1px solid #8c0e12;
   color: #fff;
   text-decoration: none;
-  margin-top: 8px;
+  margin-top: 0px;
 }
 
 .viewDetails:hover {
@@ -288,6 +292,7 @@
  
 .price-section {
   display: flex;
+  height: 50px;
   flex-direction: column;
   align-items: flex-start;
 }
