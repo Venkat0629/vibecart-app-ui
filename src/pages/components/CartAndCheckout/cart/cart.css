@@ -1,0 +1,37 @@
+.cartLayout {
+    display: flex;
+    height: auto;
+    gap: 10px;
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    overflow: hidden;
+}
+
+.cartproductslayout {
+    flex: 0 0 59%;
+    color: black;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.orderSummaryLayout {
+    margin: 20px 50px 20px 20px;
+}
+
+
+@media (max-width: 768px) {
+    .cartLayout {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+
+    .orderSummaryLayout {
+        max-height: 250px;
+        background: var(--card-background);
+    }
+}

@@ -1,0 +1,72 @@
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* body {
+    font-family: 'Macys Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+} */
+
+
+
+input,select{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+input:focus {
+    border-color: #888;
+    outline: none;
+}
+
+input::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+p {
+    margin: 0; 
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: black
+}
+
+h1,h2,h3,h4,h5,h6 {
+    color: black
+}
+strong {
+    font-size: 0.7em;
+  }
+  
+img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+:root {
+    --primary-blue: #007BFF;
+  
+    --navbar-background: #003B6F;
+  
+    /* Button Colors */
+    --button-default: #8c0e12;
+    --button-hover: #751619;
+    --button-text: #FFFFFF;
+
+  
+    /* Card Colors */
+    --card-background: #F8F9FA;
+    --card-border: #E0E0E0;
+  
+    /* Text Colors */
+    --text-primary: #333333;
+    --text-secondary: #666666;
+  
+    /* Accent Colors */
+    --success-green: #28A745;
+    --error-red: #DC3545;
+    --warning-orange: #FFC107;
+  }
+  

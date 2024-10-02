@@ -1,0 +1,29 @@
+.orderConfirmation {
+    display: flex;
+    height: auto;
+    gap: 10px;
+    color: black;
+    margin: 40px;
+    overflow: hidden;
+}
+
+.orderConfirmation-col1 {
+    flex: 0 0 40%;
+    color: black;
+    flex-direction: column;
+margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-height: 500px;
+    background-color: white;
+
+}
+
+.orderConfirmation-col2 {
+    margin: 10px;
+    flex-direction: column;
+    flex: 30%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    height: auto;
+}
