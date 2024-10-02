@@ -1,0 +1,28 @@
+.accordion-section {
+    border-radius: 4px;
+  }
+  
+  .accordion-header {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: lightgray
+  }
+  
+  .accordion-content {
+    padding: 10px;
+    display: none;
+    overflow: hidden;
+  }
+  
+  .accordion-content.open {
+    display: block;
+  }
+  
+  .accordion-icon {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  

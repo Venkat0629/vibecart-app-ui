@@ -1,0 +1,116 @@
+.cartproducts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: black;
+
+}
+.cartProductsContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.cartproductDetails {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: black;
+}
+
+.removecartItemButton {
+    color: var(--button-default);
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.cartproductTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    color: black;
+    flex: 1;
+}
+.cartproductTitle p {
+    margin: 0; /* Removes default margin from <p> elements */
+    padding: 2px 0; /* Adjust the padding to create a small gap */
+}
+
+.cartEditquantityLayout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px;
+    border-radius: 20px;
+    flex: 0 0 auto;
+    border: 1px solid var(--button-default);
+}
+.errorMessage {
+    color: var(--button-default);
+}
+
+
+.cartitemTotalLayout {
+    flex: 0 0 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.quantityInput {
+    width: 50px;
+    color: var(--button-default);
+}
+
+
+
+.emptyCart {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.icon-styles {
+    cursor: pointer;
+    color: var(--button-default);
+}
+.offer-text {
+    color: #8c0e12;
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+.offer-container {
+    position: relative;
+    display: inline-block;
+    height: auto;
+}
+
+.offer-popup {
+    display: none;
+    position: absolute;
+    padding: 10px;
+    z-index: 1;
+    background-color: #f5f5f5;
+    color: #8c0e12;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    white-space: nowrap; /* Ensures text does not wrap */
+    top: 0; /* Aligns popup vertically with the text */
+    left: 100%; /* Positions popup to the right of the text */
+    margin-left: 10px; /* Space between text and popup */
+}
+
+.offer-text:hover + .offer-popup {
+    display: block;
+}

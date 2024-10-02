@@ -1,0 +1,33 @@
+.routing {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100vh;
+}
+
+.navbarLayout{
+    flex: 0 0 auto;
+    color: #f8f9fa;
+    background-color: white;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    width: 100%;
+}
+
+.content{
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 120px;
+    /* background-color: #fafafc; */
+
+}
+
+.footerLayout{
+    flex: 0 0 auto;
+    background-color:#737373;
+}

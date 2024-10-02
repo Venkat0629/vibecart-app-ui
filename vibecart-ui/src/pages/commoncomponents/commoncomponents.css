@@ -1,0 +1,53 @@
+.successtoast-styles {
+    color: var(--success-green);
+}
+.errortoast-styles {
+    color: var(--error-red);
+}
+.successtoast-styles, .errortoast-styles{
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f2eded;
+    padding: 10px 20px;
+    z-index: 1000;
+    text-align: center;
+}
+
+.button-css {
+    background-color: var(--button-default);
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    color: var(--button-text);
+}
+
+button:hover {
+    background: var(--button-hover);
+}
+.button-css:disabled {
+    background-color: var(--button-disabled-background, #ccc); 
+    color: var(--button-disabled-text, #777); 
+    cursor: not-allowed;
+    opacity: 0.65;
+    box-shadow: none;
+    transform: none;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #8c0e12; /* Red color */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin: 100px auto; /* Center the loader */
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
