@@ -4,7 +4,7 @@ import './layout.css';
 const Footer = () => {
   return (
     <div className="footer">
-      © 2024 VibeCart - Nisum All Rights Reserved
+      © 2024 VibeCart - All Rights Reserved
     </div>
   );
 }
