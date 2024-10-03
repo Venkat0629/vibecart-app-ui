@@ -35,7 +35,7 @@ const Sale = () => {
   useEffect(() => {
     const query = new URLSearchParams(location.search).get('query');
     if (query) {
-      axios.get(`http://10.3.45.15:4001/vibecart/ecom/items/catalog/${query}`)
+      axios.get(`http://localhost:5001/api/v1/vibe-cart/app/items/catalog/${query}`)
         .then((response) => {
           setProducts(response.data);
         })
