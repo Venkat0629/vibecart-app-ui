@@ -7,6 +7,7 @@ import Banners from "../Homepage/Banners"; // Import the Banners component
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { CustomLeftArrow, CustomRightArrow } from "../Homepage/CustomArrows"; // Adjust import path as necessary
+import { VIBECART_URI } from '../../commoncomponents/service';
 
 const categories = [
   {
@@ -36,7 +37,7 @@ const Home = () => {
     const fetchTopProducts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5001/api/v1/vibe-cart/app/products?limit=10"
+          `${VIBECART_URI}/api/v1/vibe-cart/app/products?limit=10`
         );
         if (Array.isArray(response.data)) {
           // const uniqueProducts = [];
@@ -65,7 +66,7 @@ const Home = () => {
     const fetchOffers = async (itemId) => {
       try {
         const response = await axios.get(
-          `http://localhost:5001/api/v1/vibe-cart/offers/item/${itemId}`
+          `${VIBECART_URI}/api/v1/vibe-cart/offers/item/${itemId}`
         );
         setOffers((prevOffers) => ({
           ...prevOffers,

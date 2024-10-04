@@ -8,6 +8,7 @@ import './layout.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCartData } from '../../commoncomponents/CommonFunctions';
 import { updateCartData } from '../../redux-toolkit/CartSlice';
+import { VIBECART_URI } from '../../commoncomponents/service';
 
 const Navbar = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -21,7 +22,7 @@ const Navbar = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        axios.get('http://localhost:5001/api/v1/vibe-cart/app/items')
+        axios.get(`${VIBECART_URI}/api/v1/vibe-cart/app/items`)
             .then((response) => {
                 setProductData(response.data);
             })

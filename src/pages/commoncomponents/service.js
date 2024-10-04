@@ -1,0 +1,1 @@
+export const VIBECART_URI = "http://localhost:5001";

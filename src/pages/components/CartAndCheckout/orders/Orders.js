@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './myorders.css';
+import { VIBECART_URI } from '../../../commoncomponents/service';
  
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -10,7 +11,7 @@ const MyOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/v1/vibe-cart/scm/orders/getAllOrders');
+        const response = await fetch(`${VIBECART_URI}/api/v1/vibe-cart/scm/orders/getAllOrders`);
         if (!response.ok) throw new Error('Network response was not ok');
         const result = await response.json();
  

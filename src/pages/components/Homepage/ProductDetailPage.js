@@ -7,6 +7,7 @@ import '../Homepage/ProductDetailPage.css';
 import Breadcrumbs from '../Homepage/Breadcrumbs';
 import { MdLocalOffer } from "react-icons/md";
 import { updateCartData } from '../../redux-toolkit/CartSlice';
+import { VIBECART_URI } from '../../commoncomponents/service';
 
 // Default image if none is provided
 const defaultImage = 'https://via.placeholder.com/600x400';
@@ -59,17 +60,17 @@ const ProductDetailPage = () => {
  
         if (productId <1000900) {
           // Handle itemId
-          url = `http://localhost:5001/api/v1/vibe-cart/app/items/item/${productId}`;
+          url = `${VIBECART_URI}/api/v1/vibe-cart/app/items/item/${productId}`;
           response = await axios.get(url);
         } else {
           // Handle skuId
-          url = `http://localhost:5001/api/v1/vibe-cart/app/products/product/sku-id/${productId}`;
+          url = `${VIBECART_URI}/api/v1/vibe-cart/app/products/product/sku-id/${productId}`;
           response = await axios.get(url);
         }
 
         const productData = response.data;
         dispatch(setSelectedProduct(productData));
-        if (url === `http://localhost:5001/api/v1/vibe-cart/app/items/item/${productId}`) {
+        if (url === `${VIBECART_URI}/api/v1/vibe-cart/app/items/item/${productId}`) {
           setCurrentImage(productData.imageURLs[0] ? `http://${productData.imageURLs[0]}` : defaultImage);
         } else {
           setCurrentImage(productData.imageURL ? `http://${productData.imageURL}` : defaultImage);
@@ -91,13 +92,13 @@ const ProductDetailPage = () => {
     const fetchSkuDetails = async () => {
       if (selectedColor && selectedSize && product) {
         try {
-          const response = await axios.get(`http://localhost:5001/api/v1/vibe-cart/app/products/product/item-id/${product.itemID}`, {
+          const response = await axios.get(`${VIBECART_URI}/api/v1/vibe-cart/app/products/product/item-id/${product.itemID}`, {
             params: { color: selectedColor, size: selectedSize }
           });
           const { skuID, imageURL } = response.data;
           setSkuID(skuID); // Update SKU ID
           setCurrentImage(`http://${imageURL}`);
-          const stockResponse = await axios.get(`http://localhost:5001/api/v1/vibe-cart/scm/inventory/quantity-by-sku`, {
+          const stockResponse = await axios.get(`${VIBECART_URI}/api/v1/vibe-cart/scm/inventory/quantity-by-sku`, {
             params: { sku: skuID }
           });
           setStockQuantity(stockResponse.data.data ?? 0);
@@ -115,7 +116,7 @@ const ProductDetailPage = () => {
     const fetchOffersByItemID = async () => {
       if (product && product.itemID) {
         try {
-          const response = await axios.get(`http://localhost:5001/api/v1/vibe-cart/offers/item/${product.itemID}`);
+          const response = await axios.get(`${VIBECART_URI}/api/v1/vibe-cart/offers/item/${product.itemID}`);
           const offers = response.data || [];
           setOffersByItemID(offers);
 
@@ -140,7 +141,7 @@ const ProductDetailPage = () => {
     const fetchOffersBySKU = async () => {
       if (skuID) {
         try {
-          const response = await axios.get(`http://localhost:5001/api/v1/vibe-cart/offers/sku/${skuID}`);
+          const response = await axios.get(`${VIBECART_URI}/api/v1/vibe-cart/offers/sku/${skuID}`);
           const offers = response.data || [];
           setOffersBySKU(offers);
 
@@ -167,7 +168,7 @@ const ProductDetailPage = () => {
   const fetchExpectedDeliveryDate = async () => {
     if (skuID && zipcode.length === 6) {
       try {
-        const response = await axios.get(`http://localhost:5001/api/v1/vibe-cart/scm/inventory/expected-delivery-date`, {
+        const response = await axios.get(`${VIBECART_URI}/api/v1/vibe-cart/scm/inventory/expected-delivery-date`, {
           params: { sku: skuID, zipcode: zipcode }
         });
         setExpectedDeliveryDate(formatDateWithOrdinal(response.data));

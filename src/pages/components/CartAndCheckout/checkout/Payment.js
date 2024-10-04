@@ -7,6 +7,7 @@ import { updatecartBillData } from "../../../redux-toolkit/CartSlice";
 import useToast from "../../../commoncomponents/ToastHook";
 import Toaster from "../../../commoncomponents/Toaster";
 import { useNavigate } from "react-router-dom";
+import { VIBECART_URI } from '../../../commoncomponents/service';
 
 const Payment = ({ address }) => {
   const [promoCode, setPromoCode] = useState('');
@@ -44,7 +45,7 @@ const Payment = ({ address }) => {
   }
   const validatePromoCode = async () => {
     try {
-      const apiUrl = `http://localhost:5001/api/v1/vibe-cart/offers/coupon/${promoCode}`;
+      const apiUrl = `${VIBECART_URI}/api/v1/vibe-cart/offers/coupon/${promoCode}`;
       const response = await fetch(apiUrl);
       const data = await response.json();
 
@@ -116,9 +117,9 @@ const Payment = ({ address }) => {
         const cartItems = JSON.parse(localStorage.getItem("cartItems"));
         const filteredItemfields = cartItems?.map(item => ({ sku: item.skuID, orderQuantity: item.requestedQuantity }));
 
-        const res = await fetch(`http://localhost:5001/api/v1/vibe-cart/scm/orders/stock-reservation-call?customerZipcode=${finalObject?.shippingzipCode}`, { method: "PUT", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(filteredItemfields) });
+        const res = await fetch(`${VIBECART_URI}/api/v1/vibe-cart/scm/orders/stock-reservation-call?customerZipcode=${finalObject?.shippingzipCode}`, { method: "PUT", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(filteredItemfields) });
         if ([200, 201].includes(res.status)) {
-          const response = await fetch('http://localhost:5001/api/v1/vibe-cart/app/orders/createOrder', { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(finalObject) });
+          const response = await fetch(`${VIBECART_URI}/api/v1/vibe-cart/app/orders/createOrder`, { method: "POST", headers: { 'content-type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(finalObject) });
           if ([200, 201].includes(response.status)) {
             setLoading(false)
             navigate('/orderConfirmation');

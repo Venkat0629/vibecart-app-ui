@@ -7,6 +7,7 @@ import { CustomLeftArrow, CustomRightArrow } from '../Homepage/CustomArrows'
 // import defaultImage from '../../assets/default.jpg';  // Assuming a default image
 
 // import '../Homepage/Sale.css'; 
+import { VIBECART_URI } from '../../commoncomponents/service';
 
 const Sale = () => {
   const [products, setProducts] = useState([]);
@@ -35,7 +36,7 @@ const Sale = () => {
   useEffect(() => {
     const query = new URLSearchParams(location.search).get('query');
     if (query) {
-      axios.get(`http://localhost:5001/api/v1/vibe-cart/app/items/catalog/${query}`)
+      axios.get(`${VIBECART_URI}/api/v1/vibe-cart/app/items/catalog/${query}`)
         .then((response) => {
           setProducts(response.data);
         })

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { LiaSpinnerSolid } from "react-icons/lia";
 import { MdTune } from "react-icons/md";
-
+import { VIBECART_URI } from '../../commoncomponents/service';
 import Breadcrumbs from "../Homepage/Breadcrumbs";
 import axios from "axios";
 import "../Homepage/ProductPage.css";
@@ -63,7 +63,7 @@ const ProductPage = () => {
       } else if (category) {
         apiUrl = `http://10.3.45.15:5701/api/vibe-cart/${category}`;
       } else {
-        apiUrl = "http://localhost:5001/api/v1/vibe-cart/app/items";
+        apiUrl = `${VIBECART_URI}/api/v1/vibe-cart/app/items`;
       }
 
       try {
@@ -102,7 +102,7 @@ const ProductPage = () => {
         const offerPromises = products.map((product) =>
           axios
             .get(
-              `http://localhost:5001/api/v1/vibe-cart/offers/item/${product.itemID}`
+              `${VIBECART_URI}/api/v1/vibe-cart/offers/item/${product.itemID}`
             )
             .then((response) => {
               newOffers[product.itemID] = response.data;

@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import Accordion from './Accordian'
 import Loader from '../../../commoncomponents/Loading'
 import ErrorBoundary from '../../../commoncomponents/ErrorBoundary'
+import { VIBECART_URI } from '../../../commoncomponents/service';
 
 const Checkout = () => {
 
@@ -47,7 +48,7 @@ const Checkout = () => {
 
   const fetchAndStoreDiscount = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/v1/vibe-cart/offers/bill');
+      const response = await fetch(`${VIBECART_URI}/api/v1/vibe-cart/offers/bill`);
       if (response.ok) {
         const offers = await response.json();
         localStorage.setItem("cartOffers", JSON.stringify(offers));
