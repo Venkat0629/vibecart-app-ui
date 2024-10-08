@@ -58,15 +58,15 @@ const ProductDetailPage = () => {
         let response;
         let url = '';
  
-        if (productId <1000900) {
+        // if (productId <1000900) {
           // Handle itemId
           url = `${VIBECART_URI}/api/v1/vibe-cart/app/items/item/${productId}`;
           response = await axios.get(url);
-        } else {
-          // Handle skuId
-          url = `${VIBECART_URI}/api/v1/vibe-cart/app/products/product/sku-id/${productId}`;
-          response = await axios.get(url);
-        }
+        // } else {
+        //   // Handle skuId
+        //   url = `${VIBECART_URI}/api/v1/vibe-cart/app/products/product/sku-id/${productId}`;
+        //   response = await axios.get(url);
+        // }
 
         const productData = response.data;
         dispatch(setSelectedProduct(productData));

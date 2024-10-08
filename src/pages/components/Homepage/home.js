@@ -176,7 +176,7 @@ const Home = () => {
               return (
                 <div className="col-12 mb-4" key={product.itemID}>
                   <Link
-                    to={`/product/${product.skuID}`}
+                    to={`/product/${product.itemID}`}
                     className="text-decoration-none"
                   >
                     <div className="card product-card">

@@ -15,7 +15,7 @@ import {
   setFilterPriceRanges,
   setSortOption,
   toggleFilterVisibility,
-} from "../../redux-toolkit/productPageSlice"; // Adjust the path based on your project structure
+} from "../../redux-toolkit/productPageSlice";
 
 const defaultImage = "https://via.placeholder.com/150";
 
@@ -59,21 +59,17 @@ const ProductPage = () => {
 
       let apiUrl = "";
       if (searchTerm) {
-        apiUrl = `http://10.3.45.15:5701/api/vibe-cart/?searchquery=${searchTerm}`;
+        apiUrl = `${VIBECART_URI}/api/v1/vibe-cart/app/items?searchquery=${searchTerm}`;
       } else if (category) {
-        apiUrl = `http://10.3.45.15:5701/api/vibe-cart/${category}`;
+        apiUrl = `${VIBECART_URI}/api/v1/vibe-cart/app/items/category/${category}`;
       } else {
         apiUrl = `${VIBECART_URI}/api/v1/vibe-cart/app/items`;
       }
 
       try {
         const response = await axios.get(apiUrl);
-        if (response.data && Array.isArray(response.data.items)) {
-          const filteredProducts = response.data.items.filter(
-            (product) => product.size === "SIX" || product.size === "SMALL"
-          );
-
-          setProducts(filteredProducts);
+        if (response.data && Array.isArray(response.data)) {
+          setProducts(response.data);
         } else {
           setProducts([]);
         }
@@ -185,11 +181,12 @@ const ProductPage = () => {
    * This creates a new array 'filteredProducts' based on the current filter and sort criteria.
    */
   const filteredProducts = products
-    // .filter(
-    //   (product) =>
-    //     product.itemName.toLowerCase().includes(searchTerm) ||
-    //     product.itemDescription.toLowerCase().includes(searchTerm)
-    // )
+    .filter(
+      (product) => {
+        return product.itemName.toLowerCase().includes(searchTerm) ||
+          product.itemDescription.toLowerCase().includes(searchTerm)
+      }
+    )
     .filter((product) =>
       filterCategories.length
         ? filterCategories.includes(product.categoryID.toString())
@@ -197,7 +194,7 @@ const ProductPage = () => {
     )
     .filter((product) =>
       filterColors.length
-        ? filterColors.includes(product.color.toLowerCase())
+        ? product.availableColors.some(color => filterColors.includes(color.toLowerCase()))
         : true
     )
 
@@ -287,87 +284,89 @@ const ProductPage = () => {
               <div className="filter-section">
                 {/* Categories Filter */}
                 <div className="mb-3">
-                  <h5>Categories</h5>
-                  <h6>Jackets:</h6>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value="101" // Winter Jackets
-                      onChange={handleCategoryChange}
-                      checked={filterCategories.includes("101")}
-                      id="category-101"
-                    />
-                    <label className="form-check-label" htmlFor="category-101">
-                      Winter Jackets
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value="102" // Leather Jackets
-                      onChange={handleCategoryChange}
-                      checked={filterCategories.includes("102")}
-                      id="category-102"
-                    />
-                    <label className="form-check-label" htmlFor="category-102">
-                      Leather Jackets
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value="103" // Casual Jackets
-                      onChange={handleCategoryChange}
-                      checked={filterCategories.includes("103")}
-                      id="category-103"
-                    />
-                    <label className="form-check-label" htmlFor="category-103">
-                      Casual Jackets
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value="104" // Outdoor & Sports Jackets
-                      onChange={handleCategoryChange}
-                      checked={filterCategories.includes("104")}
-                      id="category-104"
-                    />
-                    <label className="form-check-label" htmlFor="category-104">
-                      Outdoor & Sports Jackets
-                    </label>
-                  </div>
-                  <h6>Shoes:</h6>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value="105" // Sports Shoes
-                      onChange={handleCategoryChange}
-                      checked={filterCategories.includes("105")}
-                      id="category-105"
-                    />
-                    <label className="form-check-label" htmlFor="category-105">
-                      Sports
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value="106" // Casual Shoes
-                      onChange={handleCategoryChange}
-                      checked={filterCategories.includes("106")}
-                      id="category-106"
-                    />
-                    <label className="form-check-label" htmlFor="category-106">
-                      Casual
-                    </label>
-                  </div>
+                  {category === "jackets" && <> <h5>Categories</h5>
+                    <h6>Jackets:</h6>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value="101" // Winter Jackets
+                        onChange={handleCategoryChange}
+                        checked={filterCategories.includes("101")}
+                        id="category-101"
+                      />
+                      <label className="form-check-label" htmlFor="category-101">
+                        Winter Jackets
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value="102" // Leather Jackets
+                        onChange={handleCategoryChange}
+                        checked={filterCategories.includes("102")}
+                        id="category-102"
+                      />
+                      <label className="form-check-label" htmlFor="category-102">
+                        Leather Jackets
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value="103" // Casual Jackets
+                        onChange={handleCategoryChange}
+                        checked={filterCategories.includes("103")}
+                        id="category-103"
+                      />
+                      <label className="form-check-label" htmlFor="category-103">
+                        Casual Jackets
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value="104" // Outdoor & Sports Jackets
+                        onChange={handleCategoryChange}
+                        checked={filterCategories.includes("104")}
+                        id="category-104"
+                      />
+                      <label className="form-check-label" htmlFor="category-104">
+                        Outdoor & Sports Jackets
+                      </label>
+                    </div>
+                  </>}{category === "shoes" && <>
+                    <h6>Shoes:</h6>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value="105" // Sports Shoes
+                        onChange={handleCategoryChange}
+                        checked={filterCategories.includes("105")}
+                        id="category-105"
+                      />
+                      <label className="form-check-label" htmlFor="category-105">
+                        Sports
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value="106" // Casual Shoes
+                        onChange={handleCategoryChange}
+                        checked={filterCategories.includes("106")}
+                        id="category-106"
+                      />
+                      <label className="form-check-label" htmlFor="category-106">
+                        Casual
+                      </label>
+                    </div>
+                  </>}
                 </div>
 
                 {/* Colors Filter */}
@@ -573,22 +572,22 @@ const ProductPage = () => {
                     const originalPrice = product.price;
                     const offerPrice = bestOffer
                       ? calculateDiscountedPrice(
-                          originalPrice,
-                          bestOffer.offerDiscountValue,
-                          bestOffer.offerDiscountType
-                        )
+                        originalPrice,
+                        bestOffer.offerDiscountValue,
+                        bestOffer.offerDiscountType
+                      )
                       : originalPrice;
                     return (
                       <div
                         className="col mb-2"
-                        key={`${product.itemID}-${product.color}-${product.size}-${product.skuId}`}
+                        key={`${product.skuId}`}
                       >
                         <div className="card product-card">
                           <div>
                             <img
                               src={
-                                product.imageURL
-                                  ? product.imageURL
+                                product.imageURLs[0]
+                                  ? `http://${product.imageURLs[0]}`
                                   : defaultImage
                               }
                               className="card-img-top"
@@ -612,7 +611,7 @@ const ProductPage = () => {
                                   <p className="discount-details">
                                     {bestOffer.offerDiscountValue}
                                     {bestOffer.offerDiscountType ===
-                                    "PERCENTAGE"
+                                      "PERCENTAGE"
                                       ? "%"
                                       : "$"}{" "}
                                     off
@@ -625,7 +624,7 @@ const ProductPage = () => {
                               )}
                             </div>
                             <Link
-                              to={`/product/${product.skuId}`}
+                              to={`/product/${product.itemID}`}
                               className="viewDetails"
                             >
                               View Details
@@ -636,7 +635,7 @@ const ProductPage = () => {
                     );
                   })
                 ) : (
-                  <div className="col-12">
+                  <div className="col-6">
                     <p className="text-center">No products found.</p>
                   </div>
                 )}
