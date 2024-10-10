@@ -14,7 +14,7 @@ const categories = [
     id: 1,
     name: "Jackets",
     image:
-      "https://media.istockphoto.com/id/948018182/photo/travel-backpack-on-summer-sea-beach.jpg?s=1024x1024&w=is&k=20&c=GprZL8N9G7cUJkmFTx1CyjcCtnkyKIrATAxlu2mc4Q8=",
+      "https://steemitimages.com/640x0/https://cdn.steemitimages.com/DQmW8jW1ZPMTkYEE3ZcWAHogrJ8cSb6VEqu42NDP4Cx6zsq/Mens_Vapor_Denim_Jacket_USE_1024x1024.jpg",
   },
   {
     id: 2,
